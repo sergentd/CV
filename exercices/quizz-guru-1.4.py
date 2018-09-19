@@ -16,7 +16,7 @@ rotated = imutils.rotate(image, angle)
 
 (b,g,r) = rotated[args["ypos"], args["xpos"]]
 
-print("Values : Blue = {}, Green={}, red){}".format(b,g,r))
+print("Values : Blue = {}, Green={}, red={}".format(b,g,r))
 
 cv2.imshow(rotated)
 cv2.waitKey(0)
