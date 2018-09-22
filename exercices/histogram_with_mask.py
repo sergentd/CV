@@ -4,6 +4,7 @@
 # import the necessary packages
 from matplotlib import pyplot as plt
 import numpy as np
+import argparse
 import cv2
 
 def plot_histogram(image, title, mask=None):
@@ -23,8 +24,12 @@ def plot_histogram(image, title, mask=None):
 		plt.plot(hist, color=color)
 		plt.xlim([0, 256])
 
-# load the beach image and plot a histogram for it
-image = cv2.imread("beach.png")
+ap = argparse.ArgumentParser()
+ap.add_argument("-i","--image",required=True,help="Path to the input image")
+args = vars(ap.parse_args())
+
+# load the image and plot a histogram for it
+image = cv2.imread(args["image"])
 cv2.imshow("Original", image)
 plot_histogram(image, "Histogram for Original Image")
 
