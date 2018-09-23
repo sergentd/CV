@@ -33,19 +33,19 @@ for imagePath in imagePaths:
 
 # display the query image and grab the sorted keys of the index dictionary
 query = cv2.imread(imagePaths[0])
-cv2.imshow("Query (trex_01.png)", query)
+cv2.imshow("Query (raptors_01.png)", query)
 keys = sorted(index.keys())
 
 # loop over the filenames in the dictionary
 for (i, k) in enumerate(keys):
 	# if this is the query image, ignore it
-	if k == "trex_01.png":
+	if k == "raptors_01.png":
 		continue
 
 	# load the current image and compute the Euclidean distance between the
 	# query image (i.e. the 1st image) and the current image
 	image = cv2.imread(imagePaths[i])
-	d = dist.euclidean(index["trex_01.png"], index[k])
+	d = dist.euclidean(index["raptors_01.png"], index[k])
 
 	# display the distance between the query image and the current image
 	cv2.putText(image, "%.2f" % (d), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 2)
