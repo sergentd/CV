@@ -94,7 +94,7 @@ while True:
   # if we need to write the flow on the disk
   if args["output"] is not None and writer is None:
     fourcc = cv2.VideoWriter_fourcc(*"MJPG")
-  writer = cv2.VideoWriter(args["output"], fourcc, 30, (W, H), True)
+    writer = cv2.VideoWriter(args["output"], fourcc, 30, (W, H), True)
 
   # init the current status along with our list of bounding box rectangles return by
   # either (1) our object detector or (2) the correlation trackers
@@ -245,7 +245,7 @@ print("[INFO] elapsed time : {:.2f}".format(fps.elapsed()))
 print("[INFO] approx. FPS : {:.2f}".format(fps.fps()))
 
 # check to see if we need to release the video writter pointer
-if writter is not None:
+if writer is not None:
   writer.release()
   
 # if we are not using a video file, stop the camera video stream
