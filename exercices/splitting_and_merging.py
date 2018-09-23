@@ -18,6 +18,8 @@ args = vars(ap.parse_args())
 image = cv2.imread(args["image"])
 (B, G, R) = cv2.split(image)
 
+print(G[5,80])
+
 # show each channel individually
 cv2.imshow("Red", R)
 cv2.imshow("Green", G)

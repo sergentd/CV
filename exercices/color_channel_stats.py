@@ -4,12 +4,18 @@
 # import the necessary packages
 from scipy.spatial import distance as dist
 from imutils import paths
+import argparse
 import numpy as np
 import cv2
 
+ap = argparse.ArgumentParser()
+ap.add_argument("-d","--directory",required=True,
+  help="Path to the input images directory")
+args = vars(ap.parse_args())
+
 # grab the list of image paths and initialize the index to store the image filename
 # and feature vector
-imagePaths = sorted(list(paths.list_images("dinos")))
+imagePaths = sorted(list(paths.list_images(args["directory"])))
 index = {}
 
 # loop over the image paths
@@ -23,6 +29,7 @@ for imagePath in imagePaths:
 	(means, stds) = cv2.meanStdDev(image)
 	features = np.concatenate([means, stds]).flatten()
 	index[filename] = features
+	print(features)
 
 # display the query image and grab the sorted keys of the index dictionary
 query = cv2.imread(imagePaths[0])
