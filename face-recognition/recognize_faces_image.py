@@ -38,17 +38,17 @@ for encoding in encodings:
   if True in matches:
     # find the indexes of all matched faces then initialize a
 	# dictionnary to count the total number of each face was matched
-	matchedIdxs = [i for (i, b) in enumerate(matches) if b]
-	counts = {}
+    matchedIdxs = [i for (i, b) in enumerate(matches) if b]
+    counts = {}
 	
-	# loop over the matched indexes and maintain a count for each
-	# recognized face
-	for i in matchedIdxs:
-	  name = data["names"][i]
-	  counts[name] = counts.get(name, 0) + 1
+    # loop over the matched indexes and maintain a count for each
+    # recognized face
+    for i in matchedIdxs:
+      name = data["names"][i]
+      counts[name] = counts.get(name, 0) + 1
 	
 	# determine the recognized face with the largest number of votes
-	name = max(counts, key=counts.get)
+    name = max(counts, key=counts.get)
 	
   # update the list of names
   names.append(name)
