@@ -19,3 +19,42 @@ ap.add_argument("-e", "--height", type=int, default=28,
 ap.add_argument("-f", "--flatten", type=int, default=-1,
 	help="whether or not we should flatten the image")
 args = vars(ap.parse_args())
+
+# load the input image and resize it to the target spatial dimensions
+image = cv2.imread(args["image"])
+output = image.copy()
+image = cv2.resize(image, (args["width"], args["height"]))
+
+# check to see if we should flatten the image and add a batch
+# dimension
+if args["flatten"] > 0:
+	image = image.flatten()
+	image = image.reshape((1, image.shape[0]))
+ 
+# otherwise, we must be working with a CNN -- don't flatten the
+# image, simply add the batch dimension
+else:
+	image = image.reshape((1, image.shape[0], image.shape[1],
+		image.shape[2]))
+
+# load the model and label binarizer
+print("[INFO] loading network and label binarizer...")
+model = load_model(args["model"])
+lb = pickle.loads(open(args["label_bin"], "rb").read())
+ 
+# make a prediction on the image
+preds = model.predict(image)
+ 
+# find the class label index with the largest corresponding
+# probability
+i = preds.argmax(axis=1)[0]
+label = lb.classes_[i]
+
+# draw the class label + probability on the output image
+text = "{}: {:.2f}%".format(label, preds[0][i] * 100)
+cv2.putText(output, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+	(0, 0, 255), 2)
+ 
+# show the output image
+cv2.imshow("Image", output)
+cv2.waitKey(0)
