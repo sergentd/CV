@@ -47,7 +47,7 @@ for imagePath in imagePaths:
 	# data list
 	image = cv2.imread(imagePath)
 	image = cv2.resize(image, (64, 64))
-	data.append(image)lstrip
+	data.append(image)
  
 	# extract the class label from the image path and update the
 	# labels list
