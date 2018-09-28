@@ -1,5 +1,5 @@
 # import necessary packages
-from keras.model import Sequential
+from keras.models import Sequential
 from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
 from keras.layers.core import Activation
@@ -8,6 +8,7 @@ from keras.layers.core import Dense
 from keras import backend as K
 
 class LeNet:
+  @ staticmethod
   def build(width, height, depth, classes):
     # initialize the model
 	model = Sequential()

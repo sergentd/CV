@@ -48,7 +48,7 @@ for imagePath in glob.glob(args["test"] + "/*.png"):
 	image = cv2.imread(imagePath)
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	features = mahotas.features.haralick(gray).mean(axis=0)
-
+	print("Extracted features for {} : {}".format(imagePath, features))
 	# classify the test image
 	pred = model.predict(features.reshape(1, -1))[0]
 	cv2.putText(image, pred, (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0,
