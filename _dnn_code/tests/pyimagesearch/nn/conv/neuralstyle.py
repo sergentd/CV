@@ -40,7 +40,7 @@ class NeuralStyle:
     # build a dictionnary that maps the *name* of
     # each layer inside the network to the actual
     # layer *output*
-    layerMap = {l.name: l.output for l in self.S["content_layer"]}
+    layerMap = {l.name: l.output for l in self.model.layers}
     
     # extract features from the content layer, then extract
     # the activations from the style image (index 0) and the output
