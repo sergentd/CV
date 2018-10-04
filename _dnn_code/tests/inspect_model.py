@@ -1,5 +1,5 @@
 # import necessary packages
-from keras.application import VGG16
+from keras.applications import VGG16
 from pyimagesearch.utils import ModelInspector
 import argparse
 
