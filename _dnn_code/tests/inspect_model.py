@@ -4,7 +4,7 @@ from pyimagesearch.utils import ModelInspector
 import argparse
 
 # construct the argument parser and parse the arguments
-ap = argpase.ArgumentParser()
+ap = argparse.ArgumentParser()
 ap.add_argument("-i","--include-top", type=int, default=1,
   help="whether or not to include top of CNN")
 args = vars(ap.parse_args())
