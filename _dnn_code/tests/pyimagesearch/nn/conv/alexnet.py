@@ -12,7 +12,7 @@ from keras import backend as K
 
 class AlexNet:
   @staticmethod
-  def build(width, height, depth, classes, reg=0.0002)
+  def build(width, height, depth, classes, reg=0.0002):
     # initialize the model along with the input shape
     # to be channels last and the channels dimension itself
     model = Sequential()

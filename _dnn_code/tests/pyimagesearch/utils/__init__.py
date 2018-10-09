@@ -2,3 +2,4 @@
 from .captchahelper import preprocess
 from .ranked import rank5_accuracy
 from .modelinspector import ModelInspector
+import .simple_object_detector

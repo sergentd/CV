@@ -16,7 +16,7 @@ from keras import backend as K
 class DeeperGoogLeNet:
   @staticmethod
   def conv_module(x, K, kX, kY, stride, chanDim,
-    padding="same", reg=0.0005, name=None)
+    padding="same", reg=0.0005, name=None):
 	# set of CONV, BN and RELU names
 	(convName, bnName, actName) = (None, None, None)
 	
@@ -37,7 +37,7 @@ class DeeperGoogLeNet:
   
   @staticmethod
   def inception_module(x, num1x1, num3x3Reduce, num3x3, num5x5Reduce,
-    num5x5, num1x1Proj, chanDim, stage, reg=0.0005)
+    num5x5, num1x1Proj, chanDim, stage, reg=0.0005):
 	# define the first branch of the Inception module which consists
 	# of 1x1 convolutions
 	first = DeeperGoogLeNet.conv_module(x, num1x1, 1, 1, (1,1), chanDim,
@@ -71,7 +71,7 @@ class DeeperGoogLeNet:
 	return x
 	
   @staticmethod
-  def build(width, height, depth, classes, reg=0.0005)
+  def build(width, height, depth, classes, reg=0.0005):
     # initialize the input shape to be "channels_last"
 	# and the channel dimension itself
 	inpuShape = (height, width, depth)
