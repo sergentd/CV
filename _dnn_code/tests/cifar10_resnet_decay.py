@@ -21,6 +21,7 @@ sys.setrecursionlimit(5000)
 # define the total number of epochs to train for along
 # with the initial learning rate
 NUM_EPOCHS = 100
+BATCH_SIZE = 128
 INIT_LR = 1e-1
 
 def poly_decay(epoch):
@@ -79,10 +80,11 @@ callbacks = [
 # train the network
 print("[INFO] training network...")
 model.fit_generator(
-  aug.flow(trainX, trainY, batch_size=128),
+  aug.flow(trainX, trainY, batch_size=BATCH_SIZE),
   validation_data=(testX, testY),
-  steps_per_epoch=len(trainX) // 128, epochs=NUM_EPOCHS,
-  callbacks=callbacks, verbose=1)
+  steps_per_epoch=len(trainX) // BATCH_SIZE, epochs=NUM_EPOCHS,
+  callbacks=callbacks, verbose=1
+)
   
 # save the network to disk
 print("[INFO] serializing network...")
