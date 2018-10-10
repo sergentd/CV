@@ -77,6 +77,12 @@ callbacks = [
   LearningRateScheduler(poly_decay)
 ]
 
+# init the optimizer and model
+print("[INFO] compiling model...")
+opt = SGD(lr=INIT_LR, momentum=0.9)
+model = ResNet.build(32, 32, 3, 10, (9, 9, 9),
+  (64, 64, 128, 256), reg=5e-4)
+
 # train the network
 print("[INFO] training network...")
 model.fit_generator(
