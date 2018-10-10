@@ -2,7 +2,7 @@
 class ModelInspector:
   def __init__(self, model):
     self.model = model
-	
+    
   def inspect_layers(self):
     # loop over the layers in the network and display them to the console
     print("[INFO] showing layers")

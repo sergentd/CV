@@ -73,5 +73,5 @@ class AlexNet:
     # softmax
     model.add(classes, kernel_regularizer=l2(reg))
     model.add(Activation("softmax"))
-	
-	return model
+    
+    return model
