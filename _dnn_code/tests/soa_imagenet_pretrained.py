@@ -18,25 +18,25 @@ import cv2
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True,
-	help="path to the input image")
+    help="path to the input image")
 ap.add_argument("-model", "--model", type=str, default="vgg16",
-	help="name of pre-trained network to use")
+    help="name of pre-trained network to use")
 args = vars(ap.parse_args())
 
 # define a dictionary that maps model names to their classes
 # inside Keras
 MODELS = {
-	"vgg16": VGG16,
-	"vgg19": VGG19,
-	"inception": InceptionV3,
-	"xception": Xception,  # TensorFlow ONLY
-	"resnet": ResNet50
+    "vgg16": VGG16,
+    "vgg19": VGG19,
+    "inception": InceptionV3,
+    "xception": Xception,  # TensorFlow ONLY
+    "resnet": ResNet50
 }
 
 # esnure a valid model name was supplied via command line argument
 if args["model"] not in MODELS.keys():
-	raise AssertionError("The --model command line argument should "
-		"be a key in the `MODELS` dictionary")
+    raise AssertionError("The --model command line argument should "
+        "be a key in the `MODELS` dictionary")
 
 # initialize the input image shape (224x224 pixels) along with
 # the pre-processing function (this might need to be changed
@@ -48,8 +48,8 @@ preprocess = imagenet_utils.preprocess_input
 # need to set the input shape to (299x299) [rather than (224x224)]
 # and use a different image processing function
 if args["model"] in ("inception", "xception"):
-	inputShape = (299, 299)
-	preprocess = preprocess_input
+    inputShape = (299, 299)
+    preprocess = preprocess_input
 
 # load our the network weights from disk (NOTE: if this is the
 # first time you are running this script for a given network, the
@@ -86,13 +86,13 @@ P = imagenet_utils.decode_predictions(preds)
 # loop over the predictions and display the rank-5 predictions +
 # probabilities to our terminal
 for (i, (imagenetID, label, prob)) in enumerate(P[0]):
-	print("{}. {}: {:.2f}%".format(i + 1, label, prob * 100))
+    print("{}. {}: {:.2f}%".format(i + 1, label, prob * 100))
 
 # load the image via OpenCV, draw the top prediction on the image,
 # and display the image to our screen
 orig = cv2.imread(args["image"])
 (imagenetID, label, prob) = P[0][0]
 cv2.putText(orig, "Label: {}".format(label), (10, 30),
-	cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
 cv2.imshow("Classification", orig)
 cv2.waitKey(0)

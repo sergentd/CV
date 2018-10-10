@@ -24,25 +24,25 @@ testY = lb.transform(testY)
 
 # initialize the label names for the CIFAR-10 dataset
 labelNames = ["airplane", "automobile", "bird", "cat", "deer",
-	"dog", "frog", "horse", "ship", "truck"]
+    "dog", "frog", "horse", "ship", "truck"]
 
 # initialize the optimizer and model
 print("[INFO] compiling model...")
 opt = SGD(lr=0.01)
 model = ShallowNet.build(width=32, height=32, depth=3, classes=10)
 model.compile(loss="categorical_crossentropy", optimizer=opt,
-	metrics=["accuracy"])
+    metrics=["accuracy"])
 
 # train the network
 print("[INFO] training network...")
 H = model.fit(trainX, trainY, validation_data=(testX, testY),
-	batch_size=32, epochs=40, verbose=1)
+    batch_size=32, epochs=40, verbose=1)
 
 # evaluate the network
 print("[INFO] evaluating network...")
 predictions = model.predict(testX, batch_size=32)
 print(classification_report(testY.argmax(axis=1),
-	predictions.argmax(axis=1), target_names=labelNames))
+    predictions.argmax(axis=1), target_names=labelNames))
 
 # plot the training loss and accuracy
 plt.style.use("ggplot")

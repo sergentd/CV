@@ -35,7 +35,7 @@ testY = lb.transform(testY)
 # initialize the label names for the CIFAR-10 dataset
 labelNames = ["airplane", "automobile", "bird", "cat", "deer",
     "dog", "frog", "horse", "ship", "truck"]
-	
+    
 # initialize the optimizer and model
 print("[INFO] compiling model...")
 opt = SGD(lr=0.01, decay=0.01 / 40, momentum=0.9, nesterov=True)
@@ -56,8 +56,8 @@ print("[INFO] evaluating network...")
 predictions = model.predict(testX, batch_size=64)
 print(classification_report(testY.argmax(axis=1),
     predictions.argmax(axis=1), target_names=labelNames))
-	
-	
+    
+    
 plt.style.use("ggplot")
 plt.figure()
 plt.plot(np.arange(0, 40), H.history["loss"], label="train_loss")
