@@ -5,7 +5,7 @@ from keras.layers.core import Flatten
 
 class FCHeadNet:
   @staticmethod
-  def build(baseModel, classes, D)
+  def build(baseModel, classes, D):
     # initialize the head model that will be placed on top of
     # the base, then add a FC layer
     headModel = baseModel.output
