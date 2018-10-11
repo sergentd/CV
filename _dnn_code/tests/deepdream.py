@@ -58,7 +58,7 @@ def eval_loss_and_gradients(X):
   
 def gradient_ascent(X, iters, alpha, maxLoss=-np.inf):
   # loop over our number of iterations
-  for i in range(0, iters)
+  for i in range(0, iters):
     # compute the loss and gradient
 	(loss, G) = eval_loss_and_gradients(X)
 	
