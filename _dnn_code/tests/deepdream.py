@@ -167,7 +167,7 @@ shrunk = resize_image(image, octaveDims[0])
 # loop over the octave dimensions from smallest to largest
 for (o, size) in enumerate(octaveDims):
   # resize the image and then apply gradient ascent
-  print("[INFO] starting octave {}...".format(o)
+  print("[INFO] starting octave {}...".format(o))
   image = resize_image(image, size)
   image = gradient_ascent(image, iters=NUM_ITERS, alpha=ALPHA,
     maxLoss=MAX_LOSS)
