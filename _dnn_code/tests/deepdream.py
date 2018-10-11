@@ -42,7 +42,7 @@ def resize_image(image, size):
   # resize the image
   resized = np.copy(image)
   resized = ndimage.zoom(resized, 
-    (1, float(size[0] / resize.shape[1],
+    (1, float(size[0]) / resize.shape[1],
 	float(size[1]) / resize.shape[2], 1), order=1)
   
   # return the resized image
