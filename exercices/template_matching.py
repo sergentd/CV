@@ -22,7 +22,7 @@ result = cv2.matchTemplate(source, template, cv2.TM_CCOEFF)
 
 # draw the bounding box on the source image
 cv2.rectangle(source, (x, y), (x + tempW, y + tempH), (0, 255, 0), 2)
-print(x + " " + y)
+print("x : {}, y : {}".format(x, y))
 
 # show the images
 cv2.imshow("Source", source)
