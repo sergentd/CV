@@ -1,6 +1,6 @@
 # import necessary packages
 from pyimagesearch.nn.conv import NeuralStyle
-from keras.applications import VGG19
+from keras.applications import VGG16
 import argparse
 import os
 
