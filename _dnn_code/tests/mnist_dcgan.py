@@ -24,3 +24,12 @@ args = vars(ap.parse_args())
 # store the epochs and batch size in convenience variables
 NUM_EPOCHS = args["epochs"]
 BATCH_SIZE = args["batch_size"]
+
+# load the MNIST dataset and stack the training and testing data
+# points
+print("[INFO] loading MNIST dataset...")
+((trainX,_), (testX,_)) = mnist.load_data()
+trainImages = np.concatenate([trainX,testX])
+
+# add in an extra dimension for the channel and scale
+# the images into the range [-1, 1] (tan)
