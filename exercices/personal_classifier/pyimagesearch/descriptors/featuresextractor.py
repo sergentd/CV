@@ -10,7 +10,7 @@ class FeaturesExtractor:
       # initialize the set of features to be applied
       self.features = features
       
-    def describe(image):
+    def describe(self, image):
       # initialize our descriptors
       colorStats = ()
       haralick = ()
