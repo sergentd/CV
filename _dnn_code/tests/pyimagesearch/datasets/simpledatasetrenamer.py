@@ -39,7 +39,7 @@ class SimpleDatasetRenamer:
       # construct the filename based on prefix, idx, suffix and dataformat  
       prefix = str(self.prefix) if self.prefix is not None else ""
       suffix = str(self.suffix) if self.suffix is not None else ""
-      filename = "{}{}{}{}".format(prefix, idx, suffix, dataFormat)
+      filename = "{}{}{}.{}".format(prefix, idx, suffix, dataFormat)
       
       # write image to disk in the approriate directory
       print("[INFO] rename: {} \t to: {}".format(original, filename))
