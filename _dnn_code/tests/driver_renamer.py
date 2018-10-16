@@ -12,7 +12,7 @@ args = vars(ap.parse_args())
 # load and init the renamer with prefix and suffix
 prefix = args["prefix"] if args["prefix"] is not None else "IMG-"
 suffix = args["suffix"] if args["suffix"] is not None else None
-sdr = SimpleDatasetRenamer(args["directory"], prefix, suffix. move=False, remove=False)
+sdr = SimpleDatasetRenamer(args["directory"], prefix, suffix, move=False, remove=False)
 
 # proceed to the rename process
 sdr.rename()
