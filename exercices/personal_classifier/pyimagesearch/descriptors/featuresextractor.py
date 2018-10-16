@@ -35,24 +35,24 @@ def color_stats(image):
 def haralick_texture(image):
   # convert the image to gray if the image is BGR
   if len(image.shape) == 3:
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	  
   # return the haralick texture encoding
-  return mahotas.features.haralick(gray).mean(axis=0)
+  return mahotas.features.haralick(image).mean(axis=0)
 	  
 def hist_oriented_grad(image):
   # convert the image to gray if the image is BGR
   if len(image.shape) == 3:
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	 
-    # edge detection using automatized canny parameters
-    edged = imutils.auto_canny(gray)
+  # edge detection using automatized canny parameters
+  edged = imutils.auto_canny(image)
   
-    # resize the image ignoring aspect ratio
-    # to have similar descriptor for any input image
-    resized = cv2.resize(image, (256,256))
+  # resize the image ignoring aspect ratio
+  # to have similar descriptor for any input image
+  resized = cv2.resize(edged, (256,256))
       
-    # return the HOG
-    return feature.hog(resized, pixels_per_cell=(128,128),
-      cells_per_block=(2,2), transform_sqrt=True, block_norm="L1")
+  # return the HOG
+  return feature.hog(resized, pixels_per_cell=(128,128),
+    cells_per_block=(2,2), transform_sqrt=True, block_norm="L1")
 	  
