@@ -47,7 +47,7 @@ class SimpleDatasetRenamer:
 	  # {dir}{sep}[{prefix}]{idx}[{suffix}].{df}
 	  # exemple : ./img-000001-root.png
 	  #           /home/user/images/000002.jpg
-      filename = "{}{}{}{}{}.{}".format(directory, os.path.sep
+      filename = "{}{}{}{}{}.{}".format(directory, os.path.sep,
 	    prefix, idx, suffix, dataFormat)
       
       # write image to disk in the approriate directory
