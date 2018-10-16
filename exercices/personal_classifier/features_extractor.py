@@ -41,6 +41,7 @@ widgets = ["Features extraction: ", progressbar.Percentage(), " ",
   progressbar.Bar(), " ", progressbar.ETA()]
 pbar = progressbar.ProgressBar(maxval=len(imagePaths),
   widgets=widgets).start()
+  
 # loop over all images in the dataset
 for (i,path) in enumerate(imagePaths):
   # init the label and the image to add to our data
@@ -54,10 +55,8 @@ for (i,path) in enumerate(imagePaths):
   
   # update the progressbar
   pbar.update(i)
-  
-  if i > 10: break
 
-# end the progressbar
+# close the progressbar
 pbar.finish()
   
 # split into training, validation and testing sets
