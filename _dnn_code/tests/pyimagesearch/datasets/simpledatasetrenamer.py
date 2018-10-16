@@ -4,7 +4,7 @@ import progressbar
 import cv2
 import os
 
-def SimpleDatasetRenamer:
+class SimpleDatasetRenamer:
   def __init__(self, path, prefix="IMG-", suffix=None, move=False, remove=False)
     # store the prefix and the paths
     self.prefix = prefix
