@@ -1,5 +1,5 @@
 # import necessary packages
-from sklearn import features
+from skimage import features
 import imutils
 import numpy as np
 import mahotas
