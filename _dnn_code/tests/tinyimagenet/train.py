@@ -78,14 +78,14 @@ else:
   K.set_value(model.optimizer.lr, 1e-5)
   print("[INFO] new learning rate: {}".format(
     K.get_value(model.optimizer.lr)))
-	
+    
 # construct the set of callbacks
 callbacks = [
   EpochCheckpoint(args["checkpoints"], every=5,
     startAt=args["start_epoch"]),
   TrainingMonitor(config.FIG_PATH,
     jsonPath=config.JSON_PATH,
-	startAt=args["start_epoch"])
+    startAt=args["start_epoch"])
 ]
 
 # train the network

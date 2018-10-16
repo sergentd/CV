@@ -38,12 +38,15 @@ def deprocess(p):
   # return the deprocessed image
   return image
   
+def fetchLossGrads(X):
+  
+  
 def resize_image(image, size):
   # resize the image
   resized = np.copy(image)
   resized = ndimage.zoom(resized, 
     (1, float(size[0]) / resized.shape[1],
-	float(size[1]) / resized.shape[2], 1), order=1)
+    float(size[1]) / resized.shape[2], 1), order=1)
   
   # return the resized image
   return resized
@@ -60,16 +63,16 @@ def gradient_ascent(X, iters, alpha, maxLoss=-np.inf):
   # loop over our number of iterations
   for i in range(0, iters):
     # compute the loss and gradient
-	(loss, G) = eval_loss_and_gradients(X)
-	
-	# if the loss is greater than the max loss, break from
-	# the loop early to prevent strange effects
-	if loss > maxLoss:
-	  break
-	
-	# take a step
-	print("[INFO] Loss at {}: {}".format(i, loss))
-	X += alpha*G
+    (loss, G) = eval_loss_and_gradients(X)
+    
+    # if the loss is greater than the max loss, break from
+    # the loop early to prevent strange effects
+    if loss > maxLoss:
+      break
+    
+    # take a step
+    print("[INFO] Loss at {}: {}".format(i, loss))
+    X += alpha*G
   
   # return the output of gradient ascent
   return X
