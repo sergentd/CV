@@ -9,7 +9,7 @@ import mahotas
 import cv2
 import sklearn
 
-def describe(image)
+def describe(image):
   # extract means and standard deviations from each color channel
   (means, stds) = cv2.MeanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2HSV))
   colorStats = np.concatenate([means, stds]).flatten()
