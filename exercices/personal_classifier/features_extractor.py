@@ -37,14 +37,14 @@ data = []
 
 
 # initialize the progressbar (feedback to user on the task progress)
-widgets = ["Renaming Dataset: ", progressbar.Percentage(), " ",
+widgets = ["Features extraction: ", progressbar.Percentage(), " ",
   progressbar.Bar(), " ", progressbar.ETA()]
 pbar = progressbar.ProgressBar(maxval=len(imagePaths),
   widgets=widgets).start()
 # loop over all images in the dataset
 for (i,path) in enumerate(imagePaths):
   # init the label and the image to add to our data
-  label = os.path.dirname(path).split(os.path.sep)[-1]
+  label = os.path.basename(path).split("_")[0]
   image = cv2.imread(path)
   
   # extract features from image and store it
@@ -54,6 +54,8 @@ for (i,path) in enumerate(imagePaths):
   
   # update the progressbar
   pbar.update(i)
+  
+  if i > 10: break
 
 # end the progressbar
 pbar.finish()
