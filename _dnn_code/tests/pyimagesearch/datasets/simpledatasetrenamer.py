@@ -5,12 +5,12 @@ import cv2
 import os
 
 class SimpleDatasetRenamer:
-  def __init__(self, path, prefix="IMG-", suffix=None, move=False, remove=False)
+  def __init__(self, path, prefix="IMG-", suffix=None, move=False, remove=False):
     # store the prefix and the paths
     self.prefix = prefix
     self.path = path
     
-  def rename(self)
+  def rename(self):
     # grab the reference to the list of images
     imagePaths = list(paths.list_images(self.path))
     
@@ -46,7 +46,7 @@ class SimpleDatasetRenamer:
       print("[INFO] rename: {} \t to: {}".format(original, dataFormat))
       if move:
         cv2.imwrite(filename, image)
-      else
+      else:
         directory = os.path.dirname(path)
         filename = directory + filename
         cv2.imwrite(filename, image)
