@@ -28,15 +28,16 @@ class FeaturesExtractor:
       if "haralick" in self.features:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         haralick = mahotas.features.haralick(gray).mean(axis=0)
-        print("[INFO] haralick: {}".format(haralick))
+        print("[INFO] haralick: {} \n len: {}".format(
+		  haralick, len(haralick)))
     
       if "hog" in self.features:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         edged = imutils.auto_canny(gray)
         resized = cv2.resize(image, (200,200))
         hog = feature.hog(resized, pixels_per_cell=(10,10),
-          cells_per_block=(2,2), transform_sqrt=True, block_norm=L1)
-        print("[INFO] hog: {}".format(hog))
+          cells_per_block=(2,2), transform_sqrt=True, block_norm="L1")
+        print("[INFO] hog: {} \n len: {}".format(hog, len(hog)))
       
       # return concatened features vector
       return np.hstack([colorStats, haralick, hog])
