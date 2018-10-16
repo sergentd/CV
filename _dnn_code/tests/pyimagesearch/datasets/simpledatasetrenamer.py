@@ -5,10 +5,13 @@ import cv2
 import os
 
 class SimpleDatasetRenamer:
-  def __init__(self, path, prefix="IMG-", suffix=None, move=False, remove=False):
+  def __init__(self, path, prefix=None, suffix=None, move=False, remove=False):
     # store the prefix and the paths
     self.prefix = prefix
+	self.suffix = suffix
     self.path = path
+	self.move = move
+	sekf.remove = remove
     
   def rename(self):
     # grab the reference to the list of images
@@ -37,14 +40,14 @@ class SimpleDatasetRenamer:
       filename = ""
       
       # construct the filename based on prefix, idx, suffix and dataformat  
-      filename += str(prefix) if prefix is not None else ""
+      filename += str(self.prefix) if self.prefix is not None else ""
       filename += idx
-      filename += str(suffix) if suffix is not None else ""
+      filename += str(self.suffix) if self.suffix is not None else ""
       filename += dataFormat
       
       # write image to disk in the approriate directory
       print("[INFO] rename: {} \t to: {}".format(original, dataFormat))
-      if move:
+      if self.move:
         cv2.imwrite(filename, image)
       else:
         directory = os.path.dirname(path)
@@ -52,7 +55,7 @@ class SimpleDatasetRenamer:
         cv2.imwrite(filename, image)
       
       # check to see if we need to remove the old file      
-      if remove:
+      if self.remove:
         os.remove(path)
     
       # update the progressbar (feedback to user)
