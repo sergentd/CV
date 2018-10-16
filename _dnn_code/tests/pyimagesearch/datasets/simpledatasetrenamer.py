@@ -8,10 +8,10 @@ class SimpleDatasetRenamer:
   def __init__(self, path, prefix=None, suffix=None, move=False, remove=False):
     # store the prefix and the paths
     self.prefix = prefix
-	self.suffix = suffix
+    self.suffix = suffix
     self.path = path
-	self.move = move
-	sekf.remove = remove
+    self.move = move
+    self.remove = remove
     
   def rename(self):
     # grab the reference to the list of images
