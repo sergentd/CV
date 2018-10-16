@@ -36,7 +36,7 @@ class FeaturesExtractor:
         edged = imutils.auto_canny(gray)
         resized = cv2.resize(image, (256,256))
         hog = feature.hog(resized, pixels_per_cell=(64,64),
-          cells_per_block=(2,2), transform_sqrt=True, block_norm="L1")
+          cells_per_block=(3,3), transform_sqrt=True, block_norm="L1")
         print("[INFO] hog: {} \n len: {}".format(hog, len(hog)))
       
       # return concatened features vector
