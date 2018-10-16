@@ -89,7 +89,7 @@ callbacks = [
     startAt=args["start_epoch"]),
   TrainingMonitor("output/resnet.png",
     jsonPath="output/resnet.json",
-	startAt=args["start_epoch"])
+    startAt=args["start_epoch"])
 ]
 
 # train the network

@@ -55,25 +55,25 @@ for (dtype, paths, labels, outputPath) in datasets:
     progressbar.Bar(), " ", progressbar.ETA()]
   pbar = progressbar.ProgressBar(maxval=len(paths),
     widgets=widgets).start()
-	
+    
   # loop over the images paths
   for (i, (path, label)) in enumerate(zip(paths, labels)):
     # load the image and process it
-	image = cv2.imread(path)
-	image = aap.preprocess(image)
-	
-	# if we are building the training dataset, then compute the
-	# mean of each channel in the image, then update
-	# the respective lists
-	if dtype == "train":
-	  (b,g,r) = cv2.mean(image)[:3]
-	  R.append(r)
-	  G.append(g)
-	  B.append(b)
-	  
-	# add the image and label # to the HDF5 dataset
-	writer.add([image], [label])
-	pbar.update()
+    image = cv2.imread(path)
+    image = aap.preprocess(image)
+    
+    # if we are building the training dataset, then compute the
+    # mean of each channel in the image, then update
+    # the respective lists
+    if dtype == "train":
+      (b,g,r) = cv2.mean(image)[:3]
+      R.append(r)
+      G.append(g)
+      B.append(b)
+      
+    # add the image and label # to the HDF5 dataset
+    writer.add([image], [label])
+    pbar.update()
   
   # close the HDF5 writer
   pbar.finish()
