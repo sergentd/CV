@@ -50,7 +50,7 @@ class SimpleDatasetRenamer:
         cv2.imwrite(filename, image)
       
       # check to see if we need to remove the old file      
-      if self.remove:
+      if self.remove and filename != path:
         os.remove(path)
     
       # update the progressbar (feedback to user)
