@@ -37,9 +37,9 @@ class SimpleDatasetRenamer:
       filename = ""
       
       # construct the filename based on prefix, idx, suffix and dataformat  
-      filename += str(prefix) if prefix is not None
+      filename += str(prefix) if prefix is not None else ""
       filename += idx
-      filename += str(suffix) if suffix is not None
+      filename += str(suffix) if suffix is not None else ""
       filename += dataFormat
       
       # write image to disk in the approriate directory
