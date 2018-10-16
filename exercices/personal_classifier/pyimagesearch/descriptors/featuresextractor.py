@@ -24,7 +24,7 @@ class FeaturesExtractor:
         print("[INFO] colors: {}".format(colorStats))
       
       # extract haralick textures if needed
-      # total : 
+      # total : 13 float values
       if "haralick" in self.features:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         haralick = mahotas.features.haralick(gray).mean(axis=0)
@@ -34,8 +34,8 @@ class FeaturesExtractor:
       if "hog" in self.features:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         edged = imutils.auto_canny(gray)
-        resized = cv2.resize(image, (200,200))
-        hog = feature.hog(resized, pixels_per_cell=(10,10),
+        resized = cv2.resize(image, (256,256))
+        hog = feature.hog(resized, pixels_per_cell=(64,64),
           cells_per_block=(2,2), transform_sqrt=True, block_norm="L1")
         print("[INFO] hog: {} \n len: {}".format(hog, len(hog)))
       
