@@ -6,7 +6,7 @@ import mahotas
 import cv2
 
 class FeaturesExtractor:
-	def __init__(self, features=["color"])
+	def __init__(self, features=["color"]):
 	  # initialize the set of features to be applied
 	  self.features = features
 	  
