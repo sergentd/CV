@@ -35,19 +35,14 @@ class SimpleDatasetRenamer:
       # create a *unique* ID for this image relative to other processed images
       # *at the same time*
       idx = str(i).zfill(9)
-	  print(idx)
-      
-      # initialize our filename as an empty string
-      filename = ""
       
       # construct the filename based on prefix, idx, suffix and dataformat  
-      filename += str(self.prefix) if self.prefix is not None else ""
-      filename += idx
-      filename += str(self.suffix) if self.suffix is not None else ""
-      filename += dataFormat
+      prefix = str(self.prefix) if self.prefix is not None else ""
+      suffix = str(self.suffix) if self.suffix is not None else ""
+      filename = "{}{}{}{}".format(prefix, idx, suffix, dataFormat)
       
       # write image to disk in the approriate directory
-      print("[INFO] rename: {} \t to: {}".format(original, dataFormat))
+      print("[INFO] rename: {} \t to: {}".format(original, filename))
       if self.move:
         cv2.imwrite(filename, image)
       else:
