@@ -54,8 +54,9 @@ for (i,path) in enumerate(imagePaths):
   
   # update the progressbar
   pbar.update(i)
-  
-  if i > 10: break
+
+# end the progressbar
+pbar.finish()
   
 # split into training, validation and testing sets
 (trainX, testX, trainY, testY) = train_test_split(np.array(data),
