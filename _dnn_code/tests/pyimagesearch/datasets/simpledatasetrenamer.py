@@ -35,6 +35,7 @@ class SimpleDatasetRenamer:
       # create a *unique* ID for this image relative to other processed images
       # *at the same time*
       idx = str(i).zfill(9)
+	  print(idx)
       
       # initialize our filename as an empty string
       filename = ""
@@ -52,7 +53,7 @@ class SimpleDatasetRenamer:
       else:
         directory = os.path.dirname(path)
         filename = directory + filename
-        cv2.imwrite(filename, image)
+        # cv2.imwrite(filename, image)
       
       # check to see if we need to remove the old file      
       if self.remove:
