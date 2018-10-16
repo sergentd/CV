@@ -16,6 +16,10 @@ class SimpleDatasetRenamer:
   def rename(self):
     # grab the reference to the list of images
     imagePaths = sorted(list(paths.list_images(self.directory)))
+	
+	# initialize the directory parameter
+    directory = "." if self.move else os.path.dirname(path)
+    directory += str(os.path.sep)
     
     # initialize the progressbar (feedback to user on the task progress)
     widgets = ["Renaming Dataset: ", progressbar.Percentage(), " ",
@@ -39,15 +43,11 @@ class SimpleDatasetRenamer:
       # construct the filename based on prefix, idx, suffix and dataformat  
       prefix = str(self.prefix) if self.prefix is not None else ""
       suffix = str(self.suffix) if self.suffix is not None else ""
-      filename = "{}{}{}.{}".format(prefix, idx, suffix, dataFormat)
+      filename = "{}{}{}{}.{}".format(directory,
+	    prefix, idx, suffix, dataFormat)
       
       # write image to disk in the approriate directory
-      if self.move:
-        cv2.imwrite(filename, image)
-      else:
-        directory = os.path.dirname(path) + str(os.path.sep)
-        filename = directory + filename
-        cv2.imwrite(filename, image)
+      cv2.imwrite(filename, image)
       
       # check to see if we need to remove the old file      
       if self.remove and filename != path:
