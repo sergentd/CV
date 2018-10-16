@@ -16,10 +16,6 @@ class SimpleDatasetRenamer:
   def rename(self):
     # grab the reference to the list of images
     imagePaths = sorted(list(paths.list_images(self.directory)))
-	
-	# initialize the directory parameter
-    directory = "." if self.move else os.path.dirname(path)
-    directory += str(os.path.sep)
     
     # initialize the progressbar (feedback to user on the task progress)
     widgets = ["Renaming Dataset: ", progressbar.Percentage(), " ",
@@ -35,15 +31,23 @@ class SimpleDatasetRenamer:
       image = cv2.imread(path)
       original = path.split(os.path.sep)[-1]
       dataFormat = original.split(".")[1]
+	  
+	  # initialize the directory parameter
+      directory = "." if self.move else os.path.dirname(path)
       
-      # create a *unique* ID for this image relative to other processed images
-      # *at the same time*
+      # create a sequential *unique* ID for this image relative to
+      # images other processed *at the same time*
       idx = str(i).zfill(6)
       
-      # construct the filename based on prefix, idx, suffix and dataformat  
+      # see if we are using prefix and/or suffix
       prefix = str(self.prefix) if self.prefix is not None else ""
       suffix = str(self.suffix) if self.suffix is not None else ""
-      filename = "{}{}{}{}.{}".format(directory,
+	  
+	  # construct the filename based on this scheme :
+	  # {dir}{sep}[{prefix}]{idx}[{suffix}].{df}
+	  # exemple : ./img-000001-root.png
+	  #           /home/user/images/000002.jpg
+      filename = "{}{}{}{}{}.{}".format(directory, os.path.sep
 	    prefix, idx, suffix, dataFormat)
       
       # write image to disk in the approriate directory
