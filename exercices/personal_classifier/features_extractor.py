@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from imutils import paths
 import numpy as np
+import progressbar
 import argparse
 import mahotas
 import cv2
@@ -12,7 +13,7 @@ import os
 
 def describe(image):
   # extract means and standard deviations from each color channel
-  (means, stds) = cv2.MeanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2HSV))
+  (means, stds) = cv2.meanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2HSV))
   colorStats = np.concatenate([means, stds]).flatten()
   
   # extract haralick textures
@@ -34,8 +35,14 @@ imagePaths = sorted(paths.list_images(args["dataset"]))
 labels = []
 data = []
 
+
+# initialize the progressbar (feedback to user on the task progress)
+widgets = ["Renaming Dataset: ", progressbar.Percentage(), " ",
+  progressbar.Bar(), " ", progressbar.ETA()]
+pbar = progressbar.ProgressBar(maxval=len(imagePaths),
+  widgets=widgets).start()
 # loop over all images in the dataset
-for path in imagePaths:
+for (i,path) in enumerate(imagePaths):
   # init the label and the image to add to our data
   label = os.path.dirname(path).split(os.path.sep)[-1]
   image = cv2.imread(path)
@@ -45,10 +52,15 @@ for path in imagePaths:
   data.append(features)
   labels.append(label)
   
+  # update the progressbar
+  pbar.update(i)
+  
+  if i > 10: break
+  
 # split into training, validation and testing sets
-((trainX, testY), (trainY, testY)) = train_test_split(np.array(data),
+(trainX, testY, trainY, testY) = train_test_split(np.array(data),
   np.array(labels), test_size=0.25, random_state=42)
-((trainX, trainY),(valX, valY)) = train_test_split(trainX, trainY,
+(trainX, trainY, valX, valY) = train_test_split(trainX, trainY,
   test_size=0.1, random_state=84)
   
 # create the model
