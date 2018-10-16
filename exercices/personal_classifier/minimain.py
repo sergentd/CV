@@ -1,4 +1,4 @@
-from .features_extractor import FeaturesExtractor
+from pyimagesearch.descriptors.featuresextractor import FeaturesExtractor
 import cv2
 import argparse
 
