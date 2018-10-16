@@ -7,6 +7,7 @@ from imutils import paths
 import numpy as np
 import progressbar
 import argparse
+import pickle
 import cv2
 import os
 
@@ -14,6 +15,7 @@ import os
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required=True,
   help="path to input images")
+ap.add_argument("-m", "--model", help="path to serialized model")
 args = vars(ap.parse_args())
 
 # grab the set of image paths and initialize the list of labels and matrix of
@@ -24,7 +26,10 @@ labels = []
 data = []
 
 # initialize the extractor
-descriptor = FeaturesExtractor(["color", "haralick", "hog"])
+des_hh = FeaturesExtractor(["haralick", "hog"])
+des_ch = FeaturesExtractor(["color", "haralick"])
+des_cg = FeaturesExtractor(["color", "hog"])
+des_chg = FeaturesExtractor(["color", "haralick", "hog"])
 
 # initialize the progressbar (feedback to user on the task progress)
 widgets = ["Features extraction: ", progressbar.Percentage(), " ",
@@ -39,7 +44,7 @@ for (i,path) in enumerate(imagePaths):
   image = cv2.imread(path)
   
   # extract features from image and store it
-  features = descriptor.describe(image)
+  features = des_cg.describe(image)
   data.append(features)
   labels.append(label)
   
@@ -65,3 +70,10 @@ model.fit(trainX, trainY)
 print("[INFO] evaluating model...")
 predictions = model.predict(testX)
 print(classification_report(testY, predictions))
+
+# save the model to disk
+print("[INFO] serializing the model...")
+output = args["model"] if args["model"] is not None else "model.pickle"
+f = open(output, 'wb')
+f.write(pickle.dumps(model))
+f.close()
