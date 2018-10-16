@@ -21,15 +21,12 @@ class FeaturesExtractor:
       if "color" in self.features:
         (means, stds) = cv2.meanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2HSV))
         colorStats = np.concatenate([means, stds]).flatten()
-        print("[INFO] colors: {}".format(colorStats))
       
       # extract haralick textures if needed
       # total : 13 float values
       if "haralick" in self.features:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         haralick = mahotas.features.haralick(gray).mean(axis=0)
-        print("[INFO] haralick: {} \n len: {}".format(
-		  haralick, len(haralick)))
     
 	  # extract hog features if needed
       # total : 36 float values
@@ -39,7 +36,6 @@ class FeaturesExtractor:
         resized = cv2.resize(image, (256,256))
         hog = feature.hog(resized, pixels_per_cell=(128,128),
           cells_per_block=(2,2), transform_sqrt=True, block_norm="L1")
-        print("[INFO] hog: {} \n len: {}".format(hog, len(hog)))
       
       # return concatened features vector
       return np.hstack([colorStats, haralick, hog])
