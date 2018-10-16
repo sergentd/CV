@@ -53,6 +53,6 @@ def hist_oriented_grad(image):
   resized = cv2.resize(edged, (256,256))
       
   # return the HOG
-  return feature.hog(resized, pixels_per_cell=(16,16),
+  return feature.hog(resized, pixels_per_cell=(32,32),
     cells_per_block=(2,2), transform_sqrt=True, block_norm="L1")
 	  
