@@ -1,77 +1,32 @@
 # import necessary packages
-from sklearn.metrics import classification_report
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from imutils import paths
 import numpy as np
-import progressbar
-import argparse
 import mahotas
 import cv2
-import sklearn
-import os
 
-def describe(image):
-  # extract means and standard deviations from each color channel
-  (means, stds) = cv2.meanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2HSV))
-  colorStats = np.concatenate([means, stds]).flatten()
-  
-  # extract haralick textures
-  gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-  haralick = mahotas.features.haralick(gray).mean(axis=0)
-  
-  # return concatened features vector
-  return np.hstack([colorStats, haralick])
-
-# construct the argument parser and parse the arguments  
-ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required=True, help="path to input images")
-args = vars(ap.parse_args())
-
-# grab the set of image paths and initialize the list of labels and matrix of
-# features
-print("[INFO] extracting features...")
-imagePaths = sorted(paths.list_images(args["dataset"]))
-labels = []
-data = []
-
-
-# initialize the progressbar (feedback to user on the task progress)
-widgets = ["Features extraction: ", progressbar.Percentage(), " ",
-  progressbar.Bar(), " ", progressbar.ETA()]
-pbar = progressbar.ProgressBar(maxval=len(imagePaths),
-  widgets=widgets).start()
-  
-# loop over all images in the dataset
-for (i,path) in enumerate(imagePaths):
-  # init the label and the image to add to our data
-  label = os.path.basename(path).split("_")[0]
-  image = cv2.imread(path)
-  
-  # extract features from image and store it
-  features = describe(image)
-  data.append(features)
-  labels.append(label)
-  
-  # update the progressbar
-  pbar.update(i)
-
-# close the progressbar
-pbar.finish()
-  
-# split into training, validation and testing sets
-(trainX, testX, trainY, testY) = train_test_split(np.array(data),
-  np.array(labels), test_size=0.25, random_state=42)
-  
-# create the model
-print("[INFO] compiling model...")
-model = RandomForestClassifier(n_estimators=20, random_state=96)
-
-# train the model
-print("[INFO] training model...")
-model.fit(trainX, trainY)
-
-# evaluate the model
-print("[INFO] evaluating model...")
-predictions = model.predict(testX)
-print(classification_report(testY, predictions))
+class FeaturesExtractor:
+	def __init__(self, features=["color"])
+	  # initialize the set of features to be applied
+	  self.features = features
+	  
+	def describe(image):
+	  colorStats = Tuple()
+	  haralick = Tuple()
+	  hog = Tuple()
+	  # extract means and standard deviations from each color channel
+	  # if needed -- total : 6 float values
+	  if "color" in features:
+	    (means, stds) = cv2.meanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2HSV))
+	    colorStats = np.concatenate([means, stds]).flatten()
+	  
+	  # extract haralick textures if needed
+	  # total : 
+	  if "haralick" in features:
+	    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+	    haralick = mahotas.features.haralick(gray).mean(axis=0)
+	    print(haralick)
+	
+	  if "hog" in features:
+	    pass
+	  
+	  # return concatened features vector
+	  return np.hstack([colorStats, haralick, hog])
