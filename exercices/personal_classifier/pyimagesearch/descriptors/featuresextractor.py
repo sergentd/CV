@@ -31,6 +31,8 @@ class FeaturesExtractor:
         print("[INFO] haralick: {} \n len: {}".format(
 		  haralick, len(haralick)))
     
+	  # extract hog features if needed
+      # total : 36 float values
       if "hog" in self.features:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         edged = imutils.auto_canny(gray)

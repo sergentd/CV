@@ -1,6 +1,19 @@
+# import necessary packages
+from sklearn.metrics import classification_report
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from pyimagesearch.descriptors import FeaturesExtractor
+from imutils import paths
+import numpy as np
+import progressbar
+import argparse
+import cv2
+import os
+
 # construct the argument parser and parse the arguments  
 ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required=True, help="path to input images")
+ap.add_argument("-d", "--dataset", required=True,
+  help="path to input images")
 args = vars(ap.parse_args())
 
 # grab the set of image paths and initialize the list of labels and matrix of
@@ -10,6 +23,8 @@ imagePaths = sorted(paths.list_images(args["dataset"]))
 labels = []
 data = []
 
+# initialize the extractor
+descriptor = FeaturesExtractor(["color", "haralick", "hog"])
 
 # initialize the progressbar (feedback to user on the task progress)
 widgets = ["Features extraction: ", progressbar.Percentage(), " ",
@@ -24,7 +39,7 @@ for (i,path) in enumerate(imagePaths):
   image = cv2.imread(path)
   
   # extract features from image and store it
-  features = describe(image)
+  features = descriptor.describe(image)
   data.append(features)
   labels.append(label)
   
