@@ -26,10 +26,7 @@ labels = []
 data = []
 
 # initialize the extractor
-des_hh = FeaturesExtractor(["haralick", "hog"])
-des_ch = FeaturesExtractor(["color", "haralick"])
-des_cg = FeaturesExtractor(["color", "hog"])
-des_chg = FeaturesExtractor(["color", "haralick", "hog"])
+descriptor = FeaturesExtractor(["color", "haralick", "hog"])
 
 # initialize the progressbar (feedback to user on the task progress)
 widgets = ["Features extraction: ", progressbar.Percentage(), " ",
@@ -44,7 +41,7 @@ for (i,path) in enumerate(imagePaths):
   image = cv2.imread(path)
   
   # extract features from image and store it
-  features = des_cg.describe(image)
+  features = descriptor.describe(image)
   data.append(features)
   labels.append(label)
   
