@@ -2,7 +2,7 @@
 from sklearn.metrics import classification_report
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from pyimagesearch.descriptors import FeaturesExtractor
+from pyimagesearch.descriptors.featuresextractor import FeaturesExtractor
 from imutils import paths
 import numpy as np
 import progressbar
