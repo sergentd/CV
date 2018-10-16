@@ -58,7 +58,7 @@ for (i,path) in enumerate(imagePaths):
   if i > 10: break
   
 # split into training, validation and testing sets
-(trainX, testY, trainY, testY) = train_test_split(np.array(data),
+(trainX, testX, trainY, testY) = train_test_split(np.array(data),
   np.array(labels), test_size=0.25, random_state=42)
   
 # create the model
