@@ -72,4 +72,4 @@ model.fit(trainX, trainY)
 # evaluate the model
 print("[INFO] evaluating model...")
 predictions = model.predict(testX)
-print(classification_report(trainY, predictions))
+print(classification_report(testY, predictions))
