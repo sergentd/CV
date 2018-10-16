@@ -1,5 +1,5 @@
 # import necessary packages
-from skimage import features
+from skimage import feature
 import imutils
 import numpy as np
 import mahotas
@@ -34,7 +34,7 @@ class FeaturesExtractor:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         edged = imutils.auto_canny(gray)
         resized = cv2.resize(image, (200,200))
-        hog = features.hog(resized, pixels_per_cell=(10,10),
+        hog = feature.hog(resized, pixels_per_cell=(10,10),
           cells_per_block=(2,2), transform_sqrt=True, block_norm=L1)
         print("[INFO] hog: {}".format(hog))
       
