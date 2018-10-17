@@ -15,13 +15,22 @@ LST_DESC = {
   "hog":HOG
 }
 
-def descriptors(descs):
+def descriptors(descriptors):
   # initialize the set of descriptors instances
   instances = []
   
   # loop over all descriptors to instanciate them
-  for d in descs:
-    instances.append(LST_DESC[d]())
+  for name in descriptors:
+    instances.append(descriptor(name))
   
   # return the set of generated descriptors instances
   return instances
+  
+def descriptor(keyword):
+  # check to see if the keyword is known
+  if keyword not in LST_DESC:
+    raise ValueError("Value of 'keyword' must be in {}".format(LST_DESC.keys()))
+  
+  # return the descriptor instance
+  return LST_DESC[keyword]()
+  
