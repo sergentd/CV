@@ -14,7 +14,7 @@ ap.add_argument("-i", "--image", required=True, help="path to the input image")
 args = vars(ap.parse_args()) 
 
 # load the image and convert it to grayscale
-image = cv2.imread("next.png")
+image = cv2.imread(args["image"])
 orig = image.copy()
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
