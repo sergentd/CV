@@ -6,12 +6,12 @@ import mahotas
 import cv2
 
 LIST_DESCRIPTORS = {
-  "bgr":BGRStats,
-  "hsv":HSVStats,
-  "lab":LabStats,
-  "haralick":HaralickTextures,
-  "hu":HuMoment,
-  "hog":HOG
+  "bgr":"BGRStats",
+  "hsv":"HSVStats",
+  "lab":"LabStats",
+  "haralick":"HaralickTextures",
+  "hu":"HuMoment",
+  "hog":"HOG"
 }
 
 class FeaturesExtractor:
