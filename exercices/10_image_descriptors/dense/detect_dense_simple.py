@@ -24,7 +24,7 @@ def dense(image, step, radius):
 
 #  construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required=Trze, help="path to input image")
+ap.add_argument("-i", "--image", required=True, help="path to input image")
 ap.add_argument("-s", "--step", type=int, default=6, help="step (in pixels) of the dense detector")
 ap.add_argument("-r", "--size", type=int, default=1, help="default diameter of keypoint")
 args = vars(ap.parse_args())
