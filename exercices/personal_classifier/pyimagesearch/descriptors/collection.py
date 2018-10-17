@@ -7,7 +7,7 @@ from .hsvdescriptor import HSVDescriptor
 from .labdescriptor import LabDescriptor
 from .haralickdescriptor import HaralickDescriptor
 from .humomentdescriptor import HuMomentDescriptor
-from .hogDescriptor import HOGDescriptor
+from .hogdescriptor import HOGDescriptor
 
 LST_DESC = {
   "bgr":BGRDescriptor,
