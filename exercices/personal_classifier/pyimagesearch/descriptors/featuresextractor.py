@@ -29,9 +29,6 @@ class BGRStats:
     return np.concatenate([means, stds]).flatten()
 
 class HSVStats: 
-  def __init__(self):
-    pass
-	
   def describe(self, image):
     # compute and return the means and standard 
     # deviation for each channel
@@ -39,9 +36,6 @@ class HSVStats:
     return np.concatenate([means, stds]).flatten()
   
 class LabStats: 
-  def __init__(self):
-    pass
-	
   def describe(self, image):
     # compute and return the means and standard 
     # deviation for each channel
@@ -49,9 +43,6 @@ class LabStats:
     return np.concatenate([means, stds]).flatten()
       
 class HaralickTextures: 
-  def __init__(self):
-    pass
-	
   def describe(self, image):
     # convert the image to gray if the image is BGR
     if len(image.shape) == 3:
@@ -61,9 +52,6 @@ class HaralickTextures:
     return mahotas.features.haralick(image).mean(axis=0)
 
 class HuMoment: 
-  def __init__(self):
-    pass
-	
   def describe(self, image):
     # compute the Hu Moments feature vector for the entire image
     return cv2.HuMoments(cv2.moments(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY))).flatten()
@@ -97,10 +85,10 @@ class HOG:
       cells_per_block=cel_p_blk, transform_sqrt=True, block_norm="L1")
 
 LIST_DESCRIPTORS = dict(
-  BGRStats=BGRStats,
-  HSVStats=HSVStats,
-  LabStats=LabStats,
-  HaralickTextures=HaralickTextures,
-  HuMoment=HuMoment,
-  HOG=HOG
+  "bgr"=BGRStats,
+  "hsv"=HSVStats,
+  "lab"=LabStats,
+  "haralick"=HaralickTextures,
+  "hu"=HuMoment,
+  "hog"=HOG
 )  
