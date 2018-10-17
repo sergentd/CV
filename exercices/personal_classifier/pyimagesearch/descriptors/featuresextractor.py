@@ -28,18 +28,19 @@ class FeaturesExtractor:
       # return the total features as an unique vector      
       return np.hstack(features)
       
-    def add(self, descriptor):
+    def add(self, descriptor, parameters=dict()):
       # check to see if the descriptor is a keyword and
       # add the descriptor to the list of descriptors
       # assuming it can perform ~.describe(image)
+      # -- possibility to parametrize the instance
       if isinstance(descriptor, str):
-        self.add_by_keyword(descriptor)
+        self.add_by_keyword(descriptor, parameters)
       else:
         self.descriptors.append(descriptor)
       
     def add_by_keyword(self, keyword, parameters=dict()):
       # instanciate the descriptor and add it to the set
-      # --possibility to parametrize the instanciation
+      # --possibility to parametrize the instance
       descriptor = clt.descriptor(keyword, parameters)
       self.add(descriptor)
  
