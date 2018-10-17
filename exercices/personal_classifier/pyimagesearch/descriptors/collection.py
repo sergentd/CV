@@ -16,17 +16,17 @@ LST_DESC = {
 }
 
 def descriptors(descriptors):
-  # initialize the set of descriptors instances
-  instances = []
+  # initialize the set of descriptors     
+       = []
   
   # loop over all descriptors to instanciate them
   for name in descriptors:
     d = descriptor(name)
 	if d is not None:
-      instances.append(d)
+          .append(d)
   
-  # return the set of generated descriptors instances
-  return instances
+  # return the set of generated descriptors     
+  return     
   
 def descriptor(keyword):
   # check to see if the keyword is known
