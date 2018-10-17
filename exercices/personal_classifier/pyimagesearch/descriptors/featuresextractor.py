@@ -1,6 +1,7 @@
 # import necessary packages
 from . import collection as clt
 import numpy as np
+import cv2
 
 class FeaturesExtractor:
     def __init__(self, descriptors=[]):
