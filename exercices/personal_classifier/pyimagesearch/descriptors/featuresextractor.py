@@ -38,8 +38,8 @@ class FeaturesExtractor:
         self.descriptors.append(descriptor)
       
     def add_by_keyword(self, keyword, parameters=dict()):
-      # instantiate the descriptor and add it to the set
-      # possibility to parametrize the instantiation
+      # instanciate the descriptor and add it to the set
+      # --possibility to parametrize the instanciation
       descriptor = clt.descriptor(keyword, parameters)
       self.add(descriptor)
  
