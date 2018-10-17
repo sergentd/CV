@@ -4,7 +4,7 @@ import imutils
 import numpy as np
 import cv2
 
-class HOG:
+class HOGDescriptor:
   def __init__(self, cvt=True, canny=True,
     dim=(256,256), pxl_p_cel=(32,32), cel_p_blk=(2,2)):
     # initialize the HOG parameters

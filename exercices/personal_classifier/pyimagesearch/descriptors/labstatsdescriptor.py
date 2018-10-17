@@ -2,9 +2,9 @@
 import numpy as np
 import cv2
 
-class BGRStats:
+class LabStatsDescriptor: 
   def describe(self, image):
     # compute and return the means and standard 
-    # deviation for each channel in RGB color space
-    (means, stds) = cv2.meanStdDev(image)
+    # deviation for each channel
+    (means, stds) = cv2.meanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2LAB))
     return np.concatenate([means, stds]).flatten()

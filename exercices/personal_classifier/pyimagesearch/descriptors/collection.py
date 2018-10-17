@@ -1,18 +1,24 @@
 # import necessary packages
-from .bgrstats import BGRStats
-from .hsvstats import HSVStats
-from .labstats import LabStats
-from .haralicktextures import HaralickTextures
-from .humoment import HuMoment
-from .hog import HOG
+from .bgrstatsdescriptor import BGRStatsDescriptor
+from .hsvstatsdescriptor import HSVStatsDescriptor
+from .labstatsdescriptor import LABStatsDescriptor
+from .bgrdescriptor import BGRDescriptor
+from .hsvdescriptor import HSVDescriptor
+from .labdescriptor import LabDescriptor
+from .haralickdescriptor import HaralickDescriptor
+from .humomentdescriptor import HuMomentDescriptor
+from .hogDescriptor import HOGDescriptor
 
 LST_DESC = {
-  "bgr":BGRStats,
-  "hsv":HSVStats,
-  "lab":LabStats,
-  "haralick":HaralickTextures,
-  "hu":HuMoment,
-  "hog":HOG
+  "bgr":BGRDescriptor,
+  "hsv":HSVDescriptor,
+  "lab":LabDescriptor,
+  "lab_s":LabStatsDescriptor,
+  "hsv_s":HSVStatsDescriptor,
+  "bgr_s":BGRStatsDescriptor,
+  "haralick":HaralickDescriptor,
+  "hu":HuMomentDescriptor,
+  "hog":HOGDescriptor
 }
 
 def descriptors(descriptors):

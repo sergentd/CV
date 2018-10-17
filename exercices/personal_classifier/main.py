@@ -26,7 +26,7 @@ labels = []
 data = []
 
 # initialize the extractor
-featex = FeaturesExtractor(["bgr", "hsv", "lab"])
+featex = FeaturesExtractor(["bgr_s", "hsv_s", "lab_s"])
 featex.add_by_keyword("hog", dict(cvt=True, canny=True, pxl_p_cel=(128,128)))
 
 # initialize the progressbar (feedback to user on the task progress)

@@ -2,7 +2,7 @@
 import numpy as np
 import cv2
 
-class HSVStats: 
+class HSVStatsDescriptor: 
   def describe(self, image):
     # compute and return the means and standard 
     # deviation for each channel

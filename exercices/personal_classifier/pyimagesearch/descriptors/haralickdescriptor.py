@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import mahotas
  
-class HaralickTextures: 
+class HaralickDescriptor: 
   def describe(self, image):
     # convert the image to gray if the image is BGR
     if len(image.shape) == 3:

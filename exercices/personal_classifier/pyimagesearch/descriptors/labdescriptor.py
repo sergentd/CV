@@ -3,15 +3,15 @@ import numpy as np
 import cv2
 import imutils
 
-class HSVDescriptor:
+class LabDescriptor:
     def __init__(self, bins=[8,8,8]):
         # store the number of bins for the histogram
         self.bins = bins
 
     def describe(self, image):
-        # convert the image to the HSV color space and initialize
+        # convert the image to the L*a*b color space and initialize
         # the features used to quantify the image
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         features = []
 
         # grab the dimensions and compute the center of the image
