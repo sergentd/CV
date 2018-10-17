@@ -29,5 +29,5 @@ class HOG:
     resized = cv2.resize(image, self.dim)
       
     # return the HOG
-    return feature.hog(resized, pixels_per_cell=pxl_p_cel,
-      cells_per_block=cel_p_blk, transform_sqrt=True, block_norm="L1")
+    return feature.hog(resized, pixels_per_cell=self.pxl_p_cel,
+      cells_per_block=self.cel_p_blk, transform_sqrt=True, block_norm="L1")
