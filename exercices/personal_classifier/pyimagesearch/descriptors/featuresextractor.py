@@ -15,7 +15,7 @@ class FeaturesExtractor:
       features = []
       
       # loop over all the descriptors
-      for d in descriptors:
+      for d in self.descriptors:
         feature = d.describe(image)
         features.append(feature)
         
