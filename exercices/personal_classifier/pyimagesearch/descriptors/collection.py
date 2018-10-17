@@ -8,6 +8,7 @@ from .labdescriptor import LabDescriptor
 from .haralickdescriptor import HaralickDescriptor
 from .humomentdescriptor import HuMomentDescriptor
 from .hogdescriptor import HOGDescriptor
+import warnings
 
 LST_DESC = {
   "bgr":BGRDescriptor,
@@ -37,8 +38,9 @@ def descriptors(descriptors):
 def descriptor(keyword, parameters=dict()):
   # check to see if the keyword is known
   if keyword not in LST_DESC:
-    print("warning: descriptor {} not loaded (unknown keyword) \n"
-    "Value of 'keyword' must be in {}".format(keyword, LST_DESC.keys()))
+    warnings.warn("descriptor {} not loaded (unknown keyword) \n"
+      "Value of 'keyword' must be in {}".format(
+      keyword, LST_DESC.keys()), UserWarning, stacklevel=2)
     return None
   
   # return the descriptor instance

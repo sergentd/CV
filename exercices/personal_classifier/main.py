@@ -26,7 +26,7 @@ labels = []
 data = []
 
 # initialize the extractor
-featex = FeaturesExtractor(["bgr", "hsv", "lab"])
+featex = FeaturesExtractor(["bg", "hsv", "lab"])
 featex.add("haralick")
 
 # initialize the progressbar (feedback to user on the task progress)
