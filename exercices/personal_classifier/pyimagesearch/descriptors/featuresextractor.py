@@ -15,7 +15,7 @@ class FeaturesExtractor:
       # loop over all the descriptors
       for d in self.descriptors:
         feature = d.describe(image)
-		print(feature, " ", cv2.normalize(feature))
+        print(feature, " ", cv2.normalize(feature))
         features.append(feature)
       
       # return the total features as an unique vector      
@@ -28,7 +28,7 @@ class FeaturesExtractor:
       
     def add_by_keyword(self, keyword, parameters=dict()):
       # instantiate the descriptor and add it to the set
-	  # possibility to parametrize the instantiation
+      # possibility to parametrize the instantiation
       descriptor = clt.descriptor(keyword, parameters)
       self.add(descriptor)
  
