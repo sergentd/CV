@@ -28,7 +28,7 @@ def descriptors(descriptors):
   # return the set of generated descriptors instances
   return instances
   
-def descriptor(keyword):
+def descriptor(keyword, parameters=()):
   # check to see if the keyword is known
   if keyword not in LST_DESC:
     print("warning: descriptor {} not loaded (unknown keyword) \n"
@@ -36,5 +36,5 @@ def descriptor(keyword):
     return None
   
   # return the descriptor instance
-  return LST_DESC[keyword]()
+  return LST_DESC[keyword]parameters
   

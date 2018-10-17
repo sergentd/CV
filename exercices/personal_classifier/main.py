@@ -26,7 +26,7 @@ labels = []
 data = []
 
 # initialize the extractor
-descriptor = FeaturesExtractor(["bgrs", "hsv"])
+descriptor = FeaturesExtractor(["bgr", "hsv"])
 
 # initialize the progressbar (feedback to user on the task progress)
 widgets = ["Features extraction: ", progressbar.Percentage(), " ",
