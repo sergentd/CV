@@ -37,7 +37,7 @@ def descriptors(descriptors):
   
 def descriptor(keyword, parameters=dict()):
   # check to see if the keyword is known
-  if keyword not in LST_DESC:
+  if str(keyword).lower() not in LST_DESC:
     warnings.warn("descriptor {} not loaded (unknown keyword) \n"
       "Value of 'keyword' must be in {}".format(
       keyword, sorted(LST_DESC.keys())), UserWarning, stacklevel=4)
