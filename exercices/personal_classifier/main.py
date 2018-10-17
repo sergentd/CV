@@ -71,11 +71,14 @@ print("[INFO] evaluating model...")
 predictions = model.predict(testX)
 print(classification_report(testY, predictions))
 
-# save the model to disk
+# grab the output filenames
 print("[INFO] serializing the model and datas...")
 file_m = args["model"] if args["model"] is not None else "model.pickle"
-file_f = args["features"] if args["features"] is not None else "features.pickle"
+file_f = args["features"] if args["features"] is not None else "{}.pickle".format(
+  args["dataset"][-1])
 
+
+# save the model and the features to disk
 for (file, object) in ((file_m, model),(file_f, features)):
   f = open(file, 'wb')
   f.write(pickle.dumps(object))
