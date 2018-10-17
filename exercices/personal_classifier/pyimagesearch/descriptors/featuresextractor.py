@@ -15,6 +15,7 @@ class FeaturesExtractor:
       # loop over all the descriptors
       for d in self.descriptors:
         feature = d.describe(image)
+		print(feature, " ", cv2.normalize(feature))
         features.append(feature)
       
       # return the total features as an unique vector      
