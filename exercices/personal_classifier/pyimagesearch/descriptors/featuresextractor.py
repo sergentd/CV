@@ -20,15 +20,15 @@ class FeaturesExtractor:
       self.descriptors = [LIST_DESCRIPTORS[d]() for d in descriptors]
       
     def describe(self, image):
-	  # initialize the features
-	  features = []
-	  
-	  # loop over all the descriptors
-	  for d in descriptors:
-	    feature = d.describe(image)
-		features.append(feature)
-		
-	  return np.hstack(features)
+      # initialize the features
+      features = []
+      
+      # loop over all the descriptors
+      for d in descriptors:
+        feature = d.describe(image)
+        features.append(feature)
+        
+      return np.hstack(features)
 
 class BGRStats: 
   def describe(image):
@@ -50,13 +50,13 @@ class LabStats:
   # deviation for each channel
   (means, stds) = cv2.meanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2LAB))
   return np.concatenate([means, stds]).flatten()
-	  
+      
 class HaralickTextures: 
   def describe(image):
   # convert the image to gray if the image is BGR
   if len(image.shape) == 3:
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-	  
+      
   # return the haralick texture encoding
   return mahotas.features.haralick(image).mean(axis=0)
 
@@ -70,17 +70,17 @@ class HOG:
   dim=(256,256), pxl_p_cel=(32,32), cel_p_blk=(2,2)):
     # initialize the HOG parameters
     self.cvt = cvt
-	self.canny = canny
-	self.dim = dim
-	self.pxl_p_cel = pxl_p_cel
-	self.cel_p_blk = cel_p_blk
-	
-  def describe(image):	
+    self.canny = canny
+    self.dim = dim
+    self.pxl_p_cel = pxl_p_cel
+    self.cel_p_blk = cel_p_blk
+    
+  def describe(image):    
     # convert the image to gray if the image is BGR
     # and apply canny edge detection
     if len(image.shape) == 3 and self.cvt:
       image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-	 
+     
     # edge detection using automatized canny parameters
     if self.canny:
       image = imutils.auto_canny(image)
@@ -92,4 +92,4 @@ class HOG:
     # return the HOG
     return feature.hog(resized, pixels_per_cell=pxl_p_cel,
       cells_per_block=cel_p_blk, transform_sqrt=True, block_norm="L1")
-	  
+      
