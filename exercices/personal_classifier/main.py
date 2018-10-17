@@ -75,8 +75,7 @@ print(classification_report(testY, predictions))
 print("[INFO] serializing the model and datas...")
 file_m = args["model"] if args["model"] is not None else "model.pickle"
 file_f = args["features"] if args["features"] is not None else "{}.pickle".format(
-  args["dataset"][-1])
-
+  os.path.basedir(args["dataset"])[-1])
 
 # save the model and the features to disk
 for (file, object) in ((file_m, model),(file_f, features)):
