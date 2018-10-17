@@ -13,9 +13,9 @@ import os
 
 # construct the argument parser and parse the arguments  
 ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required=True,
-  help="path to input images")
-ap.add_argument("-m", "--model", help="path to serialized model")
+ap.add_argument("-d", "--dataset", required=True, help="path to input images")
+ap.add_argument("-m", "--model", help="path to output serialized model")
+ap.add_argument("-f", "--features", help="path to output serialized features")
 args = vars(ap.parse_args())
 
 # grab the set of image paths and initialize the list of labels and matrix of
