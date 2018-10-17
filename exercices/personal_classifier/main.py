@@ -26,7 +26,7 @@ labels = []
 data = []
 
 # initialize the extractor
-featex = FeaturesExtractor(["bgr_s", "hsv_s", "lab_s", "la"])
+featex = FeaturesExtractor(["bgr_s"])
 
 # initialize the progressbar (feedback to user on the task progress)
 widgets = ["Features extraction: ", progressbar.Percentage(), " ",
@@ -76,6 +76,8 @@ print("[INFO] serializing the model and datas...")
 file_m = args["model"] if args["model"] is not None else "model.pickle"
 file_f = args["features"] if args["features"] is not None else "{}.pickle".format(
   os.path.dirname(args["dataset"]))
+
+print(os.path.dirname(args["dataset"]))
 
 # save the model and the features to disk
 for (file, object) in ((file_m, model),(file_f, features)):
