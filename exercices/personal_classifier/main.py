@@ -20,21 +20,22 @@ args = vars(ap.parse_args())
 
 # grab the set of image paths and initialize the list of labels and matrix of
 # features
-print("[INFO] extracting features...")
+print("[INFO] loading features extractor...")
 imagePaths = sorted(paths.list_images(args["dataset"]))
 labels = []
 data = []
 
 # initialize the extractor
-descriptor = FeaturesExtractor(["bgr", "hsv", "lab"])
-descriptor.add_by_keyword("hog", dict(cvt=True, canny=True))
+featex = FeaturesExtractor(["bgr", "hsv", "lab"])
+featex.add_by_keyword("hog", dict(cvt=True, canny=True))
 
 # initialize the progressbar (feedback to user on the task progress)
 widgets = ["Features extraction: ", progressbar.Percentage(), " ",
   progressbar.Bar(), " ", progressbar.ETA()]
 pbar = progressbar.ProgressBar(maxval=len(imagePaths),
   widgets=widgets).start()
-  
+
+print("[INFO] features extraction: {}".format(featex.descriptors))
 # loop over all images in the dataset
 for (i,path) in enumerate(imagePaths):
   # init the label and the image to add to our data
@@ -42,7 +43,7 @@ for (i,path) in enumerate(imagePaths):
   image = cv2.imread(path)
   
   # extract features from image and store it
-  features = descriptor.describe(image)
+  features = featex.describe(image)
   data.append(features)
   labels.append(label)
   
