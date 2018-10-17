@@ -85,8 +85,8 @@ class HOG:
       cells_per_block=cel_p_blk, transform_sqrt=True, block_norm="L1")
 
 LIST_DESCRIPTORS = dict(
-  "bgr"=BGRStats,
-  "hsv"=HSVStats,
+  "bgrs"=BGRStats,
+  "hsvs"=HSVStats,
   "lab"=LabStats,
   "haralick"=HaralickTextures,
   "hu"=HuMoment,
