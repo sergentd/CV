@@ -22,28 +22,28 @@ class FeaturesExtractor:
       return np.hstack(features)
 
 class BGRStats: 
-  def describe(image):
+  def describe(self, image):
     # compute and return the means and standard 
     # deviation for each channel in RGB color space
     (means, stds) = cv2.meanStdDev(image)
     return np.concatenate([means, stds]).flatten()
 
 class HSVStats: 
-  def describe(image):
+  def describe(self, image):
     # compute and return the means and standard 
     # deviation for each channel
     (means, stds) = cv2.meanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2HSV))
     return np.concatenate([means, stds]).flatten()
   
 class LabStats: 
-  def describe(image):
+  def describe(self, image):
     # compute and return the means and standard 
     # deviation for each channel
     (means, stds) = cv2.meanStdDev(cv2.cvtColor(image, cv2.COLOR_BGR2LAB))
     return np.concatenate([means, stds]).flatten()
       
 class HaralickTextures: 
-  def describe(image):
+  def describe(self, image):
     # convert the image to gray if the image is BGR
     if len(image.shape) == 3:
       image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -52,12 +52,12 @@ class HaralickTextures:
     return mahotas.features.haralick(image).mean(axis=0)
 
 class HuMoment: 
-  def describe(image):
+  def describe(self, image):
     # compute the Hu Moments feature vector for the entire image
     return cv2.HuMoments(cv2.moments(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY))).flatten()
   
 class HOG:
-  def __init__(cvt=True, canny=True,
+  def __init__(self, cvt=True, canny=True,
     dim=(256,256), pxl_p_cel=(32,32), cel_p_blk=(2,2)):
     # initialize the HOG parameters
     self.cvt = cvt
@@ -66,7 +66,7 @@ class HOG:
     self.pxl_p_cel = pxl_p_cel
     self.cel_p_blk = cel_p_blk
     
-  def describe(image):    
+  def describe(self, image):    
     # convert the image to gray if the image is BGR
     # and apply canny edge detection
     if len(image.shape) == 3 and self.cvt:
