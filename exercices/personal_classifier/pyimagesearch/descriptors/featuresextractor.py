@@ -1,5 +1,5 @@
 # import necessary packages
-import .collection as clt
+from . import collection as clt
 import numpy as np
 
 class FeaturesExtractor:
