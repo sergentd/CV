@@ -8,7 +8,7 @@ import cv2
 class FeaturesExtractor:
     def __init__(self, descriptors=[]):
       # initialize the set of descriptors to be applied
-      self.descriptors = [LIST_DESCRIPTORS[d]() for d in descriptors]
+      self.descriptors = [LST_DESC[d]() for d in descriptors]
       
     def describe(self, image):
       # initialize the features
@@ -84,11 +84,19 @@ class HOG:
     return feature.hog(resized, pixels_per_cell=pxl_p_cel,
       cells_per_block=cel_p_blk, transform_sqrt=True, block_norm="L1")
 
-LIST_DESCRIPTORS = dict(
-  "bgrs"=BGRStats,
-  "hsvs"=HSVStats,
+LST_DESC = {
+  "bgr"=BGRStats,
+  "hsv"=HSVStats,
   "lab"=LabStats,
   "haralick"=HaralickTextures,
   "hu"=HuMoment,
   "hog"=HOG
+}
+LIST_DESCRIPTORS = dict(
+  BGRStats=BGRStats,
+  HSVStats=HSVStats,
+  LabStats=LabStats,
+  HaralickTextures=HaralickTextures,
+  HuMoment=HuMoment,
+  HOG=HOG
 )  
