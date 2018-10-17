@@ -21,7 +21,9 @@ def descriptors(descriptors):
   
   # loop over all descriptors to instanciate them
   for name in descriptors:
-    instances.append(descriptor(name))
+    d = descriptor(name)
+	if d is not None:
+      instances.append(d)
   
   # return the set of generated descriptors instances
   return instances
@@ -31,7 +33,7 @@ def descriptor(keyword):
   if keyword not in LST_DESC:
     print("warning: descriptor {} not loaded (unknown keyword) \n"
     "Value of 'keyword' must be in {}".format(keyword, LST_DESC.keys()))
-    return
+    return None
   
   # return the descriptor instance
   return LST_DESC[keyword]()
