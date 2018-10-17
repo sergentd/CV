@@ -15,7 +15,7 @@ LST_DESC = {
   "hog":HOG
 }
 
-def descriptors(descs)
+def descriptors(descs):
   # initialize the set of descriptors instances
   instances = []
   
