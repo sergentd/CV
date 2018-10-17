@@ -77,7 +77,7 @@ file_m = args["model"] if args["model"] is not None else "model.pickle"
 file_f = args["features"] if args["features"] is not None else "{}.pickle".format(
   os.path.dirname(args["dataset"]))
 
-print(os.path.dirname(args["dataset"]))
+print(file_f)
 
 # save the model and the features to disk
 for (file, object) in ((file_m, model),(file_f, features)):
