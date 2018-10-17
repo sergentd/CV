@@ -1,8 +1,8 @@
 # import necessary packages
+from pyimagesearch.descriptors.featuresextractor import FeaturesExtractor
 from sklearn.metrics import classification_report
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from pyimagesearch.descriptors.featuresextractor import FeaturesExtractor
 from imutils import paths
 import numpy as np
 import progressbar
@@ -27,6 +27,7 @@ data = []
 
 # initialize the extractor
 descriptor = FeaturesExtractor(["bgr", "hsv", "lab"])
+descriptor.add_by_keyword("hog", dict(cvt=True, canny=True))
 
 # initialize the progressbar (feedback to user on the task progress)
 widgets = ["Features extraction: ", progressbar.Percentage(), " ",
