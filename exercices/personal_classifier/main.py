@@ -42,6 +42,7 @@ for (i,path) in enumerate(imagePaths):
   
   # extract features from image and store it
   features = featex.describe(image)
+  print(len(features))
   data.append(features)
   labels.append(label)
   
@@ -54,7 +55,7 @@ for (i,path) in enumerate(imagePaths):
 pbar.finish()
 print("[FEATURES] {} images featured with {} descriptor(s). \n"
   "[FEATURES] total features vector length per image: {}".format(
-  len(imagePaths), len(featex.descriptors), len(data[0][0])))
+  len(imagePaths), len(featex.descriptors), len(data[0])))
   
 # split into training, validation and testing sets
 (trainX, testX, trainY, testY) = train_test_split(np.array(data),
