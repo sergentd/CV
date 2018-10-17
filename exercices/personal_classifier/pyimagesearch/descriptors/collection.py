@@ -30,8 +30,8 @@ def descriptor(keyword):
   # check to see if the keyword is known
   if keyword not in LST_DESC:
     print("warning: descriptor {} not loaded (unknown keyword) \n"
-	"Value of 'keyword' must be in {}".format(keyword, LST_DESC.keys()))
-	return []
+    "Value of 'keyword' must be in {}".format(keyword, LST_DESC.keys()))
+    return []
   
   # return the descriptor instance
   return LST_DESC[keyword]()
