@@ -85,12 +85,12 @@ class HOG:
       cells_per_block=cel_p_blk, transform_sqrt=True, block_norm="L1")
 
 LST_DESC = {
-  "bgr"=BGRStats,
-  "hsv"=HSVStats,
-  "lab"=LabStats,
-  "haralick"=HaralickTextures,
-  "hu"=HuMoment,
-  "hog"=HOG
+  "bgr":BGRStats,
+  "hsv":HSVStats,
+  "lab":LabStats,
+  "haralick":HaralickTextures,
+  "hu":HuMoment,
+  "hog":HOG
 }
 LIST_DESCRIPTORS = dict(
   BGRStats=BGRStats,
