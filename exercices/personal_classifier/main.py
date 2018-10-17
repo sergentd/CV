@@ -35,7 +35,6 @@ widgets = ["Features extraction: ", progressbar.Percentage(), " ",
 pbar = progressbar.ProgressBar(maxval=len(imagePaths),
   widgets=widgets).start()
 
-print("[INFO] features extraction: {}".format(featex.descriptors))
 # loop over all images in the dataset
 for (i,path) in enumerate(imagePaths):
   # init the label and the image to add to our data
