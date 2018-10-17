@@ -75,7 +75,7 @@ print(classification_report(testY, predictions))
 print("[INFO] serializing the model and datas...")
 file_m = args["model"] if args["model"] is not None else "model.pickle"
 file_f = args["features"] if args["features"] is not None else "{}.pickle".format(
-  os.path.dirname(args["dataset"]))
+  os.path.dirname(args["dataset"])[-1])
 
 print(file_f)
 
