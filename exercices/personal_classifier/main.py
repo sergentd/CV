@@ -26,8 +26,7 @@ labels = []
 data = []
 
 # initialize the extractor
-featex = FeaturesExtractor(["bg", "hsv", "lab"])
-featex.add("haralick")
+featex = FeaturesExtractor(["bgr", "hsv", "lab"])
 
 # initialize the progressbar (feedback to user on the task progress)
 widgets = ["Features extraction: ", progressbar.Percentage(), " ",
@@ -48,11 +47,14 @@ for (i,path) in enumerate(imagePaths):
   
   # update the progressbar
   pbar.update(i)
+  
+  if i>10: break
 
 # close the progressbar
 pbar.finish()
-print("[INFO] {} images featured with {} descriptor(s)".format(
-  len(imagePaths, len(featex.descriptors))))
+print("[INFO] {} images featured with {} descriptor(s). \n"
+  "[INFO] total features vector length per image: {}".format(
+  len(imagePaths), len(featex.descriptors), len(data[0]))))
   
 # split into training, validation and testing sets
 (trainX, testX, trainY, testY) = train_test_split(np.array(data),
