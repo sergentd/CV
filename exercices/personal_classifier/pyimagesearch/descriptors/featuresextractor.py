@@ -5,15 +5,6 @@ import numpy as np
 import mahotas
 import cv2
 
-LIST_DESCRIPTORS = {
-  "bgr":"BGRStats",
-  "hsv":"HSVStats",
-  "lab":"LabStats",
-  "haralick":"HaralickTextures",
-  "hu":"HuMoment",
-  "hog":"HOG"
-}
-
 class FeaturesExtractor:
     def __init__(self, descriptors=[]):
       # initialize the set of descriptors to be applied
@@ -92,4 +83,12 @@ class HOG:
     # return the HOG
     return feature.hog(resized, pixels_per_cell=pxl_p_cel,
       cells_per_block=cel_p_blk, transform_sqrt=True, block_norm="L1")
-      
+
+LIST_DESCRIPTORS = dict(
+  BGRStats=BGRStats,
+  HSVStats=HSVStats,
+  LabStats=LabStats,
+  HaralickTextures=HaralickTextures,
+  HuMoment=HuMoment,
+  HOG=HOG
+}	  
