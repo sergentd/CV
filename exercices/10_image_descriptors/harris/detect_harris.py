@@ -6,6 +6,7 @@ from __future__ import print_function
 import numpy as np
 import cv2
 import imutils
+import argparse
 
 def harris(gray, blockSize=2, apetureSize=3, k=0.1, T=0.02):
 	# convert our input image to a floating point data type and then
@@ -22,8 +23,13 @@ def harris(gray, blockSize=2, apetureSize=3, k=0.1, T=0.02):
 	# return the Harris keypoints
 	return kps
 
+# construct the argument parser and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True, help="path to input image")
+args = vars(ap.parse_args())
+
 # load the image and convert it to grayscale
-image = cv2.imread("next.png")
+image = cv2.imread(args["image"])
 orig = image.copy()
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
