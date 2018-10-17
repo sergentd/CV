@@ -91,4 +91,4 @@ LIST_DESCRIPTORS = dict(
   HaralickTextures=HaralickTextures,
   HuMoment=HuMoment,
   HOG=HOG
-}	  
+)  
