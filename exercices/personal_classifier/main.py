@@ -42,14 +42,11 @@ for (i,path) in enumerate(imagePaths):
   
   # extract features from image and store it
   features = featex.describe(image)
-  print(len(features))
   data.append(features)
   labels.append(label)
   
   # update the progressbar
   pbar.update(i)
-  
-  if i>10: break
 
 # close the progressbar
 pbar.finish()
@@ -75,8 +72,11 @@ predictions = model.predict(testX)
 print(classification_report(testY, predictions))
 
 # save the model to disk
-print("[INFO] serializing the model...")
-output = args["model"] if args["model"] is not None else "model.pickle"
-f = open(output, 'wb')
-f.write(pickle.dumps(model))
-f.close()
+print("[INFO] serializing the model and datas...")
+file_m = args["model"] if args["model"] is not None else "model.pickle"
+file_f = args["features"] if args["features"] is not None else "features.pickle"
+
+for (file, object) in ((file_m, model),(file_f, features)):
+  f = open(file, 'wb')
+  f.write(pickle.dumps(object))
+  f.close()
