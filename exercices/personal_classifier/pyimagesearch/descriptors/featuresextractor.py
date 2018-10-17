@@ -22,9 +22,6 @@ class FeaturesExtractor:
       return np.hstack(features)
 
 class BGRStats:
-  def __init__(self):
-    pass
-	
   def describe(self, image):
     # compute and return the means and standard 
     # deviation for each channel in RGB color space
