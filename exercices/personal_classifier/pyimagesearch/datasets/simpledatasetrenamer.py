@@ -2,6 +2,7 @@
 from imutils import paths
 import progressbar
 import string
+import random
 import cv2
 import os
 
