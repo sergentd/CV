@@ -30,7 +30,7 @@ class FaceDatasetCreator:
     return ''.join(random.choice(chars) for _ in range(size))
     
   def write(self, frame, output):
-    p = os.path.sep.join(output, "{}.png".format(self.id_generator())])
+    p = os.path.sep.join([output, "{}.png".format(self.id_generator())])
     cv2.imwrite(p, orig)
     
   def resize(self, frame):
