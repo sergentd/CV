@@ -9,7 +9,7 @@ import os
 class FaceDatasetCreator:
   def __init__(self, cascade, width=400, scale=1.1,minNei=5, minSize=(32,32)):
     # initialize the image size to process and detector parameters
-    self.detector = cv2.CascadeClassifier(args["cascade"])
+    self.detector = cv2.CascadeClassifier(cascade)
     self.width = width
     self.minNei = minNei
     self.minSize = minSize
