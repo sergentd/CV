@@ -26,7 +26,7 @@ class FaceDatasetCreator:
     # draw the faces box on the image and return it
     return self.draw(frame, rects)
    
-  def id_generator(size=6, chars=string.ascii_lowercase + string.digits):
+  def id_generator(self, size=6, chars=string.ascii_lowercase + string.digits):
     # generate a random id with lowercase ascii chars and digits
     return ''.join(random.choice(chars) for _ in range(size))
     
