@@ -25,7 +25,7 @@ class SimpleDatasetRenamer:
     self.index = index
     
 	# set the array of accepted false values
-    self.FALSE_VALUES = ["false", "no", "f", "n", "0", "-1"]
+	self.FALSE_VALUES = ["false", "no", "f", "n", "0", "-1"]
 	
   def rename(self):
     # grab the reference to the list of images
@@ -89,7 +89,7 @@ class SimpleDatasetRenamer:
       filename = os.path.sep.join([directory, "{}{}{}.{}".format(prefix, idx, suffix, dataFormat)])
           
       # allow for a unique filename only
-      if not os.path.isFile(filename):
+      if not os.path.isfile(filename):
         break
         
       # if we keep the idx and the filename wasn't free at first try,
