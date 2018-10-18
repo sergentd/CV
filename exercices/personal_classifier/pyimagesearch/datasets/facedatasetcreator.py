@@ -1,7 +1,8 @@
 # import necessary packages
 from imutils.video import VideoStream
 import imutils
-import time
+import string
+import random
 import cv2
 import os
 
