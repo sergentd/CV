@@ -19,7 +19,7 @@ class FaceDatasetCreator:
     frame = self.resize(frame)
   
     # detect faces in the grayscale frame
-    rects = detector.detectMultiScale(
+    rects = self.detector.detectMultiScale(
         cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), scaleFactor=self.scale, 
         minNeighbors=self.minNei, minSize=self.minSize)
     
@@ -27,10 +27,14 @@ class FaceDatasetCreator:
     return self.draw(frame, rects)
    
   def id_generator(size=6, chars=string.ascii_lowercase + string.digits):
+    # generate a random id with lowercase ascii chars and digits
     return ''.join(random.choice(chars) for _ in range(size))
     
   def write(self, frame, output):
+    # grab the output path
     p = os.path.sep.join([output, "{}.png".format(self.id_generator())])
+    
+    # write image to disk
     cv2.imwrite(p, orig)
     
   def resize(self, frame):
@@ -41,4 +45,6 @@ class FaceDatasetCreator:
     # draw boxes around face detections
     for (x, y, w, h) in rects:
       cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+      
+    # return the drawed frame
     return frame
