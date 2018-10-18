@@ -73,7 +73,7 @@ class SimpleDatasetRenamer:
     
     while(True and self.index < 10**(self.length+1)):
       # check to see if we need to generate a unique ID	
-      if not keep_idx:
+      if not self.keep_idx:
         # loop until we have a unique id and no conflict with existing files
         # generate a tentative of unique ID
         idx = self.id_generator()
@@ -91,7 +91,7 @@ class SimpleDatasetRenamer:
       # if we keep the idx and the filename wasn't free at first try,
       # we will not be able to generate a unique ID so we break the loop
       # and return a None filename (so we don't erase the existing file)
-      elif keep_idx:
+      elif self.keep_idx:
         filename = None
         print("Could not save {}: existing file in target directory")
         break
