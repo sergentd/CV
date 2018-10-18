@@ -3,6 +3,7 @@ from pyimagesearch.datasets.facedatasetcreator import FaceDatasetCreator
 from imutils.video import VideoStream
 import argparse
 import imutils
+import time
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
