@@ -35,7 +35,7 @@ class FaceDatasetCreator:
     p = os.path.sep.join([output, "{}.png".format(self.id_generator())])
     
     # write image to disk
-    cv2.imwrite(p, orig)
+    cv2.imwrite(p, frame)
     
   def resize(self, frame):
     # return the resized frame respecting aspect ratio
