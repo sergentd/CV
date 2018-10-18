@@ -2,6 +2,8 @@
 from pyimagesearch.datasets.facedatasetcreator import FaceDatasetCreator
 import argparse
 import imutils
+import string
+import random
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
