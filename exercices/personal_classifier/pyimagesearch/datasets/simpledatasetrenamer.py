@@ -5,13 +5,17 @@ import cv2
 import os
 
 class SimpleDatasetRenamer:
-  def __init__(self, path, prefix=None, suffix=None, move=False, remove=False):
+  def __init__(self, path, prefix=None, suffix=None, move=False, remove=False,
+    sequential=True, length=6, ext=None):
     # store the prefix and the paths
     self.prefix = prefix
     self.suffix = suffix
     self.directory = path
     self.move = move
     self.remove = remove
+    self.sequential = sequential
+    self.length = length
+    self.ext = ext
     
   def rename(self):
     # grab the reference to the list of images
@@ -26,18 +30,24 @@ class SimpleDatasetRenamer:
     # loop over each image, then rename it and save it in its
     # original data format
     for (i, path) in enumerate(imagePaths):
-      # grab the original image and the data format 
-      # to encode the file with the same after renaming
+      # load the image from disk
       image = cv2.imread(path)
-      original = path.split(os.path.sep)[-1]
-      dataFormat = original.split(".")[1]
+      
+      # grab the data format to encode the file with
+      # the same after renaming
+      if self.ext is None:
+        dataFormat = (path.split(os.path.sep)[-1]).split(".")[1]
+      else:
+        dataFormat = str(ext)
 	  
 	  # initialize the directory parameter
-      directory = "." if self.move else os.path.dirname(path)
+      directory = self.move if self.move is not None else os.path.dirname(path)
       
       # create a sequential *unique* ID for this image relative to
-      # images other processed *at the same time*
-      idx = str(i).zfill(6)
+      # other images processed *at the same time*
+      # OR
+      # create a random id with lowercase letters and digits
+      idx = str(i).zfill(self.length) if self.sequential else self.id_generator()
       
       # see if we are using prefix and/or suffix
       prefix = str(self.prefix) if self.prefix is not None else ""
@@ -46,7 +56,7 @@ class SimpleDatasetRenamer:
 	  # construct the filename based on this scheme :
 	  # {dir}{sep}[{prefix}]{idx}[{suffix}].{df}
 	  # exemple : ./img-000001-root.png
-	  #           /home/user/images/000002.jpg
+	  #           /home/user/images/ef6va2.jpg
       filename = "{}{}{}{}{}.{}".format(directory, os.path.sep,
 	    prefix, idx, suffix, dataFormat)
       
@@ -62,3 +72,7 @@ class SimpleDatasetRenamer:
     
     # close the progressbar
     pbar.finish()
+    
+  def id_generator(self, size=6, chars=string.ascii_lowercase + string.digits):
+    # generate a random id with lowercase ascii chars and digits
+    return ''.join(random.choice(chars) for _ in range(size))
