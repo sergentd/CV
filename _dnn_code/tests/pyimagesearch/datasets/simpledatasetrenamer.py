@@ -97,7 +97,7 @@ class SimpleDatasetRenamer:
         
     return filename
   
-  def id_generator(self, size=self.length, chars=string.ascii_lowercase + string.digits):
+  def id_generator(self, chars=string.ascii_lowercase + string.digits):
     # create a sequential *unique* ID for this image relative to
     # other images processed *at the same time*
     # OR
@@ -107,4 +107,4 @@ class SimpleDatasetRenamer:
       return str(self.index).zfill(self.length)
     else:
       # generate a random id with lowercase ascii chars and digits
-      return ''.join(random.choice(chars) for _ in range(size))
+      return ''.join(random.choice(chars) for _ in range(self.length))
