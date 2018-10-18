@@ -24,9 +24,9 @@ class SimpleDatasetRenamer:
     self.ext = ext
     self.index = index
     
-	# set the array of accepted false values
-	self.FALSE_VALUES = ["false", "no", "f", "n", "0", "-1"]
-	
+    # set the array of accepted false values
+    self.FALSE_VALUES = ["false", "no", "f", "n", "0", "-1"]
+    
   def rename(self):
     # grab the reference to the list of images
     imagePaths = sorted(list(paths.list_images(self.directory)))
@@ -76,7 +76,7 @@ class SimpleDatasetRenamer:
     suffix = str(self.suffix) if self.suffix is not None else ""
     
     while(True and self.index < 10**(self.length+1)):
-      # check to see if we need to generate a unique ID	
+      # check to see if we need to generate a unique ID    
       if not self.keep_idx:
         # loop until we have a unique id and no conflict with existing files
         # generate a tentative of unique ID
@@ -108,7 +108,7 @@ class SimpleDatasetRenamer:
     # OR
     # create a random id with lowercase letters and digits
     if str(self.sequential).lower() in self.FALSE_VALUES:
-	  return ''.join(random.choice(chars) for _ in range(self.length))
-	# return the current index number as id filled with 0s
+      return ''.join(random.choice(chars) for _ in range(self.length))
+    # return the current index number as id filled with 0s
     else:
       return str(self.index).zfill(self.length)
