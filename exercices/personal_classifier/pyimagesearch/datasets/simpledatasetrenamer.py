@@ -23,6 +23,9 @@ class SimpleDatasetRenamer:
     self.ext = ext
     self.index = index
     
+	# set the array of accepted false values
+	self.FALSE_VALUES = ["false", "no", "f", "n", "0", "-1"]
+	
   def rename(self):
     # grab the reference to the list of images
     imagePaths = sorted(list(paths.list_images(self.directory)))
@@ -40,7 +43,7 @@ class SimpleDatasetRenamer:
       image = cv2.imread(path)
      
       # try to generate a unique filename
-      filename = gen_filename(path)
+      filename = self.gen_filename(path)
       
       if filename is not None:
         # write image to disk in the approriate directory
@@ -73,7 +76,7 @@ class SimpleDatasetRenamer:
     
     while(True and self.index < 10**(self.length+1)):
       # check to see if we need to generate a unique ID	
-      if not keep_idx:
+      if not self.keep_idx:
         # loop until we have a unique id and no conflict with existing files
         # generate a tentative of unique ID
         idx = self.id_generator()
@@ -91,21 +94,20 @@ class SimpleDatasetRenamer:
       # if we keep the idx and the filename wasn't free at first try,
       # we will not be able to generate a unique ID so we break the loop
       # and return a None filename (so we don't erase the existing file)
-      elif keep_idx:
+      elif self.keep_idx:
         filename = None
         print("Could not save {}: existing file in target directory")
         break
         
     return filename
   
-  def id_generator(self, size=self.length, chars=string.ascii_lowercase + string.digits):
+  def id_generator(self, chars=string.ascii_lowercase + string.digits):
     # create a sequential *unique* ID for this image relative to
     # other images processed *at the same time*
     # OR
     # create a random id with lowercase letters and digits
-    if self.sequential:
-      # return the current index number as id filled with 0s
-      return str(self.index).zfill(self.length)
+    if str(self.sequential).lower() in self.FALSE_VALUES:
+	  return ''.join(random.choice(chars) for _ in range(self.length))
+	# return the current index number as id filled with 0s
     else:
-      # generate a random id with lowercase ascii chars and digits
-      return ''.join(random.choice(chars) for _ in range(size))
+      return str(self.index).zfill(self.length)
