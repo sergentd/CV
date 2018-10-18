@@ -1,6 +1,7 @@
 # import necessary packages
 from imutils import paths
 import progressbar
+import string
 import cv2
 import os
 
