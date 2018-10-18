@@ -24,7 +24,7 @@ class SimpleDatasetRenamer:
     self.index = index
     
 	# set the array of accepted false values
-	self.FALSE_VALUES = ["false", "no", "f", "n", "0", "-1"]
+    self.FALSE_VALUES = ["false", "no", "f", "n", "0", "-1"]
 	
   def rename(self):
     # grab the reference to the list of images
