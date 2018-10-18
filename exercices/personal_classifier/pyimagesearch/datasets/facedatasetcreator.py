@@ -1,5 +1,4 @@
 # import necessary packages
-from imutils.video import VideoStream
 import imutils
 import string
 import random

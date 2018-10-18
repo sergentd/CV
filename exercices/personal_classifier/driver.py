@@ -1,5 +1,6 @@
 # import necessary packages
 from pyimagesearch.datasets.facedatasetcreator import FaceDatasetCreator
+from imutils.video import VideoStream
 import argparse
 import imutils
 
