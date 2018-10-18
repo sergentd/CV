@@ -40,7 +40,7 @@ class SimpleDatasetRenamer:
       image = cv2.imread(path)
      
       # try to generate a unique filename
-      filename = gen_filename(path)
+      filename = self.gen_filename(path)
       
       if filename is not None:
         # write image to disk in the approriate directory
