@@ -107,4 +107,4 @@ class SimpleDatasetRenamer:
       return str(self.index).zfill(self.length)
     else:
       # generate a random id with lowercase ascii chars and digits
-      return = ''.join(random.choice(chars) for _ in range(size))
+      return ''.join(random.choice(chars) for _ in range(size))
