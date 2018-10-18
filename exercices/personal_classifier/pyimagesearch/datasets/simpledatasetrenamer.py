@@ -89,7 +89,7 @@ class SimpleDatasetRenamer:
       filename = os.path.sep.join([directory, "{}{}{}.{}".format(prefix, idx, suffix, dataFormat)])
           
       # allow for a unique filename only
-      if not os.path.isFile(filename):
+      if not os.path.isfile(filename):
         break
         
       # if we keep the idx and the filename wasn't free at first try,
