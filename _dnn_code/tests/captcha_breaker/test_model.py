@@ -35,7 +35,7 @@ for imagePath in imagePaths:
     cv2.BORDER_REPLICATE)
     
   # threshold the image to reveal the digits
-  thresh = cv2.threshold(gray, 0, 255, cv2.TRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
+  thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
   
   # find contours in the image, keeping only the four largest ones,
   # then sort them from left to right
