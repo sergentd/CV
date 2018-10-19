@@ -15,7 +15,8 @@ from keras import backend as K
 
 class ResNet:
   @ staticmethod
-  def residual_module(data, K, stride, chanDim, red=False, reg=0.0001, bnEps=0.00002, bnMom=0.9)
+  def residual_module(data, K, stride, chanDim, red=False,
+    reg=0.0001, bnEps=2e-5, bnMom=0.9):
     # the shortcut branch of the ResNet module should
     # be initialize as the input (identity) data
     shortcut = data
@@ -54,7 +55,7 @@ class ResNet:
     
   @staticmethod
   def build(width, height, depth, classes, stages, filters,
-    reg=0.0001, bnEps=2e-5, bnMom=0.9, dataset="cifar")
+    reg=0.0001, bnEps=2e-5, bnMom=0.9, dataset="cifar"):
     
     # initialize the input shape to be channels last and the channels
     # dimension itself
@@ -97,7 +98,7 @@ class ResNet:
         chanDim, bnEps=bnEps, bnMom=bnMom)
       
       # loop over the number of layers in the stage
-      for j in range(0, len(stages[i]) - 1)
+      for j in range(0, len(stages[i]) - 1):
         # apply ResNet module
         x = ResNet.residual_module(x, filters[i + 1],
           (1, 1), chanDim, bnEps=bnEps, bnMom=bnMom)
