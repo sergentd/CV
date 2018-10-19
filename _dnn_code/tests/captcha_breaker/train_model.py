@@ -15,7 +15,7 @@ import os
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--directory", required=True, help="path to the dataset")
+ap.add_argument("-d", "--dataset", required=True, help="path to the dataset")
 ap.add_argument("-m", "--model", required=True, help="path to the output model")
 args = vars(ap.parse_args())
 
