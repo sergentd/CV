@@ -32,7 +32,7 @@ for imagePath in imagePaths:
   image = cv2.imread(imagePath)
   gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
   gray = cv2.copyMakeBorder(gray, 20, 20, 20, 20,
-    cv2.BORDER_REPLACE)
+    cv2.BORDER_REPLICATE)
     
   # threshold the image to reveal the digits
   thresh = cv2.threshold(gray, 0, 255, cv2.TRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
