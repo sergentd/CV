@@ -55,7 +55,7 @@ valY   = lb.transform(valY)
 
 # initialize the model
 print("[INFO] compiling model...")
-model = LeNet.build(width=28, height=28, depth=3, classes=9)
+model = LeNet.build(width=28, height=28, depth=1, classes=9)
 opt = SGD(lr=0.01)
 model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
 
