@@ -57,7 +57,7 @@ while True:
   
   if frame is None:
     break
-	
+    
   # resize the frame for faster processing and then convert the
   # frame from BGR to RGB (dlib need RGB)
   frame = imutils.resize(frame, width=600)
@@ -67,7 +67,7 @@ while True:
   # initialize the writer
   if args["output"] is not None and writer is None:
     fourcc = cv2.VideoWriter_fourcc(*"MJPG")
-	writer = cv2.VideoWriter(args["output"], fourcc, 30, (frame.shape[1], frame.shape[0]), True)
+    writer = cv2.VideoWriter(args["output"], fourcc, 30, (frame.shape[1], frame.shape[0]), True)
     
   # if the correlation object tracker is None we need to apply an object detector
   # to seed the tracker with someting to actually track
