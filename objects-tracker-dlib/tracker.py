@@ -1,5 +1,6 @@
 # import necessary packages
 from imutils.video import FPS
+from imutils.video import VideoStream
 import numpy as np
 import argparse
 import imutils
