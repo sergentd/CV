@@ -76,7 +76,7 @@ while True:
   if tracker is None:
     # grab the frame dimensions and convert the frame to a blob
     (h, w) = frame.shape[:2]
-    blob = cv2.dnn.blobFromImage(frame, 0.007843, (h, w), 127.5)
+    blob = cv2.dnn.blobFromImage(frame, 0.007843, (w, h), 127.5)
   
     net.setInput(blob)
     detections = net.forward()
