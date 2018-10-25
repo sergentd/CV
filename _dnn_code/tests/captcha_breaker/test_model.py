@@ -60,7 +60,7 @@ for imagePath in imagePaths:
     roi = np.expand_dims(img_to_array(roi), axis=0) / 255.0
     pred = model.predict(roi).argmax(axis=1)[0] + 1
     predictions.append(str(pred))
-    
+
     # draw the prediction output
     cv2.rectangle(output, (x - 2, y - 2),
       (x + w + 4, y + h + 4), (0, 255, 0), 1)
