@@ -63,7 +63,7 @@ Follow one of this guides to install it with custom parameters : [OpenCV Tutoria
 ```
 pip install scipy matplotlib pillow
 pip install imutils h5py requests progressbar2
-pip install scikit-learn scikit-image
+pip install scikit-learn scikit-image dlib
 pip install mahotas
 pip install tensorflow
 pip install keras
