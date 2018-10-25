@@ -65,7 +65,7 @@ while True:
   
   # if we are supposed to be writing a video to disk,
   # initialize the writer
-  if args["output"] is not and writer is None:
+  if args["output"] is not None and writer is None:
     fourcc = cv2.VideoWriter_fourcc(*"MJPG")
 	writer = cv2.VideoWriter(args["output"], fourcc, 30, (frame.shape[1], frame.shape[0]), True)
     
