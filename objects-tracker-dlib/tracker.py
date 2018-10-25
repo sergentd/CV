@@ -55,7 +55,7 @@ while True:
   # grab the reference for the frame and handle the VideoCapture and
   # VideoStream possibilities
   frame = vs.read()
-  frame = frame[1] if not args.get("video", False) else frame
+  frame = frame[1] if args.get("video", False) else frame
   
   if frame is None:
     break
