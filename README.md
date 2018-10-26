@@ -68,6 +68,13 @@ pip install mahotas
 pip install tensorflow
 pip install keras
 ```
+### PiCamera module
+
+```
+pip install picamera[array]
+```
+
+### Testing the installation
 
 To test your installation, try to import the keras module in a Python shell. If you don't have any error, your installation is working properly.
 
