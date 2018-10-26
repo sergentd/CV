@@ -1,5 +1,3 @@
-acking multiple objects with OpenCVPython
-
 # import the necessary packages
 from imutils.video import VideoStream
 import argparse
