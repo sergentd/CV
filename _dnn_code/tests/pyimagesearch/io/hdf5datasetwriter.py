@@ -28,7 +28,7 @@ class HDF5DatasetWriter:
     self.buffer["labels"].extend(labels)
 
     # check to see if the buffer needs to be flushed to disk
-    if (len(self.buffer["data"] >= self.bufSize):
+    if (len(self.buffer["data"]) >= self.bufSize):
       self.flush()
 
   def flush(self):

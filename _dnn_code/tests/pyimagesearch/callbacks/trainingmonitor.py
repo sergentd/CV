@@ -43,7 +43,7 @@ class TrainingMonitor(BaseLogger):
       f.close()
 
     # chech that at least two epochs have passed before plotting
-    if len(self.H["loss"] > 1:
+    if len(self.H["loss"]) > 1:
       # plot the history
       N = np.arange(0, len(self.H["loss"]))
       plt.style.use("ggplot")
