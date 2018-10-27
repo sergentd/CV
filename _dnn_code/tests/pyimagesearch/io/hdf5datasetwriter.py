@@ -37,7 +37,7 @@ class HDF5DatasetWriter:
     self.data[self.idx:i]   = self.buffer["data"]
     self.labels[self.idx:i] = self.buffer["labels"]
     self.idx = i
-    self.buffer = {"data" : [], "labels"=[]}
+    self.buffer = {"data" : [], "labels" : []}
 
   def storeClassLabels(self, classLabels):
     # create the dataset to store the actual class label names
