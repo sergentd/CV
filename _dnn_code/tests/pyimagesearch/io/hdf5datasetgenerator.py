@@ -26,7 +26,7 @@ class HDF5DataGenerator:
 
     # keep looping infinitely -- the model will stop once we
     # reach the desired number of epochs
-    while epochs < passes
+    while epochs < passes:
       # loop over the HDF5 dataset
       for i in np.arange(0, self.numImages, self.batchSize):
         # extract the images and labels from the HDF5 dataset
