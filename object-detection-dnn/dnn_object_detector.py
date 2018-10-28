@@ -29,27 +29,27 @@ blob = cv2.dnn.blobFromImage(cv2.resize(image, (300,300)), 0.007843, (300,300), 
 # pass the blob throught the network and obtain the detections and predictions
 print("[INFO] : computing object detections")
 net.setInput(blob)
-detections = net.forward)()
+detections = net.forward()
 
 # loop over the detections
 for i in np.arange(0, detections.shape[2]):
   # extract the confidencec associated with the predictions
   confidence = detections[0, 0, i, 2]
-  
+
   # filter out weak detections by ensuring the confidence is greater than the minimum
   if confidence > args['confidence']:
     # extract the index of class label from detections and then compute
 	# the (x, y)-coorfinates of the bounding box for the object
-	idx = int(detections[0, 0, i, 1])
-	box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-	(startX, startY, endX, endY) = box.astype("int")
-	
+    idx = int(detections[0, 0, i, 1])
+    box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+    (startX, startY, endX, endY) = box.astype("int")
+
 	# display the prediciton
-	label = "{} : {:.2f}%".format(CLASSES[idx], confidence * 100)
-	print("[INFO] : {}".format(label))
-	cv2.rectangle(image, (startX, startY), (endX, endY), COLORS[idx], 2)
-	y = startY - 15 if startY - 15 > 15 else startY + 15
-	cv2.putText(image, label, (startX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
+    label = "{} : {:.2f}%".format(CLASSES[idx], confidence * 100)
+    print("[INFO] : {}".format(label))
+    cv2.rectangle(image, (startX, startY), (endX, endY), COLORS[idx], 2)
+    y = startY - 15 if startY - 15 > 15 else startY + 15
+    cv2.putText(image, label, (startX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
 
 # show the output image
 cv2.imshow("Output", image)

@@ -12,7 +12,7 @@ ap.add_argument("-d","--db", required=True,
   help="path to the HDF5 database")
 ap.add_argument("-m","--model", required=True,
   help="path to the output model")
-ap.add_argument("-j","--jobs", type=int, default=-1
+ap.add_argument("-j","--jobs", type=int, default=-1,
   help="# of jobs to run when tuning hyperparameters")
 args = vars(ap.parse_args())
 
@@ -35,7 +35,7 @@ print("[INFO] evaluating the model...")
 preds = model.predict(db["features"][i:])
 print(classification_report(db["labels"][i:], preds,
   target_names=db["label_names"]))
-  
+
 # serialize the model to disk
 print("[INFO] saving model...")
 f = open(args["model"], "wb")

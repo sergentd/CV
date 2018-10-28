@@ -23,7 +23,7 @@ labels = measure.label(thresh, neighbors=8, background=0)
 mask = np.zeros(thresh.shape,dtype="uint8")
 print("[INFO] : found {} blobs".format(len(np.unique(labels))))
 
-for (i, label) in enumerate(np.unique(labels))
+for (i, label) in enumerate(np.unique(labels)):
   # if this is the background, ignore it
   if label == 0:
     print("[INFO] : label = 0 (background)")
@@ -37,7 +37,7 @@ for (i, label) in enumerate(np.unique(labels))
 
   # if the number of pixels in the component is sufficiently large,
   # add it to our mask of "large" blobs
-  if numPixels > 300 and numPixels < 1500
+  if numPixels > 300 and numPixels < 1500:
     mask = cv2.add(mask,labelMask)
 
   # show the label mask

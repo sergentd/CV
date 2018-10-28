@@ -50,7 +50,7 @@ print("[INFO] detecting objects...")
 start = time.time()
 for image in image_pyramid(resized, scale=PYR_SCALE, minSize=ROI_SIZE):
   # loop over the sliding window
-  for (x, y, roi) in sliding_window(image, WIN_STEP, ROI_SIZE)
+  for (x, y, roi) in sliding_window(image, WIN_STEP, ROI_SIZE):
     # take the ROI and pre-process it so we can later classify the
     # region with keras
     roi = img_to_array(roi)
@@ -64,25 +64,25 @@ for image in image_pyramid(resized, scale=PYR_SCALE, minSize=ROI_SIZE):
       batchROIs = np.vstack([batchROIs, roi])
 
     # add the (x,y)-coordinates of the sliding window to the batch
-    batchLocs.append((x,y))    
-    
+    batchLocs.append((x,y))
+
     # check to see if our batch is full
     if len(batchROIs) == BATCH_SIZE:
       # classify the batch, then reset the batchROIs and
       # (x,y)-coordinates
       labels = classify_batch(model, batchROIs, batchLocs,
         labels, minProb=args["confidence"])
-        
+
       # reset the batch ROIs coordinates
       batchROIs = None
       batchLocs = []
-      
+
 # check to see if there are any remaining ROIs that still need to be
 # classified
 if batchROIs is not None:
   labels = classify_batch(mode, batchROIs, batchLocs,
     labels, minProb=args["confidence"])
-    
+
 # show how long the detection process took
 end = time.time()
 print("[INFO] detections took {:.4f} seconds".format(end - start))
@@ -91,20 +91,20 @@ print("[INFO] detections took {:.4f} seconds".format(end - start))
 for k in labels.keys():
   # clone the input image so we can draw on it
   clone = resized.copy()
-  
+
   # grab the bounding boxes and associated probabilities for
   # each detection, then apply non-maxima suppresion to suppress
   # weaker, overlapping detections
   boxes = np.array([p[0] for p in labels[k]])
   proba = np.array([p[1] for p in labels[k]])
   boxes = non_max_suppression(boxes, proba)
-  
+
   # loop over all bounding boxes for the label and draw them on
   # the image
   for (xA,yA,xB,yB) in boxes:
     cv2.rectangle(clone, (xA,yA), (xB,yB), (0,255,0), 2)
-    
+
   # show the image
   print("[INFO] {}: {}".format(k, len(boxes)))
   cv2.imshow("Detection", clone)
-  cv2.waitKey(0)  
+  cv2.waitKey(0)

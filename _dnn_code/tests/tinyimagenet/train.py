@@ -42,7 +42,7 @@ args = vars(ap.parse_args())
 aug = ImageDataGenerator(rotation_range=18, zoom_range=0.15,
   width_shift_range=0.2, height_shift_range=0.2, shear_range=0.15,
   horizonal_flip=True, fill_mode="nearest")
-  
+
 # load the RGB means for the training set
 means = json.loads(open(config.DATASET_MEAN)).read()
 
@@ -56,7 +56,7 @@ trainGen = HDF5DatasetGenerator(config.TRAIN_HDF5, BATCH_SIZE, aug=aug,
   preprocessors=[sp, mp, iap], classes=config.NUM_CLASSES)
 valGen = HDF5DatasetGenerator(config.VAL_HDF5, BATCH_SIZE, aug=aug,
   preprocessors=[sp, mp, iap], classes=config.NUM_CLASSES)
-  
+
 # if there is no specific model checkpoint supplied, then initialize
 # the network and compile model
 if args["model"] is None:
@@ -69,16 +69,16 @@ if args["model"] is None:
 
 # otherwise, load the model from disk
 else:
-  print("[INFO] loading {}...".format(args["model"])
+  print("[INFO] loading {}...".format(args["model"]))
   model = load_model(args["model"])
-  
+
   # update the learning rate
   print("[INFO] old learning rate: {}".format(
     K.get_value(model.optimizer.lr)))
   K.set_value(model.optimizer.lr, 1e-5)
   print("[INFO] new learning rate: {}".format(
     K.get_value(model.optimizer.lr)))
-    
+
 # construct the set of callbacks
 callbacks = [
   EpochCheckpoint(args["checkpoints"], every=5,
@@ -96,7 +96,7 @@ model.fit_generator(
   validation_data = valGen.generator(),
   validation_steps = valGen.numImages // BATCH_SIZE,
   epochs=NUM_EPOCHS,
-  max_queue_size = MAX_QUEUE_SIZE
+  max_queue_size = MAX_QUEUE_SIZE,
   callbacks=callbacks,
   verbose=1)
 )

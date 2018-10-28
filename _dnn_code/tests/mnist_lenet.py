@@ -10,8 +10,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import argparse
 
+# construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-m", "--model", default=None, help="path to the optional model output")
+ap.add_argument("-m", "--model", default=None,
+  help="path to the optional model output")
+args = vars(ap.parse_args())
 
 # grab the MNIST dataset
 print("[INFO] accessing MNIST")
@@ -26,14 +29,14 @@ if K.image_data_format() == "channels_first":
 
 # otherwise, we are using "channels last" ordering, so the design
 # matrix shape should be: num_samples x rows x columns x depth
-  else:
-    data = data.reshape(data.shape[0], 28, 28, 1)
+else:
+  data = data.reshape(data.shape[0], 28, 28, 1)
 
 # scale the input data to the range [0, 1] and
-# perform train/test split    
+# perform train/test split
 (trainX, testX, trainY, testY) = train_test_split(data / 255.0,
     dataset.target.astype("int"), test_site=0.25, random_state=42)
-    
+
 # convert the labels from integers to vectors
 lb = LabelBinarizer()
 trainY = lb.fit_transform(trainY)
@@ -63,7 +66,7 @@ predictions = model.predict(testX, batch_size=128)
 print(classification_report(testY.argmax(axis=1),
     predictions.argmax(axis=1),
     target_names=[str(x) for x in lb.classes_]))
-    
+
 # plot the training loss and accuracy
 plt.style.use("ggplot")
 plt.figure()

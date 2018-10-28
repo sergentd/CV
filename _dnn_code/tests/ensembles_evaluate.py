@@ -1,5 +1,5 @@
 # import necessary packages
-from sklearn.preprocessing import LabelBinarizer()
+from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
 from keras.models import load_model
 from keras.datasets import cifar10
@@ -22,8 +22,8 @@ testX = testX.astype("float") / 255.0
 # initialize the label names for the CIFAR-10 dataset
 labelNames = ["airplane", "automobile", "bird", "cat", "deer",
   "dog", "frog", "horse", "ship", "truck"]
- 
-# convert the labels from integers to vectors 
+
+# convert the labels from integers to vectors
 lb = LabelBinarizer()
 testY = lb.fit_transform(testY)
 
@@ -37,7 +37,7 @@ models = []
 for (i, modelPath) in enumerate(modelPaths):
   print("[INFO] loading model {}\{}".format(i + 1, len(modelPaths)))
   models.append(load_model(modelPath))
-  
+
 # initialize a list of predictions
 print("[INFO] evaluating ensemble")
 predictions = []
@@ -47,7 +47,7 @@ for model in models:
   # use the current model to make predictions on the testing data,
   # then store these predictions in the aggregate predictions list
   predictions.append(model.predict(testX, batch_size=64))
-  
+
 # average the probabilities across all model predictions, then show
 # a classification report
 predictions = np.average(predictions, axis=0)

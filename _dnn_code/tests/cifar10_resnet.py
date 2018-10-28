@@ -55,7 +55,7 @@ i = int(len(trainX) * 0.75)
 valX = trainX[i:]
 valY = trainY[i:]
 trainX = trainX[:i]
-trainY = trainY[:i] 
+trainY = trainY[:i]
 
 # construct the image generator for data augmentation
 aug = ImageDataGenerator(width_shift_range=0.1, height_shift_range=0.1,
@@ -73,9 +73,9 @@ if args["model"] is None:
 
 # otherwise, load the model from disk
 else:
-  print("[INFO] loading {}...".format(args["model"])
+  print("[INFO] loading {}...".format(args["model"]))
   model = load_model(args["model"])
-  
+
   # update the learning rate
   print("[INFO] old learning rate: {}".format(
     K.get_value(model.optimizer.lr)))
@@ -99,4 +99,3 @@ model.fit_generator(
   validation_data = (valX, valY),
   steps_per_epoch=len(trainX) // BATCH_SIZE, epochs=NUM_EPOCHS,
   callbacks=callbacks)
-)

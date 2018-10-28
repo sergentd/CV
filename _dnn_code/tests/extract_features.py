@@ -18,7 +18,7 @@ ap.add_argument("-d", "--dataset", required=True,
   help="path to the input dataset")
 ap.add_argument("-o", "--output", required=True,
   help="path to the output HDF5 file")
-ap.add_argument("-b", "--batch-size", type=int, default=32
+ap.add_argument("-b", "--batch-size", type=int, default=32,
   help="batch size of images to be passed through the network")
 ap.add_argument("-s", "--buffer-size", type=int, default=1000,
   help="size of the features extraction buffer")
@@ -52,10 +52,10 @@ dataset.storeClassLabels(le.classes_)
 # init the progressbar
 widgets = ["Extracting features : ", progressbar.Percentage(), " ",
   progressbar.Bar(), " ", progressbar.ETA()]
-  
+
 pbar = progressbar.ProgressBar(maxval=len(imagePaths),
   widgets=widgets).start()
-  
+
 # loop over the images in batches
 for i in np.arange(0, len(imagePaths), bs):
   # extract the batch of images and labels, then init
@@ -64,7 +64,7 @@ for i in np.arange(0, len(imagePaths), bs):
   batchPaths  = imagePaths[i:i+bs]
   batchLabels = labels[i:i+bs]
   batchImages = []
-  
+
   # loop over the images and the labels in the current batch
   for (j, imagePath) in enumerate(batchPaths):
     # load the input image using Keras helper utility
@@ -85,15 +85,15 @@ for i in np.arange(0, len(imagePaths), bs):
   # as a features verctor (actual features)
   batchImages = np.vstack(batchImages)
   features = model.predict(batchImages, batch_size=bs)
-  
+
   # reshape the features so tahat each image is represented by
   # a flattened feature vector of the MaxPooling2D outputs
   features = features.reshape((features.shape[0], 512 * 7 * 7))
-  
+
   # add the features and labels to our HDF5 dataset
   dataset.add(features, batchLabels)
   pbar.update(i)
-  
+
 # close the dataset
 dataset.close()
 pbar.finish()

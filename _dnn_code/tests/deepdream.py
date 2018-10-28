@@ -17,37 +17,37 @@ def preprocess(p):
   image = img_to_array(image)
   image = np.expand_dims(image, axis=0)
   image = preprocess_input(image)
-  
+
   # return the preprocessed image
   return image
-  
+
 def deprocess(p):
   # we are using channels last ordering
   image = image.reshape((image.shape[1], image.shape[2], 3))
-  
+
   # undo the preprocessing
   image /= 255
   image += 0.5
   image *= 255
   image = np.clip(image, 0, 255).astype("uint8")
-  
+
   # we have been processing images in RGB, so convert
   # to BGR for OpenCV
   image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-  
+
   # return the deprocessed image
   return image
-  
+
 def fetchLossGrads(X):
-  
-  
+  pass
+
 def resize_image(image, size):
   # resize the image
   resized = np.copy(image)
-  resized = ndimage.zoom(resized, 
+  resized = ndimage.zoom(resized,
     (1, float(size[0]) / resized.shape[1],
     float(size[1]) / resized.shape[2], 1), order=1)
-  
+
   # return the resized image
   return resized
 
@@ -55,28 +55,28 @@ def eval_loss_and_gradients(X):
   # fetch the loss and gradients given the input
   output = fetchLossGrads([X])
   (loss, G) = (output[0], output[1])
-  
+
   # return tuple of loss and gradients
   return (loss, G)
-  
+
 def gradient_ascent(X, iters, alpha, maxLoss=-np.inf):
   # loop over our number of iterations
   for i in range(0, iters):
     # compute the loss and gradient
     (loss, G) = eval_loss_and_gradients(X)
-    
+
     # if the loss is greater than the max loss, break from
     # the loop early to prevent strange effects
     if loss > maxLoss:
       break
-    
+
     # take a step
     print("[INFO] Loss at {}: {}".format(i, loss))
     X += alpha*G
-  
+
   # return the output of gradient ascent
   return X
-  
+
 # ***********************************************************************************
 
 ap = argparse.ArgumentParser()
@@ -131,7 +131,7 @@ for layerName in LAYERS:
   coeff = LAYERS[layerName]
   scaling = K.prod(K.cast(K.shape(x), "float32"))
   loss += coeff * K.sum(K.square(x[:, 2:-2, 2:-2, :])) / scaling
-  
+
 # compute the gradients
 grads = K.gradients(loss, dream)[0]
 grads /= K.maximum(K.mean(K.abs(grads)), 1e-7)
@@ -157,7 +157,7 @@ for i in range (1, NUM_OCTAVE):
   # current octave, then update the dimensions list
   size = [int(d / (OCTAVE_SCALE ** i)) for d in dims]
   octaveDims.append(size)
-  
+
 # reverse the octave dimensions list order so the smallest
 # is at first position
 octaveDims = octaveDims[::-1]
@@ -189,11 +189,10 @@ for (o, size) in enumerate(octaveDims):
   # make the original image be the new shrunk image so we can
   #repeat the process
   shrunk = resize_image(orig, size)
-  
+
 # deprocess image, show it and write it to disk
 image = deprocess(image)
 cv2.imshow("DeepDrem", image)
 cv2.imwrite(args["output"], image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-

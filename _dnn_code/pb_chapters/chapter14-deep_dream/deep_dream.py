@@ -98,10 +98,10 @@ LAYERS = {
 # define the number of octaves, octave scale, alpha (step for
 # gradient ascent) number of iterations, and max loss -- tweaking
 # these values will produce different dreams
-NUM_OCTAVE = 3
+NUM_OCTAVE = 5
 OCTAVE_SCALE = 1.4
 ALPHA = 0.001
-NUM_ITER = 50
+NUM_ITER = 100
 MAX_LOSS = 10.0
 
 # indicate that Keras *should not* be update the weights of any

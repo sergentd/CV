@@ -28,14 +28,13 @@ encoder = FaceEncoder()
 # loop over the image paths
 for (i, imagePath) in enumerate(imagePaths):
 	# extract the person name from the image path
-	print("[INFO] processing image {}/{}".format(i + 1,
-		len(imagePaths)))
+	print("[INFO] processing image {}/{}".format(i + 1, len(imagePaths)))
 	name = imagePath.split(os.path.sep)[-2]
 
 	# load the input image and convert it from RGB (OpenCV ordering)
 	# to dlib ordering (RGB)
 	image = cv2.imread(imagePath)
-    encoder.encode(image, name)
+	encoder.encode(image, name)
 
 # dump the facial encodings + names to disk
 print("[INFO] serializing encodings...")
