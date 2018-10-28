@@ -6,7 +6,7 @@ DATASETS_PATH = "/media/djav/ToDjav/datasets"
 
 # define the base path to where the ImageNet dataset
 # devkit are stored on disk
-BASE_PATH = path.sep.join([DATASETS_PATH, "imagenet/ILSVR2015"])"
+BASE_PATH = path.sep.join([DATASETS_PATH, "imagenet/ILSVR2015"])
 
 # based on BASE_PATH, derive the images base path, images set path
 # and devkit path
