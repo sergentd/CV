@@ -40,8 +40,8 @@ NUM_TEST_IMAGES = 50 * NUM_CLASSES
 # define the path to output training, validation and testing lists
 MX_OUTPUT = path.sep.join([DATASETS_PATH, "imagenet"])
 TRAIN_MX_LIST = path.sep.join([MX_OUTPUT, "lists/train.lst"])
-VAL_MX_OUTPUT = path.sep.join([MX_OUTPUT, "lists/val.lst"])
-TEST_MX_OUTPUT = path.sep.join([MX_OUTPUT, "lists/test.lst"])
+VAL_MX_LIST = path.sep.join([MX_OUTPUT, "lists/val.lst"])
+TEST_MX_LIST = path.sep.join([MX_OUTPUT, "lists/test.lst"])
 
 # define path to the output training, validation and testing
 # image records
