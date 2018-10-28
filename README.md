@@ -77,10 +77,11 @@ pip install picamera[array]
 ### pyimagesearch package
 
 The pyimagesearch package used in many examples and projects is located at the project root. To be able to use the scripts, don't forget to either :
-(1) copy/paste the folder in your projects.
-(2) add the path to your PYTHONPATH environment variable :
-    - modify your ~/.bashrc file
-    - add `export "${PYTHONPATH}=path/to/package"` (exemple : `export "${PYTHONPATH}=${HOME}/CV`
+1. copy/paste the folder in your projects.
+2. add the path to your PYTHONPATH environment variable :
+   - modify your ~/.bashrc file
+   - add `export "${PYTHONPATH}=path/to/package"` (exemple : `export "${PYTHONPATH}=${HOME}/CV`
+
 Other methods are also acceptable. Remember, the package is mandatory for running scripts.
 
 ### Testing the installation
