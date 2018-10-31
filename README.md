@@ -87,7 +87,9 @@ Other methods are also acceptable. Remember, the package is mandatory for runnin
 
 ### Testing the installation
 
-To test your installation, try to import the keras module in a Python shell. If you don't have any error, your installation is working properly.
+To test your installation, try to do `import keras`, `import cv2` and `import pyimagesearch`in a Python shell. If you don't have any error, your installation is working properly.
+
+Note : the success of pyimagesearch import depends on the choice your made at previous step.
 
 ## Authors
 
