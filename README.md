@@ -81,6 +81,7 @@ The pyimagesearch package used in many examples and projects is located at the p
 2. add the path to your PYTHONPATH environment variable :
    - modify your ~/.bashrc file
    - add `export "${PYTHONPATH}=path/to/package"` (exemple : `export "${PYTHONPATH}=${HOME}/CV`
+3. sym-link your repository
 
 Other methods are also acceptable. Remember, the package is mandatory for running scripts.
 
