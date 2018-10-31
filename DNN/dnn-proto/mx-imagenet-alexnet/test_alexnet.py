@@ -1,6 +1,3 @@
-# USAGE
-# python test_alexnet.py --checkpoints checkpoints --prefix alexnet --epoch 100
-
 # import the necessary packages
 from config import imagenet_alexnet_config as config
 import mxnet as mx
