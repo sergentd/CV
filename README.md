@@ -102,4 +102,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 Thanks to [pyimagesearch](https://www.pyimagesearch.com) for the excellent tutorials and books from where a lot of exemples present in this project are inspired from.
-
