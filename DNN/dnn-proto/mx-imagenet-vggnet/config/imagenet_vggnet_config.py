@@ -2,7 +2,7 @@
 from os import path
 
 # define the datasets path
-DATASETS_PATH = "/media/djav/ToDjav/datasets"
+DATASETS_PATH = "/media/djav/djavpass/datasets"
 
 # define the base path to where the ImageNet dataset
 # devkit are stored on disk
