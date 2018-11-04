@@ -60,7 +60,6 @@ for (dType, paths, labels, outputPath) in datasets:
             G.append(g)
             B.append(b)
 
-
         # update the progressbar
         pbar.update(i)
 

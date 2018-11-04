@@ -10,6 +10,9 @@ class ImageNetHelper:
         # build the label mappings and validation blacklist
         self.labelMappings = self.buildClassLabels()
         self.valBlacklist = self.buildBlacklist()
+        # self.genTrainTxtFile()
+        # self.genValTxtFile()
+        # self.createAndMove()
 
     def buildClassLabels(self):
         # load the content of the file that maps the WordNet IDs
@@ -57,7 +60,7 @@ class ImageNetHelper:
             # grab the word id from the path and use it to determine
             # the integer class label
             path = os.path.sep.join([self.config.IMAGES_PATH,
-                "train", "{}.JPEG".format(partialPath)])
+                "train", "{}".format(partialPath)])
             wordID = partialPath.split("/")[0]
             label = self.labelMappings[wordID]
 
@@ -96,10 +99,77 @@ class ImageNetHelper:
             # construct the full path to the validation image,
             # then update the respective paths and labels lists
             path = os.path.sep.join([self.config.IMAGES_PATH, "val",
-                "{}.JPEG".format(partialPath)])
+                "{}".format(partialPath)])
             paths.append(path)
             labels.append(int(label) - 1)
 
         # return a tuple of images paths associated with their class
         # integer labels
         return (np.array(paths), np.array(labels))
+
+    def genTrainTxtFile(self):
+        # initialize the list of paths, the index and the text file
+        # where the informations will be write
+                # grab the list of paths for every image in the train dataset
+        basepath = os.path.sep.join([self.config.IMAGES_PATH, "train"])
+        paths = os.listdir(basepath)
+        i = 1
+        f = open(self.config.TRAIN_LIST, "w+")
+
+        # loop over all directories in train directory
+        for wnid in paths:
+            if wnid.split(".")[-1] != "tar":
+                # construct the fulle directory name
+                # and grab the list of all images in the directory
+                dirpath = os.path.sep.join([basepath, wnid])
+                images = os.listdir(dirpath)
+
+                # loop over all images in the directory
+                for im in images:
+                    # construct the row that will be inserted in the file
+                    row = "{} {}\n".format(os.path.sep.join([wnid, im]), i)
+                    f.write(row)
+                    i += 1
+
+        # close the file
+        f.close()
+
+    def genValTxtFile(self):
+        # initialize the list of paths and output file
+        paths = os.listdir(os.path.sep.join([self.config.IMAGES_PATH, "val"]))
+        f = open(self.config.VAL_LIST, "w+")
+
+        # loop over the images and write one row for each
+        for (i, im) in enumerate(paths):
+            row = "{} {}\n".format(os.path.basename(im), i+1)
+            f.write(row)
+
+        # close the file
+        f.close()
+
+    def createAndMove(self):
+        # grab the list of paths for every image in the train dataset
+        basepath = os.path.sep.join([self.config.IMAGES_PATH, "train"])
+        paths = os.listdir(basepath)
+
+        # loop over all images
+        for p in paths:
+            # skip all files with tar extensions
+            if p.split(".")[-1] == "tar" or os.path.isdir(p):
+                continue
+
+            # create the directory if it doesnt exists
+            dirname = p.split("_")[0]
+            dirpath = os.path.sep.join([basepath, dirname])
+            if not os.path.exists(dirpath):
+                # print("[DIRPATH] : {}".format(dirpath))
+                os.mkdir(dirpath)
+
+            # the full image path (mover)
+            oldpath = os.path.sep.join([basepath, p])
+            newpath = os.path.sep.join([basepath, dirname, p])
+
+            # print("[OLDPATH]: {}".format(oldpath))
+            # print("[NEWPATH]: {}".format(newpath))
+            # move the file into the right folder
+            os.rename(oldpath, newpath)
