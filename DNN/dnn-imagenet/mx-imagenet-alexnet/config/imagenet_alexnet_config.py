@@ -53,5 +53,5 @@ TEST_MX_REC = path.sep.join([MX_OUTPUT, "rec/test.rec"])
 DATASET_MEAN = "output/imagenet_mean.json"
 
 # define the batch size and number of devices
-BATCH_SIZE = 64
+BATCH_SIZE = 16
 NUM_DEVICES = 1

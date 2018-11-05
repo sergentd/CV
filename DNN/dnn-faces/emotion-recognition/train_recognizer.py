@@ -62,20 +62,20 @@ else:
 figPath = os.path.sep.join([config.OUTPUT_PATH, "vggnetemotion.png"])
 jsonPath = os.path.sep.join([config.OUTPUT_PATH, "vggnetemotion.json"])
 callbacks = [
-    EpochCheckpoint(args["checkpoints"], every=5, startAt=args["start_epoch"])
+    EpochCheckpoint(args["checkpoints"], every=5, startAt=args["start_epoch"]),
     TrainingMonitor(figPath, jsonPath=jsonPath, startAt=args["start_epoch"])
 ]
 
 # train the network
 model.fit_generator(
     trainGen.generator(),
-    steps_per_epoch=trainGen.numImages // config.BATCH_SIZE)
+    steps_per_epoch=trainGen.numImages // config.BATCH_SIZE,
     validation_data=valGen.generator(),
     validation_steps=valGen.numImages // config.BATCH_SIZE,
     epochs=15,
     max_queue_size=config.BATCH_SIZE*2,
     callbacks=callbacks,
-    verbose=1
+    verbose=1)
 
 # close the dataset
 trainGen.close()

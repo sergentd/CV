@@ -4,69 +4,69 @@ import numpy as np
 import h5py
 
 class HDF5DatasetGenerator:
-  def __init__(self, dbPath, batchSize, preprocessors=None,
-    aug=None, binarize=True, classes=2):
-    # store the batch size, preprocessors, data augmentor,
-    # wether or not the labels should be binarized and
-    # the total number of classes
-    self.batchSize = batchSize
-    self.preprocessors = preprocessors
-    self.aug = aug
-    self.binarize = binarize
-    self.classes = classes
+    def __init__(self, dbPath, batchSize, preprocessors=None,
+        aug=None, binarize=True, classes=2):
+        # store the batch size, preprocessors, data augmentor,
+        # wether or not the labels should be binarized and
+        # the total number of classes
+        self.batchSize = batchSize
+        self.preprocessors = preprocessors
+        self.aug = aug
+        self.binarize = binarize
+        self.classes = classes
 
-    # store the HDF5 database for reading and determine the total
-    # number of entries in the database
-    self.db = h5py.File(dbPath)
-    self.numImages = self.db["labels"].shape[0]
+        # store the HDF5 database for reading and determine the total
+        # number of entries in the database
+        self.db = h5py.File(dbPath)
+        self.numImages = self.db["labels"].shape[0]
 
-  def generator(self, passes=np.inf):
-    # initialize the epochs count
-    epochs = 0
+    def generator(self, passes=np.inf):
+        # initialize the epochs count
+        epochs = 0
 
-    # keep looping infinitely -- the model will stop once we
-    # reach the desired number of epochs
-    while epochs < passes:
-      # loop over the HDF5 dataset
-      for i in np.arange(0, self.numImages, self.batchSize):
-        # extract the images and labels from the HDF5 dataset
-        images = self.db["images"][i:i + self.batchSize]
-        labels = self.db["labels"][i:i + self.batchSize]
+        # keep looping infinitely -- the model will stop once we
+        # reach the desired number of epochs
+        while epochs < passes:
+            # loop over the HDF5 dataset
+            for i in np.arange(0, self.numImages, self.batchSize):
+                # extract the images and labels from the HDF5 dataset
+                images = self.db["images"][i:i + self.batchSize]
+                labels = self.db["labels"][i:i + self.batchSize]
 
-        # check to see if labels should be binarized
-        if self.binarize:
-          labels = np_utils.to_categorical(labels, self.classes)
+                # check to see if labels should be binarized
+                if self.binarize:
+                    labels = np_utils.to_categorical(labels, self.classes)
 
-        # check to see if we need to apply preprocessors
-        if self.preprocessors is not None:
-          # initialize the list of processed images
-          procImages = []
+                # check to see if we need to apply preprocessors
+                if self.preprocessors is not None:
+                    # initialize the list of processed images
+                    procImages = []
 
-          # loop over the images
-          for image in images:
-            # loop over the preprocessors and apply each
-            # of them to the image
-            for p in self.preprocessors:
-              image = p.preprocess(image)
+                    # loop over the images
+                    for image in images:
+                        # loop over the preprocessors and apply each
+                        # of them to the image
+                        for p in self.preprocessors:
+                            image = p.preprocess(image)
 
-            # update the list of processed images
-            procImages.append(image)
+                            # update the list of processed images
+                            procImages.append(image)
 
-          # update the images array to be the processed
-          # images
-          images = np.array(procImages)
+                    # update the images array to be the processed
+                    # images
+                    images = np.array(procImages)
 
-          # if the data augmentation exists, apply it
-          if self.aug is not None:
-            (images, labels) = next(self.aug.flow(images,
-              labels, batch_size=self.batchSize))
+                # if the data augmentation exists, apply it
+                if self.aug is not None:
+                    (images, labels) = next(self.aug.flow(images,
+                        labels, batch_size=self.batchSize))
 
-          # yield a tuple of images and labels
-          yield (images, labels)
+            # yield a tuple of images and labels
+            yield (images, labels)
 
-        # increment the total number of epochs
-        epochs +=1
+            # increment the total number of epochs
+            epochs +=1
 
-  def close(self):
-    # close the database
-    self.db.close()
+    def close(self):
+        # close the database
+        self.db.close()

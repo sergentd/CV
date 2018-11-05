@@ -3,7 +3,7 @@ import mxnet as mx
 
 class MxGoogLeNet:
     @staticmethod
-    def conv_module(data, K, kX, kY, pad(0, 0), stride=(1, 1)):
+    def conv_module(data, K, kX, kY, pad=(0, 0), stride=(1, 1)):
         # define the CONV => RELU => BN pattern
         conv = mx.sym.Convolution(data=data, kernel=(kX, kY), num_filter=K,
             pad=pad, stride=stride)

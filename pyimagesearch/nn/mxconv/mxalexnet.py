@@ -47,7 +47,7 @@ class MxAlexNet:
         fc1 = mx.sym.FullyConnected(data=flatten, num_hidden=4096)
         act4_1 = mx.sym.LeakyReLU(data=fc1, act_type="elu")
         bn4_1 = mx.sym.BatchNorm(data=act4_1)
-        do4 = my.sym.Dropout(data=bn4_1, p=0.5)
+        do4 = mx.sym.Dropout(data=bn4_1, p=0.5)
 
         # block 5: second set of FC => RELU layers
         fc2 = mx.sym.FullyConnected(data=do4, num_hidden=4096)

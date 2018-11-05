@@ -1,6 +1,6 @@
 # import the necessary packages
-from config import imagenet_googlenet_config as config
-from pyimagesearch.nn.mxconv import MxGoogLeNet
+from config import imagenet_squeezenet_config as config
+from pyimagesearch.nn.mxconv import MxSqueezeNet
 import mxnet as mx
 import argparse
 import logging
@@ -30,7 +30,7 @@ batchSize = config.BATCH_SIZE * config.NUM_DEVICES
 # construct the training image iterator
 trainIter = mx.io.ImageRecordIter(
 	path_imgrec=config.TRAIN_MX_REC,
-	data_shape=(3, 224, 224),
+	data_shape=(3, 227, 227),
 	batch_size=batchSize,
 	rand_crop=True,
 	rand_mirror=True,
@@ -44,14 +44,14 @@ trainIter = mx.io.ImageRecordIter(
 # construct the validation image iterator
 valIter = mx.io.ImageRecordIter(
 	path_imgrec=config.VAL_MX_REC,
-	data_shape=(3, 224, 224),
+	data_shape=(3, 227, 227),
 	batch_size=batchSize,
 	mean_r=means["R"],
 	mean_g=means["G"],
 	mean_b=means["B"])
 
 # initialize the optimizer
-opt = mx.optimizer.Adam(learning_rate=1e-3, wd=0.0002,
+opt = mx.optimizer.SGD(learning_rate=1e-2, momentum=0.9, wd=0.0002,
 	rescale_grad=1.0 / batchSize)
 
 # construct the checkpoints path, initialize the model argument and
@@ -66,7 +66,7 @@ auxParams = None
 if args["start_epoch"] <= 0:
 	# build the LeNet architecture
 	print("[INFO] building network...")
-	model = MxGoogLeNet.build(config.NUM_CLASSES)
+	model = MxSqueezeNet.build(config.NUM_CLASSES)
 
 # otherwise, a specific checkpoint was supplied
 else:
@@ -82,9 +82,9 @@ else:
 
 # compile the model
 model = mx.model.FeedForward(
-	ctx=[mx.gpu(1), mx.gpu(2), mx.gpu(3)],
+	ctx=[mx.gpu(0)],
 	symbol=model,
-	initializer=mx.initializer.MSRAPrelu(),
+	initializer=mx.initializer.Xavier(),
 	arg_params=argParams,
 	aux_params=auxParams,
 	optimizer=opt,
@@ -92,7 +92,7 @@ model = mx.model.FeedForward(
 	begin_epoch=args["start_epoch"])
 
 # initialize the callbacks and evaluation metrics
-batchEndCBs = [mx.callback.Speedometer(batchSize, 250)]
+batchEndCBs = [mx.callback.Speedometer(batchSize, 500)]
 epochEndCBs = [mx.callback.do_checkpoint(checkpointsPath)]
 metrics = [mx.metric.Accuracy(), mx.metric.TopKAccuracy(top_k=5),
 	mx.metric.CrossEntropy()]
