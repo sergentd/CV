@@ -1,0 +1,15 @@
+{
+	"face_detector_prototxt": "assets/deploy.prototxt",
+	"face_detector_weights": "assets/res10_300x300_ssd_iter_140000.caffemodel",
+	"landmark_predictor": "assets/shape_predictor_68_face_landmarks.dat",
+	"sunglasses": "assets/sunglasses.png",
+	"sunglasses_mask": "assets/sunglasses_mask.png",
+	"deal_with_it": "assets/deal_with_it.png",
+	"deal_with_it_mask": "assets/deal_with_it_mask.png",
+	"min_confidence": 0.5,
+	"steps": 20,
+	"delay": 5,
+	"final_delay": 250,
+	"loop": 0,
+	"temp_dir": "temp"
+}
