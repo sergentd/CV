@@ -2,6 +2,7 @@
 from .alexnet import AlexNet
 from .dcgan import DCGAN
 from .deepergooglenet import DeeperGoogLeNet
+from .emotionvggnet import EmotionVGGNet
 from .fcheadnet import FCHeadNet
 from .lenet import LeNet
 from .minigooglenet import MiniGoogLeNet

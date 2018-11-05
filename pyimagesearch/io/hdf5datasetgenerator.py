@@ -3,7 +3,7 @@ from keras.utils import np_utils
 import numpy as np
 import h5py
 
-class HDF5DataGenerator:
+class HDF5DatasetGenerator:
   def __init__(self, dbPath, batchSize, preprocessors=None,
     aug=None, binarize=True, classes=2):
     # store the batch size, preprocessors, data augmentor,
