@@ -1,5 +1,5 @@
 # USAGE
-# python deep_learning_object_detection.py --image images/example_01.jpg \
+# python ssd_detection.py --image images/example_01.jpg \
 #	--prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel
 
 # import the necessary packages
