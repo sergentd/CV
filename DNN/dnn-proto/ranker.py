@@ -6,8 +6,10 @@ import h5py
 
 # construct the argument parser and parse the arguments
 ap = argpase.ArgumentParser()
-ap.add_argument("-d","--db", required=True, help="path to the HDF5 database")
-ap.add_argument("-m","--model", required=True, help="path to the pre-trained model")
+ap.add_argument("-d","--db", required=True,
+    help="path to the HDF5 database")
+ap.add_argument("-m","--model", required=True,
+    help="path to the pre-trained model")
 args = vars(ap.parse_args())
 
 # load the pre-trained model
