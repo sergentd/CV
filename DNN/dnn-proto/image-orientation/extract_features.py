@@ -18,7 +18,7 @@ ap.add_argument("-d", "--dataset", required=True,
   help="path to the input dataset")
 ap.add_argument("-o", "--output", required=True,
   help="path to the output HDF5 file")
-ap.add_argument("-b", "--batch-size", type=int, default=32,
+ap.add_argument("-b", "--batch-size", type=int, default=8,
   help="batch size of images to be passed through the network")
 ap.add_argument("-s", "--buffer-size", type=int, default=1000,
   help="size of the features extraction buffer")
@@ -79,7 +79,7 @@ for i in np.arange(0, len(imagePaths), bs):
     image = imagenet_utils.preprocess_input(image)
 
     # add the preprocessed image to the batch
-    batchImage.append(image)
+    batchImages.append(image)
 
   # pass the image through the network and use the output
   # as a features verctor (actual features)

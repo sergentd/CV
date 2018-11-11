@@ -79,7 +79,7 @@ for i in np.arange(0, len(imagePaths), bs):
     image = imagenet_utils.preprocess_input(image)
 
     # add the preprocessed image to the batch
-    batchImage.append(image)
+    batchImages.append(image)
 
   # pass the image through the network and use the output
   # as a features verctor (actual features)
