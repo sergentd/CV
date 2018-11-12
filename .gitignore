@@ -111,3 +111,6 @@ venv.bak/
 # personal files
 _private/
 _dnn_code/
+
+# dnn weights
+yolov3.weights
