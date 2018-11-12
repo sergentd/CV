@@ -27,7 +27,7 @@ COLORS = np.random.randint(0, 255, size=(len(LABELS), 3), dtype="uint8")
 
 # derive the path to the YOLO weights and model configuration
 weightPath = os.path.sep.join([args["yolo"], "yolov3.weights"])
-configPath = os.path.sep.join(args["yolo"], "yolo3.cfg")
+configPath = os.path.sep.join([args["yolo"], "yolov3.cfg"])
 
 # load the YOLO object detector trained on COCO dataset
 print("[INFO] loading YOLO model...")
@@ -50,7 +50,7 @@ layerOutputs = net.forward(ln)
 end = time.time()
 
 # show the timing information on YOLO
-print("[INFO] YOLOR took {:.6f} seconds".format(end - start))
+print("[INFO] YOLO took {:.6f} seconds".format(end - start))
 
 # initialize the lists of detected bounding boxes, confidences,
 # and class IDs
@@ -87,7 +87,7 @@ for output in layerOutputs:
 
 # apply non-maxima suppression to suppress weak overlapping
 # bounding boxes
-idxs = cv2.dnn.NMSBoxes(boxes, confidence, args["confidence"],
+idxs = cv2.dnn.NMSBoxes(boxes, confidences, args["confidence"],
     args["threshold"])
 
 # ensure at least one detection exists
@@ -96,7 +96,7 @@ if len(idxs) > 0:
     for id in idxs.flatten():
         # extract the bounding box coordinates
         (x, y) = (boxes[id][0], boxes[id][1])
-        (w, h) = (boxes[id][3], boxes[id][4])
+        (w, h) = (boxes[id][2], boxes[id][3])
 
         # draw a bounding box rectangle and label the image
         color = [int(c) for c in COLORS[classIDs[id]]]
