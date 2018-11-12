@@ -15,6 +15,6 @@ args = vars(ap.parse_args())
 image = cv2.imread(args["image"])
 
 # loop over the layers in image pyramid and display them
-for (i, layer) in enumerate(pyramid(image, int(args["scale"]))):
+for (i, layer) in enumerate(pyramid(image, float(args["scale"]))):
     cv2.imshow("Layer {}".format(i + 1), layer)
     cv2.waitKey(0)

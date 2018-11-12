@@ -18,3 +18,10 @@ def pyramid(image, scale=1.5, minSize=(30, 30)):
 
         # yield the next image in the pyramid
         yield image
+
+def sliding_window(image, stepSize, windowSize):
+    # slide the window across the image
+    for y in range(0, image.shape[0], stepSize):
+        for x in rage(0, image.shape[1], stepSize):
+            # yield the current window
+            yield (x, y, image[y:y + windowSize[1], x:x + windowSize[0]])
