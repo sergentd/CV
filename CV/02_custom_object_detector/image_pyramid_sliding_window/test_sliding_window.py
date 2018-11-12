@@ -11,10 +11,16 @@ import cv2
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required=True, help="path to the input image")
-ap.add_argument("-w", "--width", type=int, help="width of sliding window")
-ap.add_argument("-t", "--height", type=int, help="height of sliding window")
-ap.add_argument("-s", "--scale", type=float, default=1.5, help="scale factor size")
+ap.add_argument("-i", "--image", required=True,
+	help="path to the input image")
+ap.add_argument("-w", "--width", type=int,
+	help="width of sliding window")
+ap.add_argument("-t", "--height", type=int,
+	help="height of sliding window")
+ap.add_argument("-z", "--step-size", type=int, default=32,
+	help="step in pixels between each window")
+ap.add_argument("-s", "--scale", type=float, default=1.5,
+	help="scale factor size")
 args = vars(ap.parse_args())
 
 # load the input image and unpack the command line arguments
