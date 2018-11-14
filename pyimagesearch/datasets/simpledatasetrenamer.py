@@ -61,6 +61,9 @@ class SimpleDatasetRenamer:
     pbar.finish()
   
   def gen_filename(self, path):
+    # initialize the filename
+    filename = None
+    
     # grab the data format to encode the file with
     # the same after renaming
     if self.ext is None:
@@ -75,7 +78,10 @@ class SimpleDatasetRenamer:
     prefix = str(self.prefix) if self.prefix is not None else ""
     suffix = str(self.suffix) if self.suffix is not None else ""
     
-    while(True and self.index < 10**(self.length+1)):
+    while self.index < 10**(self.length + 1):
+      # set the default idx to the filename without extension
+      idx = os.path.basename(path).split(".")[0]
+      
       # check to see if we need to generate a unique ID    
       if not self.keep_idx:
         # loop until we have a unique id and no conflict with existing files
@@ -90,15 +96,14 @@ class SimpleDatasetRenamer:
           
       # allow for a unique filename only
       if not os.path.isfile(filename):
-        break
+        return filename
         
       # if we keep the idx and the filename wasn't free at first try,
       # we will not be able to generate a unique ID so we break the loop
       # and return a None filename (so we don't erase the existing file)
       elif self.keep_idx:
-        filename = None
-        print("Could not save {}: existing file in target directory")
-        break
+        print("Could not save {}: existing file in target directory".format(filename))
+        return None
         
     return filename
   
