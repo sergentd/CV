@@ -48,3 +48,21 @@ for c in cnts:
     cv2.drawContours(mask, [c], -1, 255, -1)
     features = cv2.mean(canvas, mask=mask)[:3]
     data.append(features)
+
+# cluster color features
+clt = KMeans(n_clusters=3)
+clt.fit(data)
+cv2.imshow("Canvas", canvas)
+
+# loop over unique cluster identifiers
+for i in np.unique(clt.labels_):
+    # construct a mask for the current cluster
+    mask = np.zeros(canvas.shape[:2], dtype="uint8")
+
+    # loop over the indexes of the current cluster and draw them
+    for j in np.where(clt.labels_ == i)[0]:
+        cv2.drawContours(mask, [cnts[j]], -1, 255, -1)
+
+    # show the output image for the cluster
+    cv2.imshow("Cluster", cv2.bitwise_and(canvas, canvas, mask=mask))
+    cv2.waitKey(0)
