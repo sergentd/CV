@@ -1,4 +1,5 @@
 # import necessary packages
+from . import activation
 from .imagenethelper import ImageNetHelper
 from .modelinspector import ModelInspector
 from .captchahelper import preprocess
