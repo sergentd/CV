@@ -8,6 +8,7 @@ from .labdescriptor import LabDescriptor
 from .haralickdescriptor import HaralickDescriptor
 from .humomentdescriptor import HuMomentDescriptor
 from .hogdescriptor import HOGDescriptor
+from .hog import HOG
 import warnings
 
 LST_DESC = {
@@ -19,7 +20,8 @@ LST_DESC = {
   "bgr_s":BGRStatsDescriptor,
   "haralick":HaralickDescriptor,
   "hu":HuMomentDescriptor,
-  "hog":HOGDescriptor
+  "hog_d":HOGDescriptor,
+  "hog":HOG
 }
 
 def descriptors(descriptors):
