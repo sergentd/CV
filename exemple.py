@@ -20,4 +20,4 @@ cv2.imshow("Exemple", image)
 cv2.waitKey(0)
 
 # save the image
-cv2.imwrite(args["output"])
+cv2.imwrite(args["output"], image)
