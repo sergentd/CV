@@ -5,7 +5,7 @@ import datetime
 
 class BaseIndexer(object):
     def __init__(self, dbPath, estNumImages=500, maxBufferSize=50000,
-        dbResizeFactor=2, verbose=True)
+        dbResizeFactor=2, verbose=True):
         # store the database path, the estimated number of images, the length
         # of the buffer, the resize factor of the database and the verbosity
         self.dbPath = dbPath
@@ -70,7 +70,7 @@ class BaseIndexer(object):
     def _debug(self, msg, msgType="[INFO]"):
         # check to see if the message should be printed
         if self.verbose:
-            print("{} {} - {}".format(msgType, msg, datetime.datetime.noew()))
+            print("{} {} - {}".format(msgType, msg, datetime.datetime.now()))
 
     @staticmethod
     def featureStack(array, accum=None, stackMethod=np.vstack):
