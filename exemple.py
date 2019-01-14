@@ -13,7 +13,7 @@ image = cv2.imread(args["image"])
 
 # write some text at the center of the image
 (h, w) = image.shape[:2]
-cv2.putText(image, "Hello world", (h/2 - 10, w/2 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0,255,0), 2)
+cv2.putText(image, "Hello world", (h//2 - 10, w//2 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0,255,0), 2)
 
 # display the image
 cv2.imshow("Exemple", image)
