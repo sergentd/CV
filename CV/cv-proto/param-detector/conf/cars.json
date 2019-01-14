@@ -31,5 +31,11 @@
 	"overlap_thresh": 0.3,
 	"pyramid_scale": 1.5,
 	"window_dim": [96, 32],
-	"min_probability": 0.7
+	"min_probability": 0.7,
+	
+	/****
+	* LINEAR SVM
+	****/
+	"classifier_path": "output/cars/model.cpickle",
+	"C": 0.01
 }
