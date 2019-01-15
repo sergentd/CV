@@ -75,8 +75,8 @@ for i in np.arange(0, conf["num_distraction_images"]):
     image = cv2.imread(random.choice(dstPaths))
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     patches = extract_patches_2d(image, tuple(conf["window_dim"]),
-        max_patches=conf["num_distraction_per_images"])
-    
+        max_patches=conf["num_distractions_per_image"])
+
     # loop over the patches
     for patch in patches:
         # extract the features from the patch, then update the data and label list
@@ -90,4 +90,4 @@ for i in np.arange(0, conf["num_distraction_images"]):
 # dump the dataset to file
 pbar.finish()
 print("[INFO] dumping features and labels to file...")
-dataset.dump_dataset(data, labels, conf["feature_path"], "features")
+dataset.dump_dataset(data, labels, conf["features_path"], "features")

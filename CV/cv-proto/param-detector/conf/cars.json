@@ -2,14 +2,14 @@
 	/****
 	* DATASET PATHS
 	****/
-	"image_dataset": "datasets/caltech101/101_ObjectCategories/car_side",
-	"image_annotations": "datasets/caltech101/Annotations/car_side",
-	"image_distractions": "datasets/sceneclass13",
+	"image_dataset": "../../../datasets/caltech-101/images/car_side",
+	"image_annotations": "../../../datasets/caltech-101/Annotations/car_side",
+	"image_distractions": "../../../datasets/13scenes",
  
 	/****
 	* FEATURE EXTRACTION
 	****/
-	"features_path": "output/cars/car_features.hdf5",
+	"features_path": "output/cars_side/car_features.hdf5",
 	"percent_gt_images": 0.5,
 	"offset": 5,
 	"use_flip": true,
@@ -36,6 +36,6 @@
 	/****
 	* LINEAR SVM
 	****/
-	"classifier_path": "output/cars/model.cpickle",
+	"classifier_path": "output/cars_side/model.cpickle",
 	"C": 0.01
 }
