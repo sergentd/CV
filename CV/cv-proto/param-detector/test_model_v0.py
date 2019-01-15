@@ -1,9 +1,7 @@
 # import necessary packages
-from pyimagesearch.object_detection import non_max_suppression
 from pyimagesearch.object_detection import ObjectDetector
 from pyimagesearch.descriptors import HOG
 from pyimagesearch.utils import Conf
-import numpy as np
 import imutils
 import argparse
 import pickle
@@ -32,18 +30,10 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 # detect objects in the image
 (boxes, probs) = detector.detect(gray, conf["window_dim"], winStep=conf["window_step"],
     pyramidScale=conf["pyramid_scale"], minProb=conf["min_probability"])
-pick = non_max_suppression(np.array(boxes), probs, conf["overlap_thresh"])
-orig = image.copy()
-
-# loop over the original bounding boxes and draw them
-for (startX, startY, endX, endY) in boxes:
-    cv2.rectangle(orig, (startX, startY), (endX, endY), (0, 0, 255), 2)
     
-# loop over the allowed bounding boxes and draw them
-for (startX, startY, endX, endY) in pick:
-    cv2.rectangle(image, (startX, startY), (endX, endY), (0, 255, 0), 2)
+for (startX, startY, endX, endY) in boxes:
+    cv2.rectangle(image, (startX, startY), (endX, endY), (0, 0, 255), 2)
     
 # show the output image
-cv2.imshow("original", orig)
 cv2.imshow("image", image)
 cv2.waitKey(0)

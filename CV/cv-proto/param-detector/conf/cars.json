@@ -37,5 +37,13 @@
 	* LINEAR SVM
 	****/
 	"classifier_path": "output/cars_side/model.cpickle",
-	"C": 0.01
+	"C": 0.01,
+	
+	/****
+	* HARD NEGATIVE MINING
+	****/
+	"hn_num_distraction_images": 50,
+	"hn_window_step": 4,
+	"hn_pyramid_scale": 1.5,
+	"hn_min_probability": 0.51
 }
