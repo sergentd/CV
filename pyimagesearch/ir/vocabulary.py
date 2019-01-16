@@ -34,7 +34,7 @@ class Vocabulary:
         self._debug("clustering with k={:,}".format(numClusters))
         clt = MiniBatchKMeans(n_clusters=numClusters, random_state=randomState)
         clt.fit(data)
-        self._debug("cluster shape: {}".format(clt.clusters_centers_.shape))
+        self._debug("cluster shape: {}".format(clt.cluster_centers_.shape))
         
         # close the database
         db.close()
