@@ -28,7 +28,7 @@ data = []
 # and the object detector
 model = pickle.loads(open(conf["classifier_path"], "rb").read())
 hog = HOG(orientations=conf["orientations"], pixelsPerCell=tuple(conf["pixels_per_cell"]),
-	cellsPerBlock=tuple(conf["cells_per_block"]), normalize=conf["normalize"], block_norm="L1")
+    cellsPerBlock=tuple(conf["cells_per_block"]), normalize=conf["normalize"], block_norm="L1")
 od = ObjectDetector(model, hog)
 
 # grab the set of distraction paths and randomly sample them
@@ -41,27 +41,27 @@ pbar = progressbar.ProgressBar(maxval=len(dstPaths), widgets=widgets).start()
 
 # loop over the distraction paths
 for (i, imagePath) in enumerate(dstPaths):
-	# load the image and convert it to grayscale
-	image = cv2.imread(imagePath)
-	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # load the image and convert it to grayscale
+    image = cv2.imread(imagePath)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-	# detect objects in the image
-	(boxes, probs) = od.detect(gray, conf["window_dim"], winStep=conf["hn_window_step"],
-		pyramidScale=conf["hn_pyramid_scale"], minProb=conf["hn_min_probability"])
+    # detect objects in the image
+    (boxes, probs) = od.detect(gray, conf["window_dim"], winStep=conf["hn_window_step"],
+        pyramidScale=conf["hn_pyramid_scale"], minProb=conf["hn_min_probability"])
 
-	# loop over the bounding boxes
-	for (prob, (startX, startY, endX, endY)) in zip(probs, boxes):
-		# extract the ROI from the image, resize it to a known, canonical size, extract
-		# HOG features from teh ROI, and finally update the data
-		roi = cv2.resize(gray[startY:endY, startX:endX], tuple(conf["window_dim"]),
-			interpolation=cv2.INTER_AREA)
+    # loop over the bounding boxes
+    for (prob, (startX, startY, endX, endY)) in zip(probs, boxes):
+        # extract the ROI from the image, resize it to a known, canonical size, extract
+        # HOG features from teh ROI, and finally update the data
+        roi = cv2.resize(gray[startY:endY, startX:endX], tuple(conf["window_dim"]),
+            interpolation=cv2.INTER_AREA)
         cv2.imshow(roi)
         cv2.waitKey(0)
-		features = hog.describe(roi)
-		data.append(np.hstack([[prob], features]))
+        features = hog.describe(roi)
+        data.append(np.hstack([[prob], features]))
 
-	# update the progress bar
-	pbar.update(i)
+    # update the progress bar
+    pbar.update(i)
 
 # sort the data points by confidence
 pbar.finish()
@@ -72,4 +72,4 @@ data = data[data[:, 0].argsort()[::-1]]
 # dump the dataset to file
 print("[INFO] dumping hard negatives to file...")
 dataset.dump_dataset(data[:, 1:], [-1] * len(data), conf["features_path"], "hard_negatives",
-	writeMethod="a")
+    writeMethod="a")
