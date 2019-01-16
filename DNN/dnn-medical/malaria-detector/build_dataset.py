@@ -26,37 +26,37 @@ trainPaths = trainPaths[i:]
 
 # define the datasets that we'll be building
 datasets = [
-	("training", trainPaths, config.TRAIN_PATH),
-	("validation", valPaths, config.VAL_PATH),
-	("testing", testPaths, config.TEST_PATH)
+    ("training", trainPaths, config.TRAIN_PATH),
+    ("validation", valPaths, config.VAL_PATH),
+    ("testing", testPaths, config.TEST_PATH)
 ]
 
 # loop over the datasets
 for (dType, imagePaths, baseOutput) in datasets:
-	# show which data split we are creating
-	print("[INFO] building '{}' split".format(dType))
+    # show which data split we are creating
+    print("[INFO] building '{}' split".format(dType))
 
-	# if the output base output directory does not exist, create it
-	if not os.path.exists(baseOutput):
-		print("[INFO] 'creating {}' directory".format(baseOutput))
-		os.makedirs(baseOutput)
+    # if the output base output directory does not exist, create it
+    if not os.path.exists(baseOutput):
+        print("[INFO] 'creating {}' directory".format(baseOutput))
+        os.makedirs(baseOutput)
 
-	# loop over the input image paths
-	for inputPath in imagePaths:
-		# extract the filename of the input image along with its
-		# corresponding class label
-		filename = inputPath.split(os.path.sep)[-1]
-		label = inputPath.split(os.path.sep)[-2]
+    # loop over the input image paths
+    for inputPath in imagePaths:
+        # extract the filename of the input image along with its
+        # corresponding class label
+        filename = inputPath.split(os.path.sep)[-1]
+        label = inputPath.split(os.path.sep)[-2]
 
-		# build the path to the label directory
-		labelPath = os.path.sep.join([baseOutput, label])
+        # build the path to the label directory
+        labelPath = os.path.sep.join([baseOutput, label])
 
-		# if the label output directory does not exist, create it
-		if not os.path.exists(labelPath):
-			print("[INFO] 'creating {}' directory".format(labelPath))
-			os.makedirs(labelPath)
+        # if the label output directory does not exist, create it
+        if not os.path.exists(labelPath):
+            print("[INFO] 'creating {}' directory".format(labelPath))
+            os.makedirs(labelPath)
 
-		# construct the path to the destination image and then copy
-		# the image itself
-		p = os.path.sep.join([labelPath, filename])
-		shutil.copy2(inputPath, p)
+        # construct the path to the destination image and then copy
+        # the image itself
+        p = os.path.sep.join([labelPath, filename])
+        shutil.copy2(inputPath, p)
