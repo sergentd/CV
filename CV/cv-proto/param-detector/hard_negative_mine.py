@@ -55,6 +55,8 @@ for (i, imagePath) in enumerate(dstPaths):
 		# HOG features from teh ROI, and finally update the data
 		roi = cv2.resize(gray[startY:endY, startX:endX], tuple(conf["window_dim"]),
 			interpolation=cv2.INTER_AREA)
+        cv2.imshow(roi)
+        cv2.waitKey(0)
 		features = hog.describe(roi)
 		data.append(np.hstack([[prob], features]))
 
