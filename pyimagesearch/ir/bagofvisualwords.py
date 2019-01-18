@@ -4,7 +4,7 @@ from scipy.sparse import csr_matrix
 import numpy as np
 
 class BagOfVisualWords:
-	def __init__(self, codebook, sparse=True):
+    def __init__(self, codebook, sparse=True):
         # store the codebook used to compute the bag-of-visual-words representation
         # for each image along with the flag used to control whether sparse or dense
         # histograms are constructed
