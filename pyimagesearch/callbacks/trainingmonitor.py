@@ -6,7 +6,7 @@ import json
 import os
 
 class TrainingMonitor(BaseLogger):
-  def __init__(self, figPath, jsonPath=None, statAt=0):
+  def __init__(self, figPath, jsonPath=None, startAt=0):
     # store the output path for the figure, the path
     # to the optional json file and the starting epoch
     super(TrainingMonitor, self).__init__()

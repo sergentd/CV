@@ -34,8 +34,8 @@ split = train_test_split(trainPaths, trainLabels,
 # construct a list pairing the training validation and testing images paths
 # along with their corresponding labels and output HDF5 files
 datasets = [
-  ("train", trainPaths, trainLabels, config.TRAIN_HDF5)
-  ("val", valPaths, valLabels, config.VAL_HDF5)
+  ("train", trainPaths, trainLabels, config.TRAIN_HDF5),
+  ("val", valPaths, valLabels, config.VAL_HDF5),
   ("test", testPaths, testLabels, config.TEST_HDF5)
 ]
 
@@ -49,19 +49,19 @@ for (dtype, paths, labels, outputPath) in datasets:
   # create HDF5 writer
   print("[INFO] building {}".format(outputPath))
   writer = HDF5DatasetWriter((len(paths), 256, 256, 3), outputPath)
-  
+
   # initialize the progressbar
   widgets = ["Building Dataset: ", progressbar.Percentage(), " ",
     progressbar.Bar(), " ", progressbar.ETA()]
   pbar = progressbar.ProgressBar(maxval=len(paths),
     widgets=widgets).start()
-    
+
   # loop over the images paths
   for (i, (path, label)) in enumerate(zip(paths, labels)):
     # load the image and process it
     image = cv2.imread(path)
     image = aap.preprocess(image)
-    
+
     # if we are building the training dataset, then compute the
     # mean of each channel in the image, then update
     # the respective lists
@@ -70,15 +70,15 @@ for (dtype, paths, labels, outputPath) in datasets:
       R.append(r)
       G.append(g)
       B.append(b)
-      
+
     # add the image and label # to the HDF5 dataset
     writer.add([image], [label])
-    pbar.update()
-  
+    pbar.update(i)
+
   # close the HDF5 writer
   pbar.finish()
   writer.close()
-  
+
 # construct a dictionnary of averages, then serialize the means
 # to a JSON file
 print("[INFO] serializing means...")
