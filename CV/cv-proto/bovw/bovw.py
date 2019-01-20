@@ -8,25 +8,25 @@ class BagOfVisualWords:
         # store the codebook used to compute the bag-of-visual-words representation
         # for each image along with the flag used to control whether sparse or dense
         # histograms are constructed
-        self.codebook = codebook
-        self.sparse = sparse
-        
-    def describe(self, features):
+		self.codebook = codebook
+		self.sparse = sparse
+
+	def describe(self, features):
         # compute the euclidean distance between the features and cluster centers
         # then grab the indexes of the smallest distances for each cluster and construct
         # a bag-of-visual-words representation
-        D = pairwise.euclidean_distances(features, Y=self.codebook)
-        (words, counts) = np.unique(np.argmin(D, axis=1), return_counts=True)
-        
+		D = pairwise.euclidean_distances(features, Y=self.codebook)
+		(words, counts) = np.unique(np.argmin(D, axis=1), return_counts=True)
+
         # check to see if a sparse histogram should be constructed
-        if self.sparse:
-            hist = csr_matrix((counts, (np.zeros((len(words),)), words)),
-                shape=(1, len(self.codebook)), dtype="float")
-        
+		if self.sparse:
+			hist = csr_matrix((counts, (np.zeros((len(words),)), words)),
+				shape=(1, len(self.codebook)), dtype="float")
+
         # otherwise, construct a dense histogram of visual words counts
-        else:
-            hist = np.zeros((len(self.codebook),), dtype="float")
-            hist[words] = counts
-            
+		else:
+			hist = np.zeros((len(self.codebook),), dtype="float")
+			hist[words] = counts
+
         # return the histogram of visual word counts
-        return hist
+		return hist

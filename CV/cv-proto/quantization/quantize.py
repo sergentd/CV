@@ -24,14 +24,13 @@ for (i, f) in enumerate(features):
     # with the smallest distance
     D = pairwise.euclidean_distances(f.reshape(1, -1), Y=vocab)
     j = np.argmin(D)
-    
-    print("[INFO] closest visual word to feature #{}: {}".format(i, j)
+
+    print("[INFO] closest visual word to feature #{}: {}".format(i, j))
     hist[j] += 1
     print("[INFO] updated histogram: {}".format(hist))
-    
+
 # apply the BagOfVisualWords class and speed up the process
 bovw = BagOfVisualWords(vocab, sparse=False)
 hist = bovw.describe(features)
 
 print("[INFO] BOVW histogram: {}".format(hist))
-
