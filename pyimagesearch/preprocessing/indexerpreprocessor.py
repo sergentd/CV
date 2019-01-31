@@ -2,7 +2,7 @@
 import imutils
 import cv2
 
-class CBIRPreprocessor:
+class IndexerPreprocessor:
     def __init__(self, width=320):
         # store the width of preprocessed images
         self.width = width
