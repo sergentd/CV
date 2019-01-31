@@ -11,3 +11,4 @@ from .hogdescriptor import HOGDescriptor
 from .hog import HOG
 from .detectanddescribe import DetectAndDescribe
 from .blockbinarypixelsum import BlockBinaryPixelSum
+from .pbow import PBOW
