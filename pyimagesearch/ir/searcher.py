@@ -1,6 +1,6 @@
 # import necessary packages
-from .searchersult import SearchResult
-from .dists import chi2chi2_distance
+from .searchresult import SearchResult
+from .dists import chi2_distance
 import numpy as np
 import datetime
 import h5py
