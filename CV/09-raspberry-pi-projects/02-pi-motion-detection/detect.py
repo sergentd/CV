@@ -3,7 +3,7 @@
 
 # import the necessary packages
 from __future__ import print_function
-from pyimagesearch.motion_detection import SingleMotionDetector
+from pyimagesearch.motion import SingleMotionDetector
 from scipy.spatial import distance as dist
 from imutils.video import VideoStream
 import argparse
