@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>imglab dataset</name>
+<comment>Created by imglab tool.</comment>
+<images>
+  <image file='face_000000.png'>
+    <box top='251' left='166' width='26' height='39'/>
+  </image>
+  <image file='face_000001.png'>
+    <box top='101' left='103' width='120' height='147'>
+      <label>adrian</label>
+    </box>
+  </image>
+  <image file='face_000002.png'>
+    <box top='40' left='40' width='55' height='68'>
+      <label>adrian</label>
+    </box>
+  </image>
+  <image file='face_000003.png'>
+    <box top='40' left='145' width='43' height='64'>
+      <label>face</label>
+    </box>
+    <box top='77' left='269' width='46' height='59'>
+      <label>face</label>
+    </box>
+  </image>
+  <image file='face_000004.png'>
+    <box top='19' left='93' width='68' height='90'>
+      <label>face</label>
+    </box>
+    <box top='52' left='197' width='89' height='99'>
+      <label>face</label>
+    </box>
+    <box top='81' left='394' width='63' height='74'>
+      <label>face</label>
+    </box>
+  </image>
+</images>
+</dataset>

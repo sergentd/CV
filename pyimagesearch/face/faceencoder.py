@@ -19,6 +19,18 @@ class FaceEncoder:
         self.names = data["names"]
         self.method = data["method"]
 
+    def locate(self, image):
+        # return the faces locations in the image
+        return face_recognition.face_locations(image, model=self.method)
+
+    def quantify(self, image, boxes):
+        # return the descriptor for face encodings
+        return face_recognition.face_encodings(image, boxes)
+
+    def compare(self, encoding):
+        # return the matches between known encodings and the encoding
+        return face_recognition.compare_faces(self.encodings, encoding)
+
     def encode(self, image, name=""):
         # convert the image to grayscale
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -87,11 +99,6 @@ class FaceEncoder:
         # return the drawed image
         return image
 
-    def compare(self, encoding):
-        # return the matches between known encodings and the encoding
-        return face_recognition.compare_faces(self.encodings,
-            encoding)
-
     def save(self, filename):
         # prepare the datas
         data = {
@@ -103,11 +110,3 @@ class FaceEncoder:
         f = open(filename, "wb")
         f.write(pickle.dumps(data))
         f.close()
-
-    def locate(self, image):
-        # return the faces locations in the image
-        return face_recognition.face_locations(image, model=self.method)
-
-    def quantify(self, image, boxes):
-        # return the descriptor for face encodings
-        return face_recognition.face_encodings(image, boxes)
