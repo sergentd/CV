@@ -14,12 +14,18 @@ args = vars(ap.parse_args())
 
 # check to see if it is a file or a directory
 if isfile(args["input"]):
-    # compile it
-    source = open(args["input"], 'r').read() + "\n"
-    compile(source, args["input"], 'exec')
+    # try to compile it
+    try:
+        source = open(args["input"], 'r').read() + "\n"
+        compile(source, args["input"], 'exec')
 
-    # if successfully compiled
-    print("[SUCCESS]File: {}".format(args["input"]))
+        # print a message to the user
+        print("[SUCCESS]File: {}".format(args["input"]))
+
+    # if the file didn't compile
+    except Exception as e:
+        # display the file and the error to the user
+        print("[FAIL] {} - {}".format(path, e))
 
 # check to see if the directory exist
 elif exists(args["input"]):
@@ -42,11 +48,15 @@ elif exists(args["input"]):
                 if args["verbose"] is not None:
                     print("[INFO] processed {}".format(path))
 
-                # increment the counter
+                # increment the sucess counter
                 success += 1
 
+            # handle uncompiled files
             except Exception as e:
+                # display the file and the error to the user
                 print("[FAIL] {} - {}".format(path, e))
+
+                # increment the failure counter
                 failure += 1
 
     # conveniance variable for printing the results
