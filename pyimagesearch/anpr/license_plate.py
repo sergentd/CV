@@ -4,7 +4,7 @@ from skimage.filters import threshold_local
 from skimage import segmentation
 from skimage import measure
 from imutils import perspective
-import num as np
+import numpy as np
 import imutils
 import cv2
 
