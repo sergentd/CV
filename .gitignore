@@ -113,6 +113,9 @@ _private/
 _dnn_code/
 _features.hdf5
 hadoop_faces_dataset.txt
+hadoop_output/
+data.mdb
+lock.mdb
 
 # dnn weights
 yolov3.weights
