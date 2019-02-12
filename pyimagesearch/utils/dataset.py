@@ -2,7 +2,10 @@
 import numpy as np
 import mahotas
 import imutils
+<<<<<<< HEAD
 import pickle
+=======
+>>>>>>> 323ad9f26357d5b88902175ecf83e7598c790457
 import h5py
 import cv2
 
@@ -23,6 +26,7 @@ def load_dataset(path, datasetName):
     # return a tuple of data and labels
     return (data, labels)
 
+<<<<<<< HEAD
 def build_cifar10(inputPaths, outputPath, outputFile):
     # loop over the input CIFAR-10 files
     for path in inputPaths:
@@ -41,6 +45,8 @@ def build_cifar10(inputPaths, outputPath, outputFile):
             # update the training file with the path and class label
             outputFile.write("{} {}\n".format(p, data["labels"][i]))
 
+=======
+>>>>>>> 323ad9f26357d5b88902175ecf83e7598c790457
 def load_digits(path):
     # load the dataset and then split it into data and labels
     data = np.genfromtxt(path, delimiter=",",dtype="uint8")
