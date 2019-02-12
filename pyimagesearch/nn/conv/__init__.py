@@ -1,5 +1,6 @@
 # import the necessary packages
 from .alexnet import AlexNet
+from .convnetfactory import ConvNetFactory
 from .dcgan import DCGAN
 from .deepergooglenet import DeeperGoogLeNet
 from .emotionvggnet import EmotionVGGNet
