@@ -21,7 +21,7 @@ class AlexNet:
 
     # if we are using channel first, update the input shape
     if K.image_data_format() == "channels_first":
-      inputShape = (dept, height, width)
+      inputShape = (depth, height, width)
       chanDim = 1
 
     # Block #1: CONV => RELU => BN => POOL => DO

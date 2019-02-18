@@ -9,6 +9,7 @@ from .lenet import LeNet
 from .minigooglenet import MiniGoogLeNet
 from .minivggnet import MiniVGGNet
 from .neuralstyle import NeuralStyle
+from .regressnet import RegressNet
 from .resnet import ResNet
 from .shallownet import ShallowNet
 from .simplenet import SimpleNet

@@ -1,13 +1,15 @@
 # import necessary packages
+from sklearn.preprocessing import LabelBinarizer
+from sklearn.preprocessing import MinMaxScaler
+import pandas as pd
 import numpy as np
 import mahotas
 import imutils
-<<<<<<< HEAD
 import pickle
-=======
->>>>>>> 323ad9f26357d5b88902175ecf83e7598c790457
+import glob
 import h5py
 import cv2
+import os
 
 def dump_dataset(data, labels, path, datasetName, writeMethod="w"):
     # open the database, create the dataset, write the data and labels to dataset,
@@ -26,7 +28,6 @@ def load_dataset(path, datasetName):
     # return a tuple of data and labels
     return (data, labels)
 
-<<<<<<< HEAD
 def build_cifar10(inputPaths, outputPath, outputFile):
     # loop over the input CIFAR-10 files
     for path in inputPaths:
@@ -45,8 +46,6 @@ def build_cifar10(inputPaths, outputPath, outputFile):
             # update the training file with the path and class label
             outputFile.write("{} {}\n".format(p, data["labels"][i]))
 
-=======
->>>>>>> 323ad9f26357d5b88902175ecf83e7598c790457
 def load_digits(path):
     # load the dataset and then split it into data and labels
     data = np.genfromtxt(path, delimiter=",",dtype="uint8")
@@ -55,6 +54,86 @@ def load_digits(path):
 
     # return a tuple of the data and targets
     return (data, target)
+
+def load_house_attributes(path):
+    # initialize the list of column names in the CSV file and then
+    # load it using pandas
+    cols = ["bedrooms", "bathrooms", "area", "zipcode", "price"]
+    df = pd.read_csv(inputPath, sep=" ", header=None, names=cols)
+
+    # determien the (1) unique zip codes and (2) the number of data
+    # points with each zipcode
+    zipcodes = df["zipcode"].value_counts().keys().tolist()
+    counts = df["zipcode"].value_counts().tolist()
+
+    # loop over each of the unique zip codes and their corresponding count
+    for (zipcode, count) in zip(zipcodes, counts):
+        # the zip code counts for our housing dataset is very unbalanced
+        # so let's remove the houses with less than 25 hourses per zip code
+        if count < 25:
+            idxs = df[df["zipcode"] == zipcode].index
+            df.drop(idxs, inplace=True)
+
+        # return the data frame
+        return df
+
+def load_house_images(df, path):
+    # initialize the images array
+    images = []
+
+    # loop over the indexes of the houses
+    for i in df.index.values:
+        # find the four images for the house and sort the file paths
+        # ensuring the four are always in the same order
+        basePath = os.path.sep.join([path, "{}_*".format(i + 1)])
+        housePaths = sorted(list(glob.glob(basePath)))
+
+        # initialize the list of input images along with the output image
+        # after combining the four input images
+        inputImages = []
+        outputImage = np.zeros((64, 64, 3), dtype="uint8")
+
+        # loop over the input house paths
+        for housePath in housePaths:
+            image = cv2.imread(housePath)
+            image = cv2.resize(image, (32, 32))
+            inputImages.append(image)
+
+        # tiles the four input images in the output image
+        outputImage[ 0:32,  0:32] = inputImages[0]
+        outputImage[ 0:32, 32:64] = inputImages[1]
+        outputImage[32:64, 32:64] = inputImages[2]
+        outputImage[32:64,  0:32] = inputImages[3]
+
+        # add the tiled image to the set of images the network will
+        # be trained on
+        images.append(outputImage)
+
+    # return the set of images
+    return np.array(images)
+
+def process_house_attributes(df, train, test):
+    # initialize the column names of the continuous data
+    continuous = ["bedrooms", "bathrooms", "area"]
+
+    # perform the min-max scaling each continuous feature column to
+    # the range [0, 1]
+    cs.MinMaxScaler()
+    trainContinuous = cs.fit_transform(train[continuous])
+    testContinuous = cs.transform(test[continuous])
+
+    # one-hot encode the zip code categorical data
+    zipBinarizer = LabelBinarizer().fit(df["zipcode"])
+    trainCategorical = zipBinarizer.transform(train["zipcode"])
+    testCategorical = zipBinarizer.transform(test["zipcode"])
+
+    # construct our training and testing data points by concatenating
+    # the categorical features with the continuous features
+    trainX = np.hstack([trainCategorical, trainContinuous])
+    testX = np.hstack([testCategorical, testContinuous])
+
+    # return the concatenated training and testing data
+    return (trainX, testX)
 
 def deskew(image, width):
     # grab the width and height of the image and compute the moments
