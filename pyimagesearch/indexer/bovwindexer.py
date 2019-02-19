@@ -73,7 +73,7 @@ class BOVWIndexer(BaseIndexer):
 
         # compact the dataset
         self._debug("compacting datasets...")
-        self._resizeDatasets(self.bovwDB, "bovw", finished=self.idxs["bovw"])
+        self._resizeDataset(self.bovwDB, "bovw", finished=self.idxs["bovw"])
 
         # store the total number of images in the dataset and close the database
         self.totalImages = self.bovwDB.shape[0]

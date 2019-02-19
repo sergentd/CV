@@ -29,7 +29,7 @@ class BaseIndexer(object):
         # otherwise, assume that the buffer is a Numpy/Scipy array, so
         # compute the ending based on the array shape
         else:
-            end = self.idxs[idName] + buf.shape[0]
+            end = self.idxs[idxName] + buf.shape[0]
 
         # check to see if the dataset needs to be resized
         if end > dataset.shape[0]:
