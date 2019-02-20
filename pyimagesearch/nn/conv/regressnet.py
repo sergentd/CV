@@ -1,5 +1,5 @@
 # import necessary packages
-from keras.models import Sequential, Model
+from keras.models import Model
 from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import MaxPooling2D, Conv2D
 from keras.layers.core import Activation, Dropout, Dense
