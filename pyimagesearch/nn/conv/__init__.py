@@ -1,5 +1,6 @@
 # import the necessary packages
 from .alexnet import AlexNet
+from .cancernet import CancerNet
 from .convnetfactory import ConvNetFactory
 from .dcgan import DCGAN
 from .deepergooglenet import DeeperGoogLeNet
