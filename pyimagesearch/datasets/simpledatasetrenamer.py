@@ -6,122 +6,117 @@ import random
 import cv2
 import os
 
-# set the array of accepted false values
+# set the array of accepted false values and extensions
 FALSE_VALUES = ["false", "no", "f", "n", "0", "-1"]
+VALID_EXT = ["jpg", "jpeg", "gif", "tiff", "png", "bmp"]
 
 class SimpleDatasetRenamer:
-  def __init__(self, path=".", prefix=None, suffix=None, keep_idx=False,
-    move=None, remove=False, sequential=True, length=6, ext=None, index=0):
-    # store the following parameters : prefix to filename, suffix to filename,
-    # keep old id boolean, source directory, target directory, remove boolean,
-    # sequential renaming boolean, length of idx, file extension (dataformat),
-    # current index
-    self.prefix = prefix
-    self.suffix = suffix
-    self.keep_idx = keep_idx
-    self.directory = path
-    self.move = move
-    self.remove = remove
-    self.sequential = sequential
-    self.length = length
-    self.ext = ext
-    self.index = index
+    def __init__(self, directory=".", prefix=None, suffix=None, keep_idx=False,
+        sequential=True, length=6, ext=None, index=0):
+        # store the following parameters : prefix to filename, suffix to filename,
+        # keep old filename boolean, source directory, sequential, length of
+        # filename, file extension (dataformat), current index
+        self.prefix = prefix
+        self.suffix = suffix
+        self.keep_idx = keep_idx
+        self.directory = directory
+        self.sequential = sequential
+        self.length = length
+        self.ext = ext
+        self.index = index
 
-  def rename(self, directory=None):
-    # grab the reference to the list of images
-    if directory is not None:
-        imagePaths = sorted(list(paths.list_images(directory)))
-    else:
-        imagePaths = sorted(list(paths.list_images(self.directory)))
+    def rename(self, directory=None):
+        # grab the reference to the list of images
+        if directory is not None:
+            imagePaths = sorted(list(paths.list_images(directory)))
+        else:
+            imagePaths = sorted(list(paths.list_images(self.directory)))
 
-    # initialize the progressbar (feedback to user on the task progress)
-    widgets = ["Renaming Dataset: ", progressbar.Percentage(), " ",
-      progressbar.Bar(), " ", progressbar.ETA()]
-    pbar = progressbar.ProgressBar(maxval=len(imagePaths),
-      widgets=widgets).start()
+        # initialize the progressbar (feedback to user on the task progress)
+        widgets = ["Renaming Dataset: ", progressbar.Percentage(), " ",
+            progressbar.Bar(), " ", progressbar.ETA()]
+        pbar = progressbar.ProgressBar(maxval=len(imagePaths),
+            widgets=widgets).start()
 
-    # loop over each image, then rename it and save it in its
-    # original data format
-    for (i, path) in enumerate(imagePaths):
-      # load the image from disk
-      image = cv2.imread(path)
+        # loop over each image, then rename it and save it in its
+        # original data format
+        for (i, path) in enumerate(imagePaths):
+            # generate a filename
+            filename = self.gen_filename(path)
 
-      # try to generate a unique filename
-      filename = self.gen_filename(path)
+            # check to see if we successfuly get a new filename
+            if filename is not None:
+            # rename the image
+                os.rename(path, filename)
 
-      if filename is not None:
-        # write image to disk in the approriate directory
-        cv2.imwrite(filename, image)
+            # update the progressbar (feedback to user)
+            pbar.update(i)
 
-        # check to see if we need to remove the old file
-        if self.remove and filename != path:
-          os.remove(path)
+        # close the progressbar
+        pbar.finish()
 
-      # update the progressbar (feedback to user)
-      pbar.update(i)
+    def gen_filename(self, path):
+        # initialize the filename
+        filename = None
 
-    # close the progressbar
-    pbar.finish()
+        # grab the data format to encode the file with
+        # the same after renaming
+        ext = str(self.ext).lower() if str(self.ext).lower() in VALID_EXT \
+            else (path.split(os.path.sep)[-1]).split(".")[1]
 
-  def gen_filename(self, path):
-    # initialize the filename
-    filename = None
 
-    # grab the data format to encode the file with
-    # the same after renaming
-    if self.ext is None:
-      dataFormat = (path.split(os.path.sep)[-1]).split(".")[1]
-    else:
-      dataFormat = str(ext)
+        # check to see if a valid extension is found, else set it to 'jpg'
+        ext = ext.lower() if ext.lower() in VALID_EXT else "jpg"
+        # see if we are using prefix and/or suffix
+        prefix = str(self.prefix) if self.prefix is not None else ""
+        suffix = str(self.suffix) if self.suffix is not None else ""
 
-    # initialize the output directory parameter
-    directory = self.move if self.move is not None else os.path.dirname(path)
+        # set the default idx to the filename without extension
+        idx = os.path.basename(path).split(".")[0]
 
-    # see if we are using prefix and/or suffix
-    prefix = str(self.prefix) if self.prefix is not None else ""
-    suffix = str(self.suffix) if self.suffix is not None else ""
+        # check to see if we need to generate a unique ID
+        if not self.keep_idx:
+        # loop to find a unique filename
+            while True:
+                # loop until we have a unique id and no conflict with existing files
+                # generate a tentative of unique ID
+                idx = id_generator(sequential=self.sequential,
+                    length=self.length, index=self.index)
 
-    while self.index < 10**(self.length + 1):
-      # set the default idx to the filename without extension
-      idx = os.path.basename(path).split(".")[0]
+                # increment the current index number (preventing infinite loop)
+                self.index += 1
 
-      # check to see if we need to generate a unique ID
-      if not self.keep_idx:
-        # loop until we have a unique id and no conflict with existing files
-        # generate a tentative of unique ID
-        idx = id_generator(sequential=self.sequential, length=self.length,
-            index=self.index)
+                # generate the filename : {dir}{sep}[{prefix}]{idx}[{suffix}].{df}
+                filename = os.path.sep.join([os.path.dirname(path),
+                    "{}{}{}.{}".format(prefix, idx, suffix, ext)])
 
-        # increment the current index number (preventing infinite loop)
-        self.index += 1
+                # allow for a unique filename only
+                if (not os.path.isfile(filename)) or
+                    (self.index >= 10**(self.length + 1)):
+                    break
 
-      # generate the filename : {dir}{sep}[{prefix}]{idx}[{suffix}].{df}
-      filename = os.path.sep.join([directory, "{}{}{}.{}".format(
-        prefix, idx, suffix, dataFormat)])
+        # generate the filename : {dir}{sep}[{prefix}]{idx}[{suffix}].{df}
+        filename = os.path.sep.join([os.path.dirname(path),
+            "{}{}{}.{}".format(prefix, idx, suffix, ext)])
 
-      # allow for a unique filename only
-      if not os.path.isfile(filename):
+        # if we keep the idx and the filename wasn't free at first try,
+        # we will not be able to generate a unique ID so we return a None
+        # filename (so we don't erase the existing file)
+        if os.path.isfile(filename):
+            print("Could not save {}: existing file in target directory".format(
+                filename))
+            return None
+
+        # return the filename
         return filename
-
-      # if we keep the idx and the filename wasn't free at first try,
-      # we will not be able to generate a unique ID so we break the loop
-      # and return a None filename (so we don't erase the existing file)
-      elif self.keep_idx:
-        print("Could not save {}: existing file in target directory".format(filename))
-        return None
-
-    # return the filename
-    return filename
 
   @staticmethod
   def id_generator(sequential=True, length=6, index=0,
     chars=string.ascii_lowercase + string.digits):
-    # create a sequential *unique* ID for this image relative to
-    # other images processed *at the same time*
-    # OR
     # create a random id with lowercase letters and digits
     if str(sequential).lower() in FALSE_VALUES:
       return ''.join(random.choice(chars) for _ in range(length))
-    # return the current index number as id filled with 0s
+
+    # otherwise create a sequential an ID based on the index
     else:
       return str(index).zfill(length)

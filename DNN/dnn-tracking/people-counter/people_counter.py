@@ -133,6 +133,7 @@ while True:
       box = detections[0, 0, i, 3:7] * np.array([W, H, W, H])
       (startX, startY, endX, endY) = box.astype("int")
 
+      print("box: {}".format(box))
       # construct a dlib rectangle object from bounding box coordinates
       # and then start the dlib correlation tracker
       tracker = dlib.correlation_tracker()

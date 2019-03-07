@@ -4,7 +4,7 @@ import pickle
 import cv2
 
 class FaceEncoder:
-    def __init__(self, encodings=[], names=[], method="cnn"):
+    def __init__(self, encodings=[], names=[], method="hog"):
         # initialize the encoder
         self.encodings = encodings
         self.names = names
@@ -31,15 +31,26 @@ class FaceEncoder:
         # return the matches between known encodings and the encoding
         return face_recognition.compare_faces(self.encodings, encoding)
 
-    def encode(self, image, name=""):
-        # convert the image to grayscale
+    def describe(self, image):
+        # convert the image to RGB color space
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-        # localize the faces in the image
+        # locate the faces in the image
         boxes = self.locate(image)
 
-        # for each face, encode the properties
-        encodings = self.quantify(image, boxes)
+        # initialize the list of encodings for the image
+        encodings = []
+
+        # quantify the faces
+        if len(boxes) > 0:
+            encodings = self.quantify(image, boxes)
+
+        # return the quantified vectors for faces
+        return encodings
+
+    def store(self, image, name=""):
+        # describe the image by encoding the faces in it
+        encodings = self.describe(image)
 
         # add the quantified face to the list
         # all faces are considered same person

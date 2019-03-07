@@ -93,11 +93,13 @@ class Step:
             # try to execute the script with the command build previously
             try:
                 exec(cmd.split(" "))
-                self._debug("finished step {} {}".format(self.desc, self.script))
+                self._debug("finished step {} ({})".format(self.desc,
+                    self.script))
 
             # if an error occur, disable the pypeline
             except Exception as e:
-                self.pipeline.kill()
+                if self.pipeline is not None:
+                    self.pipeline.kill()
                 self._debug(msg=e, msgType="[ERROR]")
 
         # otherwise, just print a message about the skipped status of the step

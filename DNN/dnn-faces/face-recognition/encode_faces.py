@@ -23,7 +23,7 @@ print("[INFO] quantifying faces...")
 imagePaths = list(paths.list_images(args["dataset"]))
 
 # initialize the face encoder object
-encoder = FaceEncoder()
+encoder = FaceEncoder(method=args["detection_method"])
 
 # loop over the image paths
 for (i, imagePath) in enumerate(imagePaths):
@@ -34,7 +34,7 @@ for (i, imagePath) in enumerate(imagePaths):
 	# load the input image and convert it from RGB (OpenCV ordering)
 	# to dlib ordering (RGB)
 	image = cv2.imread(imagePath)
-	encoder.encode(image, name)
+	encoder.store(image, name)
 
 # dump the facial encodings + names to disk
 print("[INFO] serializing encodings...")
