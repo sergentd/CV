@@ -17,7 +17,9 @@ ap.add_argument("-i", "--dataset", required=True,
 	help="path to input directory of faces + images")
 ap.add_argument("-e", "--embeddings", required=True,
 	help="path to output serialized db of facial embeddings")
-ap.add_argument("-d", "--detector", required=True,
+ap.add_argument("-p", "--prototxt", required=True,
+	help="path to OpenCV's deep learning face detector")
+ap.add_argument("-a", "--caffe-model", required=True,
 	help="path to OpenCV's deep learning face detector")
 ap.add_argument("-m", "--embedding-model", required=True,
 	help="path to OpenCV's deep learning face embedding model")
@@ -27,10 +29,8 @@ args = vars(ap.parse_args())
 
 # load our serialized face detector from disk
 print("[INFO] loading face detector...")
-protoPath = os.path.sep.join([args["detector"], "deploy.prototxt"])
-modelPath = os.path.sep.join([args["detector"],
-	"res10_300x300_ssd_iter_140000.caffemodel"])
-detector = cv2.dnn.readNetFromCaffe(protoPath, modelPath)
+detector = cv2.dnn.readNetFromCaffe(args["prototxt"],
+    args["caffe_model"])
 
 # load our serialized face embedding model from disk
 print("[INFO] loading face recognizer...")

@@ -64,9 +64,9 @@ class SimpleDatasetRenamer:
         ext = str(self.ext).lower() if str(self.ext).lower() in VALID_EXT \
             else (path.split(os.path.sep)[-1]).split(".")[1]
 
-
         # check to see if a valid extension is found, else set it to 'jpg'
         ext = ext.lower() if ext.lower() in VALID_EXT else "jpg"
+
         # see if we are using prefix and/or suffix
         prefix = str(self.prefix) if self.prefix is not None else ""
         suffix = str(self.suffix) if self.suffix is not None else ""
@@ -117,6 +117,6 @@ class SimpleDatasetRenamer:
         if str(sequential).lower() in FALSE_VALUES:
             return ''.join(random.choice(chars) for _ in range(length))
 
-        # otherwise create a sequential an ID based on the index
+        # otherwise create a sequential ID based on the index
         else:
             return str(index).zfill(length)
