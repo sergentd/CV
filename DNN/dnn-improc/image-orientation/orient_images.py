@@ -13,16 +13,12 @@ import cv2
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--db", required=True,
-    help="path to HDF5 database")
 ap.add_argument("-i", "--dataset", required=True,
     help="path to the input image dataset")
-ap.add_argument("-m", "--model", required=True,
-    help="path to trained orientation model")
 args = vars(ap.parse_args())
 
 # load the label names from the HDF5 dataset
-db = h5py.File(args["db"])
+db = h5py.File(conf.FEATURES_PATH)
 labelNames = [int(angle) for angle in db["label_names"][:]]
 db.close()
 
@@ -35,7 +31,7 @@ imagePaths = np.random.choice(imagePaths, size=(10,), replace=False)
 net = VGG16(weights="imagenet", include_top=False)
 
 # load the orientation model
-model = pickle.loads(open(args["model"], "rb").read())
+model = pickle.loads(open(conf.MODEL_PATH, "rb").read())
 
 # loop over the image paths
 for imagePath in imagePaths:

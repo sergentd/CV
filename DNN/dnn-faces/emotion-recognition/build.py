@@ -1,20 +1,21 @@
 # import necessary packages
-from conf import config as conf
+from conf import emotion_config as conf
 from helpers.pypeline import Pypeline
 from helpers.pypeline import Step
 
-S = {True:"+", False:"-"}
-
 def main():
+    # printing symbols, for display purpose only
+    S = {True:"+", False:"-"}
+
     # set up the pypeline
     print("[PIPE] pypeline creation and feeding:")
     pypeline = Pypeline()
 
-    # add the features extraction task
-    print("[{}] {}".format(S[conf.EXTRACT_ENABLED], conf.EXTRACT_DESC))
-    extract = Step(conf.EXTRACT_SCRIPT, conf.EXTRACT_DESC, conf.EXTRACT_ARGS,
-        conf.EXTRACT_ENABLED)
-    pypeline.add(extract)
+    # add the building dataset task
+    print("[{}] {}".format(S[conf.BUILD_ENABLED], conf.BUILD_DESC))
+    build = Step(conf.BUILD_SCRIPT, conf.BUILD_DESC, conf.BUILD_ARGS,
+        conf.BUILD_ENABLED)
+    pypeline.add(build)
 
     # add the training model task
     print("[{}] {}".format(S[conf.TRAIN_ENABLED], conf.TRAIN_DESC))

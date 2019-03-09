@@ -36,7 +36,7 @@ MODELS = {
 # esnure a valid model name was supplied via command line argument
 if args["model"] not in MODELS.keys():
     raise AssertionError("The --model command line argument should "
-        "be a key in the `MODELS` dictionary")
+        "be a key in the `MODELS` dictionary: {}".format(MODELS.keys()))
 
 # initialize the input image shape (224x224 pixels) along with
 # the pre-processing function (this might need to be changed

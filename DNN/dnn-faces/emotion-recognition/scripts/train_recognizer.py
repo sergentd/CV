@@ -1,0 +1,93 @@
+# set the matplotlib backend so figures can be saved in the background
+import matplotlib
+matplotlib.use("Agg")
+
+# import necessary packages
+from helpers.preprocessing import ImageToArrayPreprocessor
+from helpers.callbacks import EpochCheckpoint
+from helpers.callbacks import TrainingMonitor
+from helpers.io import HDF5DatasetGenerator
+from helpers.conv import EmotionVGGNet
+from keras.preprocessing.image import ImageDataGenerator
+from keras.optimizers import Adam
+from keras.models import load_model
+import keras.backend as K
+import argparse
+import os
+
+# construct the argument parser and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-c", "--checkpoints", required=True,
+    help="path to output checkpoint models directory")
+ap.add_argument("-m", "--model", type=str,
+    help="path to *specific* model checkpoint to load")
+ap.add_argument("-s", "--start-epoch", type=int, default=0,
+    help="epoch to restart training at")
+ap.add_argument("-o", "--output", type=str, required=True,
+    help="path to output plot and json")
+ap.add_argument("-t", "--train-hdf5", type=str, required=True,
+    help="path to HDF5 test dataset")
+ap.add_argument("-e", "--test-hdf5", type=str, required=True,
+    help="path to HDF5 test dataset")
+ap.add_argument("-v", "--val-hdf5", type=str, required=True,
+    help="path to HDF5 val dataset")
+ap.add_argument("-c", "--num-classes", type=int, default=2,
+    help="number of classes we want to recognize")
+ap.add_argument("-b", "--batch-size", type=int, default=32,
+    help="number of classes we want to recognize")
+args = vars(ap.parse_args())
+
+# construct the training and testing image generator for data
+# augmentation, then initialize the image processor
+trainAug = ImageDataGenerator(rotation_range=10, zoom_range=0.1,
+    horizontal_flip=True, rescale=1 / 255.0, fill_mode="nearest")
+valAug = ImageDataGenerator(rescale = 1 / 255.0)
+iap = ImageToArrayPreprocessor()
+
+# initialize the training and validation dataset generators
+trainGen = HDF5DatasetGenerator(args["train_hdf5"], args["batch_size"],
+    aug=trainAug, preprocessors=[iap], classes=args["num_classes"])
+valGen = HDF5DatasetGenerator(args["val_hdf5"], args["batch_size"],
+    aug=valAug, preprocessors=[iap], classes=args["num_classes"])
+
+# if no specific model to load, then init and compile the model
+if args["model"] is None:
+    print("[INFO] compiling model...")
+    model = EmotionVGGNet.build(width=48, height=48,
+        depth=1, classes=args["num_classes"])
+    opt = Adam(lr=1e-3)
+    model.compile(loss="categorical_crossentropy", optimizer=opt,
+        metrics=["accuracy"])
+else:
+    print("[INFO] loading {}".format(args["model"]))
+    model = load_model(args["model"])
+
+    # update the learning rate
+    print("[INFO] old learning rate: {}".format(
+        K.get_value(model.optimizer.lr)))
+    K.set_value(model.optimizer.lr, 1e-3)
+    print("[INFO] new learning rate: {}".format(
+        K.get_value(model.optimizer.lr)))
+
+# construct the set of callbacks
+figPath = os.path.sep.join([args["output"], "vggnetemotion.png"])
+jsonPath = os.path.sep.join([args["output"], "vggnetemotion.json"])
+callbacks = [
+    EpochCheckpoint(args["checkpoints"], every=5, startAt=args["start_epoch"]),
+    TrainingMonitor(figPath, jsonPath=jsonPath, startAt=args["start_epoch"])
+]
+
+# train the network
+model.fit_generator(
+    trainGen.generator(),
+    steps_per_epoch=trainGen.numImages // args["batch_size"],
+    validation_data=valGen.generator(),
+    validation_steps=valGen.numImages // args["batch_size"],
+    epochs=15,
+    max_queue_size=args["batch_size"]*2,
+    callbacks=callbacks,
+    verbose=1)
+
+# close the dataset
+trainGen.close()
+valGen.close()
