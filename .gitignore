@@ -119,3 +119,4 @@ lock.mdb
 
 # dnn weights
 yolov3.weights
+colorization_release_v2.caffemodel
