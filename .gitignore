@@ -107,18 +107,3 @@ venv.bak/
 .idea/misc.xml
 .idea/modules.xml
 .idea/workspace.xml
-
-# personal files
-_private/
-_dnn_code/
-_features.hdf5
-inputs.hdf5
-outputs.hdf5
-hadoop_faces_dataset.txt
-hadoop_output/
-data.mdb
-lock.mdb
-
-# dnn weights
-yolov3.weights
-colorization_release_v2.caffemodel
