@@ -1,0 +1,35 @@
+{
+	/****
+	* configuration file for paths and network parameters
+	****/
+	"base_path": "datasets",
+  "images_path": "car_ims",
+  "labels_path": "complete_dataset.csv",
+
+  "mx_output": "datasets",
+  "lists_dir": "lists",
+  "train_mx_list": "train.lst",
+  "val_mx_list": "val.lst",
+  "test_mx_list": "test.lst",
+
+  "rec_dir": "rec",
+  "train_mx_rec": "train.lst",
+  "val_mx_rec": "val.lst",
+  "test_mx_rec": "test.lst",
+
+  "output_dir": "output",
+  "label_encoder_path": "le.pickle",
+
+  "checkpoints_dir":"checkpoints",
+
+  "r_mean": 123.68,
+  "g_mean": 116.779,
+  "b_mean": 103.939,
+
+  "num_classes": 164,
+  "num_val_images": 0.15,
+  "num_test_images": 0.15,
+
+  "batch_size": 16,
+  "num_devices": 1
+}
