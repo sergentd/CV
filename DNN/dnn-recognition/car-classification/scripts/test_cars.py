@@ -42,7 +42,7 @@ checkpointsPath = os.path.sep.join([conf["checkpoints_dir"], args["prefix"]])
     checkpointsPath, args["epoch"])
 
 # construct the model
-model = mx.mod.Module(symbol=symbol, contect=[mx.gpu(0)])
+model = mx.mod.Module(symbol=symbol, context=[mx.gpu(0)])
 model.bind(data_shapes=testIter.provide_data,
     label_shapes=testIter.provide_label)
 model.set_params(argParams, auxParams)

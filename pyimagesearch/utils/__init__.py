@@ -1,5 +1,6 @@
 # import necessary packages
 from . import activation
+from .agegenderhelper import AgeGenderHelper
 from .imagenethelper import ImageNetHelper
 from .modelinspector import ModelInspector
 from .captchahelper import preprocess
