@@ -72,6 +72,8 @@ def main():
     # construct the checkpoints path, initialize the model argument
     # and auxiliary parameters
     checkpointsPath = os.path.sep.join([args["checkpoints"], args["prefix"]])
+    if not os.path.exists(checkpointsPath):
+        os.makedirs(checkpointsPath)
     argParams = None
     auxParams = None
 
