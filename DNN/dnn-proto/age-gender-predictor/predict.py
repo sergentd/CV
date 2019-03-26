@@ -6,7 +6,6 @@ from scripts.utils.preprocessing import MeanPreprocessor
 from scripts.utils.preprocessing import CropPreprocessor
 from scripts.utils import AgeGenderHelper
 from imutils.face_utils import FaceAligner
-from collections import namedtuple
 from imutils import face_utils
 from imutils import paths
 import numpy as np
@@ -19,124 +18,126 @@ import dlib
 import cv2
 import os
 
-Batch = namedtuple('Batch', ['data'])
+def main():
+    # construct the argument parser and parse the arguments
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-i", "--image", required=True,
+        help="path to input image or directory")
+    args = vars(ap.parse_args())
 
-# construct the argument parser and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required=True,
-    help="path to input image or directory")
-args = vars(ap.parse_args())
+    # load the label encoders and mean file
+    print("[INFO] loading label encoders and mean files...")
+    ageLE = pickle.loads(open(deploy.AGE_LABEL_ENCODER, "rb").read())
+    genderLE = pickle.loads(open(deploy.GENDER_LABEL_ENCODER, "rb").read())
+    ageMeans = json.loads(open(deploy.AGE_MEANS).read())
+    genderMeans = json.loads(open(deploy.GENDER_MEANS).read())
 
-# load the label encoders and mean file
-print("[INFO] loading label encoders and mean files...")
-ageLE = pickle.loads(open(deploy.AGE_LABEL_ENCODER, "rb").read())
-genderLE = pickle.loads(open(deploy.GENDER_LABEL_ENCODER, "rb").read())
-ageMeans = json.loads(open(deploy.AGE_MEANS).read())
-genderMeans = json.loads(open(deploy.GENDER_MEANS).read())
+    # load the models from disk
+    print("[INFO] loading models...")
+    agePath = os.path.sep.join([deploy.AGE_NETWORK_PATH,
+    	deploy.AGE_PREFIX])
+    genderPath = os.path.sep.join([deploy.GENDER_NETWORK_PATH,
+    	deploy.GENDER_PREFIX])
+    ageModel = mx.model.FeedForward.load(agePath, deploy.AGE_EPOCH)
+    genderModel = mx.model.FeedForward.load(genderPath,
+    	deploy.GENDER_EPOCH)
 
-# load the models from disk
-print("[INFO] loading models...")
-agePath = os.path.sep.join([deploy.AGE_NETWORK_PATH,
-	deploy.AGE_PREFIX])
-genderPath = os.path.sep.join([deploy.GENDER_NETWORK_PATH,
-	deploy.GENDER_PREFIX])
-ageModel = mx.model.FeedForward.load(agePath, deploy.AGE_EPOCH)
-genderModel = mx.model.FeedForward.load(genderPath,
-	deploy.GENDER_EPOCH)
+    # now that the networks are loaded, we need to compile them
+    print("[INFO] compiling models...")
+    ageModel = mx.model.FeedForward(ctx=[mx.gpu(0)],
+    	symbol=ageModel.symbol, arg_params=ageModel.arg_params,
+    	aux_params=ageModel.aux_params)
+    genderModel = mx.model.FeedForward(ctx=[mx.gpu(0)],
+    	symbol=genderModel.symbol, arg_params=genderModel.arg_params,
+    	aux_params=genderModel.aux_params)
 
-# now that the networks are loaded, we need to compile them
-print("[INFO] compiling models...")
-ageModel = mx.model.FeedForward(ctx=[mx.gpu(0)],
-	symbol=ageModel.symbol, arg_params=ageModel.arg_params,
-	aux_params=ageModel.aux_params)
-genderModel = mx.model.FeedForward(ctx=[mx.gpu(0)],
-	symbol=genderModel.symbol, arg_params=genderModel.arg_params,
-	aux_params=genderModel.aux_params)
+    # initialize the set of preprocessors
+    sp = SimplePreprocessor(width=256, height=256, inter=cv2.INTER_CUBIC)
+    cp = CropPreprocessor(width=227, height=227, horiz=True)
+    ageMP = MeanPreprocessor(ageMeans["R"], ageMeans["G"], ageMeans["B"])
+    genderMP = MeanPreprocessor(genderMeans["R"], genderMeans["G"],
+        genderMeans["B"])
+    iap = ImageToArrayPreprocessor(dataFormat="channels_first")
 
-# initialize the set of preprocessors
-sp = SimplePreprocessor(width=256, height=256, inter=cv2.INTER_CUBIC)
-cp = CropPreprocessor(width=227, height=227, horiz=True)
-ageMP = MeanPreprocessor(ageMeans["R"], ageMeans["G"], ageMeans["B"])
-genderMP = MeanPreprocessor(genderMeans["R"], genderMeans["G"],
-    genderMeans["B"])
-iap = ImageToArrayPreprocessor(dataFormat="channels_first")
+    # initialize the dlib's face detector (HOG based) then create the
+    # facial landmark predictor and face aligner
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor(deploy.DLIB_LANDMARK_PATH)
+    fa = FaceAligner(predictor)
 
-# initialize the dlib's face detector (HOG based) then create the
-# facial landmark predictor and face aligner
-detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(deploy.DLIB_LANDMARK_PATH)
-fa = FaceAligner(predictor)
+    # initialize the list of images paths as juste a single image
+    imagePaths = [args["image"]]
 
-# initialize the list of images paths as juste a single image
-imagePaths = [args["image"]]
+    # if the input path is a directoy, then list all images
+    if os.path.isdir(args["image"]):
+        imagePaths = paths.list_images(args["image"])
 
-# if the input path is a directoy, then list all images
-if os.path.isdir(args["image"]):
-    imagePaths = paths.list_images(args["image"])
+    # loop over the images paths
+    for imagePath in imagePaths:
+        # load the image from disk, resize it and convert it to grayscale
+        print("[INFO] processing {}".format(imagePath))
+        image = cv2.imread(imagePath)
+        image = imutils.resize(image, width=800)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-# loop over the images paths
-for imagePath in imagePaths:
-    # load the image from disk, resize it and convert it to grayscale
-    print("[INFO] processing {}".format(imagePath))
-    image = cv2.imread(imagePath)
-    image = imutils.resize(image, width=800)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # detect faces in the grayscale image
+        rects = detector(gray, 1)
 
-    # detect faces in the grayscale image
-    rects = detector(gray, 1)
+        # loop over the detected faces
+        for rect in rects:
+            # determine the facial landmarks for the face region,
+            # then align the face
+            shape = predictor(gray, rect)
+            face = fa.align(image, gray, rect)
 
-    # loop over the detected faces
-    for rect in rects:
-        # determine the facial landmarks for the face region,
-        # then align the face
-        shape = predictor(gray, rect)
-        face = fa.align(image, gray, rect)
+            # resize the face to a fixed size, then extract 10-crop
+            # patches from it
+            face = sp.preprocess(face)
+            patches = cp.preprocess(face)
 
-        # resize the face to a fixed size, then extract 10-crop
-        # patches from it
-        face = sp.preprocess(face)
-        patches = cp.preprocess(face)
+            # allocate memory for the age and gender patches
+            agePatches = np.zeros((patches.shape[0], 3, 227, 227),
+                dtype="float")
+            genderPatches = np.zeros((patches.shape[0], 3, 227, 227),
+                dtype="float")
 
-        # allocate memory for the age and gender patches
-        agePatches = np.zeros((patches.shape[0], 3, 227, 227),
-            dtype="float")
-        genderPatches = np.zeros((patches.shape[0], 3, 227, 227),
-            dtype="float")
+    		# loop over the patches
+            for j in np.arange(0, patches.shape[0]):
+    			# perform mean subtraction on the patch
+                agePatch = ageMP.preprocess(patches[j])
+                genderPatch = genderMP.preprocess(patches[j])
+                agePatch = iap.preprocess(agePatch)
+                genderPatch = iap.preprocess(genderPatch)
 
-		# loop over the patches
-        for j in np.arange(0, patches.shape[0]):
-			# perform mean subtraction on the patch
-            agePatch = ageMP.preprocess(patches[j])
-            genderPatch = genderMP.preprocess(patches[j])
-            agePatch = iap.preprocess(agePatch)
-            genderPatch = iap.preprocess(genderPatch)
+    			# update the respective patches lists
+                agePatches[j] = agePatch
+                genderPatches[j] = genderPatch
 
-			# update the respective patches lists
-            agePatches[j] = agePatch
-            genderPatches[j] = genderPatch
+    		# make predictions on age and gender based on the extracted
+    		# patches
+            agePreds = ageModel.predict(agePatches)
+            genderPreds = genderModel.predict(genderPatches)
 
-		# make predictions on age and gender based on the extracted
-		# patches
-        agePreds = ageModel.predict(agePatches)
-        genderPreds = genderModel.predict(genderPatches)
+            # compute the average for each class label based on the
+            # predictions for the patches
+            agePreds = agePreds.mean(axis=0)
+            genderPreds = genderPreds.mean(axis=0)
+            #
+            # # visualize the age and gender predictions
+            ageCanvas = AgeGenderHelper.visualizeAge(agePreds, ageLE)
+            genderCanvas = AgeGenderHelper.visualizeGender(genderPreds, genderLE)
+            #
+            # # draw the bounding box around the face
+            clone = image.copy()
+            (x, y, w, h) = face_utils.rect_to_bb(rect)
+            cv2.rectangle(clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            #
+            # # show the output image
+            cv2.imshow("Input", clone)
+            cv2.imshow("Face", face)
+            cv2.imshow("Age Probabilities", ageCanvas)
+            cv2.imshow("Gender Probabilities", genderCanvas)
+            cv2.waitKey(0)
 
-        # compute the average for each class label based on the
-        # predictions for the patches
-        agePreds = agePreds.mean(axis=0)
-        genderPreds = genderPreds.mean(axis=0)
-        #
-        # # visualize the age and gender predictions
-        ageCanvas = AgeGenderHelper.visualizeAge(agePreds, ageLE)
-        genderCanvas = AgeGenderHelper.visualizeGender(genderPreds, genderLE)
-        #
-        # # draw the bounding box around the face
-        clone = image.copy()
-        (x, y, w, h) = face_utils.rect_to_bb(rect)
-        cv2.rectangle(clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        #
-        # # show the output image
-        cv2.imshow("Input", clone)
-        cv2.imshow("Face", face)
-        cv2.imshow("Age Probabilities", ageCanvas)
-        cv2.imshow("Gender Probabilities", genderCanvas)
-        cv2.waitKey(0)
+if __name__ == "__main__":
+    main()
